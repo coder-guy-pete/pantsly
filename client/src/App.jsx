@@ -1,50 +1,23 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { hello } from './api/hello'
-import './App.css'
+import reactLogo from "@/assets/react.svg"
+import { Button, Center, HStack } from "@chakra-ui/react"
+import viteLogo from "/vite.svg"
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [message, setMessage] = useState('')
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await hello()
-        setMessage(response.message)
-      } catch (error) {
-        setMessage(error.message)
-      }
-    }
-
-    fetchData()
-  }, [])
-
   return (
-    <>
-      <div>
+    <Center flexDir="column" gap="8" minH="dvh">
+      <HStack>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
-      </div>
-      <h1>Vite + React</h1>
-      <h2>The server says {message}</h2>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      </HStack>
+      <HStack>
+        <Button>Click me</Button>
+        <Button>Click me</Button>
+      </HStack>
+    </Center>
   )
 }
 
