@@ -1,45 +1,57 @@
-import React from 'react';
-import { Box, Flex, Grid, Heading } from '@chakra-ui/react';
+import React, { useState } from 'react';
+// import ProductModal from '../components/ProductModal';
+import ProductList from '@/components/ProductList';
+import ProductCard from '@/components/ProductCard';
+import Products from '@/mock-data/Products';
 
-// Placeholder components until I setup the actual components
-const Navbar = () => <Box as="nav">Navbar Placeholder</Box>;
-const SearchBar = () => <Box>Search Bar Placeholder</Box>;
-const SortFilter = () => <Box>Sort & Filter Placeholder</Box>;
-const ProductList = () => 
-    <Grid templateColumns="repeat(4, 1fr)" gap={4}>
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        {/* ... more ProductCards */}
-    </Grid>;
-const ProductCard = () => <Box>Product Card Placeholder</Box>;
+// // Placeholder components until I setup the actual components
+// const SearchBar = () => <Box>Search Bar Placeholder</Box>;
+// const SortFilter = () => <Box>Sort & Filter Placeholder</Box>;
 
 
 const Shop = () => {
+    // const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [selectedProduct, setSelectedProduct] = useState(null);
+    // const [cartItems, setCartItems] = useState([]); // State to manage cart items
+
+    // const handleAddToCart = (product, size, color) => {
+    //     setCartItems([...cartItems, { ...product, size, color }]);
+    // };
+
+    // const handleRemoveFromCart = (product) => {
+    //     setCartItems(cartItems.filter((item) => item.id !== product.id));
+    // };
+
+    // const isProductInCart = (product) => cartItems.some((item) => item.id === product.id);
+
+    // const openModal = (product) => {
+    //     setSelectedProduct(product);
+    //     setIsModalOpen(true);
+    // };
+
+    // const closeModal = () => {
+    //     setSelectedProduct(null);
+    //     setIsModalOpen(false);
+    // };
+
     return (
-        <Box>
-        <Navbar />
-
-        <Flex direction="column" p={4}>
-            <Heading as="h1" size="xl" mb={4}>Shop</Heading>
-
-            <Flex direction="row" mb={4}>
-            <Box flex={1}>
-                <SearchBar />
-            </Box>
-            <Box>
-                <SortFilter />
-            </Box>
-            </Flex>
-
+        <div>
             <ProductList />
-        </Flex>
-        </Box>
+            {/* <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+            {mockProducts.map((product) => (
+                <ProductCard
+                key={product.id}
+                product={product}
+                addToCart={handleAddToCart}
+                removeFromCart={handleRemoveFromCart}
+                isProductInCart={isProductInCart(product)}
+                onClick={() => openModal(product)} // Open modal on card click
+                />
+            ))}
+            </Grid> */}
+    
+            {/* <ProductModal isOpen={isModalOpen} onClose={closeModal} product={selectedProduct} /> */}
+        </div>
     );
 };
 

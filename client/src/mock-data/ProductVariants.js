@@ -1,4 +1,4 @@
-const mockPants = [
+const ProductVariants = [
     {
         id: 1,
         product_id: 101, // You'll assign product IDs later
@@ -141,4 +141,4 @@ const mockPants = [
         },
     ];
 
-export default mockPants;
+export default ProductVariants;
