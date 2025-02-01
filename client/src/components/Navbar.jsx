@@ -8,14 +8,16 @@ const Navbar = () => {
     const [cartCount, setCartCount] = useState(3); // State for cart count (REPLACE THIS WITH ACTUAL CART COUNT)
 
     return (
-        <Flex as="nav" p={4} alignItems="center">
-            <HStack spacing={4}>
+        <Flex as="nav" p={4}>
+
+            <Spacer />
+
+            <HStack spacing={4} px={4}>
                 <Link to="/">Shop</Link>
                 {/* ADD OTHER NAVIGATION HERE */}
             </HStack>
-    
-            <Spacer /> {/* Pushes the right-aligned items to the right */}
         
+            <Flex justify="flex-end" flex={1}>
             <HStack spacing={4}>
                 {!isLoggedIn ? (
                 <Link to="/login">
@@ -30,13 +32,22 @@ const Navbar = () => {
                 <Button>
                     Cart{' '}
                     {cartCount > 0 && (
-                    <Text as="span" ml={2} bg="red.500" color="white" borderRadius="full" px={2} fontSize="sm">
+                    <Text 
+                        as="span"
+                        ml={1}
+                        bg="teal.600"
+                        color="white"
+                        borderRadius="full"
+                        px={2}
+                        fontSize="sm"
+                    >
                         {cartCount}
                     </Text>
                     )}
                 </Button>
                 </Link>
             </HStack>
+            </Flex>
             </Flex>
         );
     };
