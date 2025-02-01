@@ -7,13 +7,17 @@ const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // State for login status (REPLACE THIS WITH ACTUAL AUTHENTICATION)
     const [cartCount, setCartCount] = useState(3); // State for cart count (REPLACE THIS WITH ACTUAL CART COUNT)
 
+    const isActive = (path) => location.pathname === path;
+
     return (
         <Flex as="nav" p={4}>
 
             <Spacer />
 
-            <HStack spacing={4} px={4}>
-                <Link to="/">Shop</Link>
+            <HStack spacing={4}>
+                <Link to="/">
+                    <Button variant="ghost" fontWeight={isActive("/") ? "bold" : "normal"}>Shop</Button>
+                </Link>
                 {/* ADD OTHER NAVIGATION HERE */}
             </HStack>
         
