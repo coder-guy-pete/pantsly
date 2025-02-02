@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Box, Grid } from '@chakra-ui/react';
+import { Box, Heading, Highlight, Grid } from '@chakra-ui/react';
 import ProductCard from '@/components/ProductCard';
 import Products from '@/mock-data/Products';
 import SearchBar from '@/components/SearchBar';
@@ -32,6 +32,11 @@ const Shop = () => {
 
     return (
         <Box p={4}>
+            <Heading size="3xl" ml={10} mb={5}>
+                <Highlight query="Pantsly:" styles={{ color: 'teal.600' }}>
+                Pantsly: Pants with passion
+                </Highlight>
+            </Heading>
             <SearchBar onSearch={handleSearch} />
             <Grid templateColumns="repeat(3, 1fr)" gap={4}>
                 {filteredProducts.map(product => (
