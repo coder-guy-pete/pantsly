@@ -25,6 +25,4 @@ const Products = ProductVariants.reduce((acc, variant) => {
     colors: [...new Set(product.colors)], // Deduplicate colors
 }));
 
-console.log("Aggregated Products:", Products);
-
 export default Products;
