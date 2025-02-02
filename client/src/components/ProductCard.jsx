@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Box, Image, Text, Flex, Button, VStack } from '@chakra-ui/react';
 import {
     SelectContent,
@@ -7,26 +7,24 @@ import {
     SelectRoot,
     SelectTrigger,
     SelectValueText,
-} from './ui/select'; // Make sure this path is correct
+} from './ui/select';
+import Products from '@/mock-data/Products';
 
 const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) => {
-    const sizes = product?.sizes || [];
-    const colors = product?.colors || [];
+    const [sizes, setSizes] = useState([]);
+    const [colors, setColors] = useState([]);
 
-    const [selectedSize, setSelectedSize] = useState(sizes.length > 0 ? sizes[0] : '');
-    const [selectedColor, setSelectedColor] = useState(colors.length > 0 ? colors[0] : '');
+    const [selectedSize, setSelectedSize] = useState('');
+    const [selectedColor, setSelectedColor] = useState('');
+
+    // REPLACE THIS WITH API FETCH CALLS LATER
+    useEffect(() => {
+        setSizes(product.sizes);
+    }, []);
 
     useEffect(() => {
-        if (sizes.length > 0) {
-            setSelectedSize(sizes[0]);
-        }
-    }, [sizes]);
-
-    useEffect(() => {
-        if (colors.length > 0) {
-            setSelectedColor(colors[0]);
-        }
-    }, [colors]);
+        setColors(product.colors);
+    }, []);
 
     const handleAddToCart = () => {
         addToCart(product, selectedSize, selectedColor);
@@ -34,6 +32,19 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
     const handleRemoveFromCart = () => {
         removeFromCart(product);
+    };
+
+    // ONCHANGE HANDLERS are not working as expected, need to debug
+    const handleSizeChange = (event) => {
+        setSelectedSize(event.target.value);
+        console.log("Sizes:", sizes);
+        console.log("Selected Size: ", event.target.value);
+        console.log("Selected Size is a string?", typeof event.target.value === 'string');
+    };
+
+    const handleColorChange = (event) => {
+        setSelectedColor(event.target.value);
+        console.log("Selected Color:", event.target.value);
     };
 
     return (
@@ -46,28 +57,37 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                     <Text fontSize="md" color="teal.500">${product.sell_price}</Text>
                 </Flex>
 
-            <SelectRoot disabled={sizes.length === 0} value={selectedSize} onChange={setSelectedSize} size="sm" mb={2}>
+                <SelectRoot 
+                    value={selectedSize} 
+                    onChange={handleSizeChange} 
+                    size="sm" 
+                    mb={2} 
+                    disabled={sizes.length === 0}>
                 <SelectLabel>Size</SelectLabel>
                 <SelectTrigger>
                     <SelectValueText />
                 </SelectTrigger>
                 <SelectContent>
-                    {sizes.map((size, index) => (
-                        <SelectItem key={size + index} value={size} item={size}> {/* Corrected line */}
+                    {sizes.map((size) => (
+                        <SelectItem key={size} item={size} value={size}>
                             {size}
                         </SelectItem>
                     ))}
                 </SelectContent>
             </SelectRoot>
 
-            <SelectRoot disabled={sizes.length === 0} value={selectedColor} onChange={setSelectedColor} size="sm">
+            <SelectRoot 
+                value={selectedColor} 
+                onChange={handleColorChange} 
+                size="sm" 
+                disabled={colors.length === 0}>
                 <SelectLabel>Color</SelectLabel>
                 <SelectTrigger>
                     <SelectValueText />
                 </SelectTrigger>
                 <SelectContent>
-                    {colors.map((color, index) => (
-                        <SelectItem key={color + index} value={color} item={color}> {/* Corrected line */}
+                    {colors.map((color) => (
+                        <SelectItem key={color} item={color} value={color}>
                             {color}
                         </SelectItem>
                     ))}

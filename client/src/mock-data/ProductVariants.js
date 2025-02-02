@@ -11,7 +11,7 @@ const ProductVariants = [
         reorder_point: 10,
         reorder_quantity: 50,
         reorder_price: 40.00,
-        image_url: "/images/gap_blue_small.jpg",
+        image_url: "https://placehold.co/600x400",
         },
         {
         id: 2,
@@ -25,7 +25,7 @@ const ProductVariants = [
         reorder_point: 5,
         reorder_quantity: 50,
         reorder_price: 40.00,
-        image_url: "/images/gap_blue_medium.jpg",
+        image_url: "https://placehold.co/600x400",
         },
         {
         id: 3,
@@ -39,7 +39,7 @@ const ProductVariants = [
         reorder_point: 10,
         reorder_quantity: 50,
         reorder_price: 40.00,
-        image_url: "/images/gap_black_small.jpg",
+        image_url: "https://placehold.co/600x400",
         },
         {
         id: 4,
@@ -53,7 +53,7 @@ const ProductVariants = [
         reorder_point: 5,
         reorder_quantity: 30,
         reorder_price: 65.00,
-        image_url: "/images/jcrew_gray_medium.jpg",
+        image_url: "https://placehold.co/600x400",
         },
         {
         id: 5,
@@ -67,7 +67,7 @@ const ProductVariants = [
         reorder_point: 5,
         reorder_quantity: 30,
         reorder_price: 65.00,
-        image_url: "/images/jcrew_navy_large.jpg",
+        image_url: "https://placehold.co/600x400",
         },
         {
         id: 6,
@@ -81,7 +81,7 @@ const ProductVariants = [
         reorder_point: 15,
         reorder_quantity: 60,
         reorder_price: 55.00,
-        image_url: "/images/levis_blue_32.jpg",
+        image_url: "https://placehold.co/600x400",
         },
         {
         id: 7,
@@ -95,7 +95,7 @@ const ProductVariants = [
         reorder_point: 10,
         reorder_quantity: 60,
         reorder_price: 55.00,
-        image_url: "/images/levis_black_34.jpg",
+        image_url: "https://placehold.co/600x400",
         },
         {
         id: 8,
@@ -109,7 +109,7 @@ const ProductVariants = [
         reorder_point: 10,
         reorder_quantity: 40,
         reorder_price: 48.00,
-        image_url: "/images/dockers_khaki_medium.jpg",
+        image_url: "https://placehold.co/600x400",
         },
         {
         id: 9,
@@ -123,7 +123,7 @@ const ProductVariants = [
         reorder_point: 5,
         reorder_quantity: 40,
         reorder_price: 48.00,
-        image_url: "/images/dockers_gray_large.jpg",
+        image_url: "https://placehold.co/600x400",
         },
         {
         id: 10,
@@ -137,7 +137,7 @@ const ProductVariants = [
         reorder_point: 15,
         reorder_quantity: 70,
         reorder_price: 32.00,
-        image_url: "/images/uniqlo_olive_small.jpg",
+        image_url: "https://placehold.co/600x400",
         },
     ];
 
