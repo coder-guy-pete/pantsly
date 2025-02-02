@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS volunteer_management;
-CREATE DATABASE volunteer_management;
+DROP DATABASE IF EXISTS ecommerce;
+CREATE DATABASE ecommerce;

@@ -1,7 +1,7 @@
 import sequelize from '../config/connection.js';
-import { VolunteerFactory } from './volunteer.js';
+import { UserFactory } from './user.js';
 
-const Volunteer = VolunteerFactory(sequelize);
-console.log(Volunteer === sequelize.models.Volunteer);
+const User = UserFactory(sequelize);
+console.log(User === sequelize.models.User);
 
-export { Volunteer };
+export { User };

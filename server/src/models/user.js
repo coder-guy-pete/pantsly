@@ -1,9 +1,11 @@
 import { DataTypes, Model } from 'sequelize';
 
-class Volunteer extends Model {}
 
-export function VolunteerFactory(sequelize) {
-  Volunteer.init({
+// Renamed class without adjusting the model just for testing routes setup
+class User extends Model {}
+
+export function UserFactory(sequelize) {
+  User.init({
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -30,5 +32,5 @@ export function VolunteerFactory(sequelize) {
     sequelize,
   });
 
-  return Volunteer;
+  return User;
 }

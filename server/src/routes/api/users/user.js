@@ -1,10 +1,9 @@
 import express from 'express';
 const router = express.Router();
-import { Volunteer } from '../../../models/index.js';
+import { User } from '../../../models/index.js';
 
 router.get('/', async (req, res) => {
-  const volunteers = await Volunteer.findAll();
-  res.json(volunteers);
+  res.json({ message: 'This is the user specific API route'});
 });
 
 export default router;
