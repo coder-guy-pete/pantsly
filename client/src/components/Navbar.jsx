@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Flex, HStack, Button, Text, Spacer } from '@chakra-ui/react';
-import { useState } from 'react';
+import { HiOutlineShoppingCart } from "react-icons/hi";
 
 const Navbar = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // State for login status (REPLACE THIS WITH ACTUAL AUTHENTICATION)
@@ -25,16 +25,16 @@ const Navbar = () => {
             <HStack spacing={4}>
                 {!isLoggedIn ? (
                 <Link to="/login">
-                    <Button>Login</Button>
+                    <Button colorPalette="cyan" rounded="lg">Login</Button>
                 </Link>
                 ) : (
                 <Link to="/order-history">
-                    <Button>Order History</Button>
+                    <Button colorPalette="orange" rounded="lg">Order History</Button>
                 </Link>
                 )}
                 <Link to="/cart">
-                <Button>
-                    Cart{' '}
+                <Button variant="ghost">
+                    <HiOutlineShoppingCart />{' '}
                     {cartCount > 0 && (
                     <Text 
                         as="span"
