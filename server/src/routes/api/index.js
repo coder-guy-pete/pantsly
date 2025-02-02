@@ -1,8 +1,11 @@
 import express from 'express';
 const router = express.Router();
-import volunteers from './volunteers/index.js';
+import users from './users/index.js';
+import orders from './orders/index.js';
 
-router.use('/volunteers', volunteers);
+router.use('/users', users);
+router.use('/orders', orders);
+
 router.get('/', (req, res) => {
   res.json({ message: 'Hello API!' });
 });
