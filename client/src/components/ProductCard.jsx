@@ -48,13 +48,10 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
     const handleSizeChange = (event) => {
         setSelectedSize(event.target.value);
-        console.log("Sizes:", sizeOptions);
-        console.log("Selected Size: ", event.target.value);
     };
 
     const handleColorChange = (event) => {
         setSelectedColor(event.target.value);
-        console.log("Selected Color:", event.target.value);
     };
 
     return (
