@@ -56,9 +56,9 @@ const SortFilter = ({ products, onSortChange, onBrandFilterChange }) => {
             <Card.Header />
             <Stack spacing={4}>
                 <SelectRoot onChange={handleSortChange} collection={sortOptions} w="200px" mb={4}>
-                    <SelectLabel>Sort By</SelectLabel> {/* Add a label */}
+                    <SelectLabel>Sort By</SelectLabel>
                     <SelectTrigger>
-                        <SelectValueText placeholder="Select" /> {/* Placeholder text */}
+                        <SelectValueText placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent>
                         {sortOptions.items.map((option) => (
