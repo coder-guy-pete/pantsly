@@ -2,13 +2,11 @@ import React from 'react';
 import {
     DialogRoot,
     DialogBackdrop,
-    DialogTrigger, // If you want a trigger element outside the dialog
     DialogContent,
     DialogHeader,
     DialogTitle,
     DialogBody,
     DialogFooter,
-    DialogCloseTrigger,
     Button,
     Image,
     Text,

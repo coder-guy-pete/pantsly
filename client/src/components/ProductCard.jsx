@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Image, Text, Flex, Button, VStack, Card, HStack } from '@chakra-ui/react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Box, Image, Text, Flex, Button, VStack, Card, createListCollection } from '@chakra-ui/react';
 import ProductModal from './ProductModal';
 import {
     SelectContent,
@@ -11,21 +11,28 @@ import {
 } from './ui/select';
 
 const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) => {
-    const [sizes, setSizes] = useState([]);
-    const [colors, setColors] = useState([]);
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
-
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // REPLACE THIS WITH API FETCH CALLS LATER
-    useEffect(() => {
-        setSizes(product.sizes);
-    }, []);
+    const sizeOptions = useMemo(() => {
+        const uniqueSizes = [...new Set(product.sizes)];
+        return createListCollection({
+            items: uniqueSizes.map(size => ({ value: size, label: size })),
+            itemToString: (item) => item.label, // Important: Add itemToString
+            itemToValue: (item) => item.value, // Important: Add itemToValue
+        });
+    }, [product.sizes]);
 
-    useEffect(() => {
-        setColors(product.colors);
-    }, []);
+        // UPDATE THIS WITH API FETCH CALLS LATER
+    const colorOptions = useMemo(() => {
+        const uniqueColors = [...new Set(product.colors)];
+        return createListCollection({
+            items: uniqueColors.map(color => ({ value: color, label: color })),
+            itemToString: (item) => item.label, // Important: Add itemToString
+            itemToValue: (item) => item.value, // Important: Add itemToValue
+        });
+    }, [product.colors]);
 
     const handleAddToCart = () => {
         addToCart(product, selectedSize, selectedColor);
@@ -39,12 +46,10 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         setIsModalOpen(!isModalOpen);
     };
 
-    // ONCHANGE HANDLERS are not working as expected, need to debug
     const handleSizeChange = (event) => {
         setSelectedSize(event.target.value);
-        console.log("Sizes:", sizes);
+        console.log("Sizes:", sizeOptions);
         console.log("Selected Size: ", event.target.value);
-        console.log("Selected Size is a string?", typeof event.target.value === 'string');
     };
 
     const handleColorChange = (event) => {
@@ -53,8 +58,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     };
 
     return (
-        <Box position="relative">
-            <Card.Root borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} m={10} boxShadow="md">
+        <Box>
+            <Card.Root borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md" minW="350px">
                 <Card.Body gap="2">
                 <Image 
                     src={product.image_url} 
@@ -72,37 +77,37 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
                 <Flex gap={5}>
                     <SelectRoot 
-                        value={selectedSize} 
                         onChange={handleSizeChange} 
                         size="sm"
                         mb={2} 
-                        disabled={sizes.length === 0}>
+                        collection={sizeOptions}
+                        disabled={product.sizes.length === 0}>
                     <SelectLabel>Size</SelectLabel>
                     <SelectTrigger minWidth="100px">
                         <SelectValueText />
                     </SelectTrigger>
                     <SelectContent>
-                        {sizes.map((size) => (
-                            <SelectItem key={size} item={size} value={size}>
-                                {size}
+                        {sizeOptions.items.map((item) => (
+                            <SelectItem key={item.value} item={item}>
+                                {item.label}
                             </SelectItem>
                         ))}
                     </SelectContent>
                 </SelectRoot>
 
                 <SelectRoot 
-                    value={selectedColor} 
                     onChange={handleColorChange} 
-                    size="sm" 
-                    disabled={colors.length === 0}>
+                    size="sm"
+                    collection={colorOptions}
+                    disabled={product.colors.length === 0}>
                     <SelectLabel>Color</SelectLabel>
                     <SelectTrigger minWidth="100px">
                         <SelectValueText />
                     </SelectTrigger>
                     <SelectContent>
-                        {colors.map((color) => (
-                            <SelectItem key={color} item={color} value={color}>
-                                {color}
+                        {colorOptions.items.map((item) => (
+                            <SelectItem key={item.value} item={item}>
+                                {item.label}
                             </SelectItem>
                         ))}
                     </SelectContent>
