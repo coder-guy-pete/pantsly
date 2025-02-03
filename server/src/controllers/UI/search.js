@@ -1,4 +1,4 @@
-// import { Product, Variants } from '../../models/index.js';
+// import { Product, Variant } from '../../models/index.js';
 
 // search GET
 export const searchGet = (req, res) => {

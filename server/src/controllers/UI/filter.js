@@ -1,4 +1,4 @@
-// import { Product, Variants } from '../../models/index.js';
+// import { Product, Variant } from '../../models/index.js';
 
 // filter GET
 export const filterGet = (req, res) => {
