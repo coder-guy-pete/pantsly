@@ -3,25 +3,26 @@ import { Box, Heading, Highlight, Grid } from '@chakra-ui/react';
 import ProductCard from '@/components/ProductCard';
 import Products from '@/mock-data/Products';
 import SearchBar from '@/components/SearchBar';
+import SliderTool from '@/components/SliderTest';
 
 const Shop = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [cartItems, setCartItems] = useState([]); // Cart items moved here
+    const [cartItems, setCartItems] = useState([]);
 
     const handleSearch = (query) => {
         setSearchQuery(query);
     };
 
-    const handleAddToCart = (product, size, color) => { // Moved here
+    const handleAddToCart = (product, size, color) => {
         setCartItems([...cartItems, { ...product, size, color }]);
     };
 
-    const handleRemoveFromCart = (product) => { // Moved here
-        setCartItems(cartItems.filter((item) => item.product_id !== product.product_id)); // Use product_id
+    const handleRemoveFromCart = (product) => {
+        setCartItems(cartItems.filter((item) => item.product_id !== product.product_id));
     };
 
-    const isProductInCart = (product) =>  // Moved here
-        cartItems.some((item) => item.product_id === product.product_id); // Use product_id
+    const isProductInCart = (product) =>
+        cartItems.some((item) => item.product_id === product.product_id);
 
     const filteredProducts = useMemo(() => {
         const lowerCaseQuery = searchQuery.toLowerCase();
@@ -43,9 +44,9 @@ const Shop = () => {
                     <ProductCard
                         key={product.product_id}
                         product={product}
-                        addToCart={handleAddToCart} // Pass the handler
-                        removeFromCart={handleRemoveFromCart} // Pass the handler
-                        isProductInCart={isProductInCart(product)} // Pass the function
+                        addToCart={handleAddToCart}
+                        removeFromCart={handleRemoveFromCart}
+                        isProductInCart={isProductInCart(product)}
                     />
                 ))}
             </Grid>
