@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Box, Heading, Highlight, Grid } from '@chakra-ui/react';
+import { Box, Heading, Highlight, Grid, Flex } from '@chakra-ui/react';
 import ProductCard from '@/components/ProductCard';
 import Products from '@/mock-data/Products';
 import SearchBar from '@/components/SearchBar';
@@ -9,6 +9,7 @@ const Shop = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [cartItems, setCartItems] = useState([]);
     const [sortOption, setSortOption] = useState('name');
+    const [selectedBrands, setSelectedBrands] = useState([]);
 
     const handleSearch = (query) => {
         setSearchQuery(query);
@@ -24,28 +25,30 @@ const Shop = () => {
 
     const isProductInCart = (product) =>
         cartItems.some((item) => item.product_id === product.product_id);
-
-    const filteredProducts = useMemo(() => {
-        const lowerCaseQuery = searchQuery.toLowerCase();
-        return Products.filter(product =>
-            product.name.toLowerCase().includes(lowerCaseQuery)
-        );
-    }, [searchQuery, Products]);
-
+    
     const handleSortChange = (option) => {
         setSortOption(option);
+    };
+    
+    const handleBrandFilterChange = (brands) => {
+        setSelectedBrands(brands);
     };
 
     const filteredAndSortedProducts = useMemo(() => {
         const lowerCaseQuery = searchQuery.toLowerCase();
 
-        let filtered = Products.filter(product =>
-            product.name.toLowerCase().includes(lowerCaseQuery)
-        );
+        let filtered = Products.filter(product => {
+            const nameMatch = product.name.toLowerCase().includes(lowerCaseQuery);
+            const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+            return nameMatch && brandMatch;
+        });
 
         switch (sortOption) {
-            case 'name':
+            case 'name-asc':
                 filtered.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'name-desc':
+                filtered.sort((a, b) => b.name.localeCompare(a.name));
                 break;
             case 'price-asc':
                 filtered.sort((a, b) => a.sell_price - b.sell_price);
@@ -58,7 +61,7 @@ const Shop = () => {
         }
 
         return filtered;
-    }, [searchQuery, Products, sortOption]);
+    }, [searchQuery, Products, sortOption, selectedBrands]);
 
     return (
         <Box p={4}>
@@ -68,8 +71,14 @@ const Shop = () => {
                 </Highlight>
             </Heading>
             <SearchBar onSearch={handleSearch} />
-            <SortFilter products={Products} onSortChange={handleSortChange} /> 
-            <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+
+            <Flex gap={20}>
+            <SortFilter 
+                products={Products} 
+                onSortChange={handleSortChange} 
+                onBrandFilterChange={handleBrandFilterChange} 
+            /> 
+            <Grid templateColumns="repeat(3, 1fr)" gap={10} maxW="500px">
                 {filteredAndSortedProducts.map(product => (
                     <ProductCard
                         key={product.product_id}
@@ -80,6 +89,7 @@ const Shop = () => {
                     />
                 ))}
             </Grid>
+            </Flex>
         </Box>
     );
 };

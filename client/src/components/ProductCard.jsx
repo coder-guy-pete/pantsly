@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Image, Text, Flex, Button, VStack, Card, HStack } from '@chakra-ui/react';
+import { Box, Image, Text, Flex, Button, VStack, Card } from '@chakra-ui/react';
 import ProductModal from './ProductModal';
 import {
     SelectContent,
@@ -54,7 +54,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
     return (
         <Box position="relative">
-            <Card.Root borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} m={10} boxShadow="md">
+            <Card.Root borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md">
                 <Card.Body gap="2">
                 <Image 
                     src={product.image_url} 
