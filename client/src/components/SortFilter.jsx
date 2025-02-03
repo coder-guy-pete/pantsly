@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { Collapsible, Card, Button, Stack, createListCollection, CheckboxGroup, Fieldset, CollapsibleContent} from '@chakra-ui/react';
+import { Stack, createListCollection, CheckboxGroup, Fieldset, Button, Center} from '@chakra-ui/react';
 import { Checkbox } from './ui/checkbox';
 import {
     SelectContent,
@@ -9,6 +9,18 @@ import {
     SelectTrigger,
     SelectValueText,
 } from './ui/select';
+import {
+    DrawerBackdrop,
+    DrawerBody,
+    DrawerCloseTrigger,
+    DrawerContent,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerRoot,
+    DrawerTitle,
+    DrawerTrigger,
+} from "./ui/drawer";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const sortOptions = createListCollection({
     items: [
@@ -47,44 +59,52 @@ const SortFilter = ({ products, onSortChange, onBrandFilterChange }) => {
     const brandOptions = useMemo(() => [...new Set(products.map(p => p.brand))], [products]);
 
     return (
-        <Collapsible.Root position="sticky" top="80px" open={isOpen}>
-        <Collapsible.Trigger as="span">
-            <Button variant="surface" mb={2} onClick={() => setIsOpen(!isOpen)}>{isOpen ? '<' : '>'}</Button>
-        </Collapsible.Trigger>
-        <CollapsibleContent>
-        <Card.Root p={4} variant="subtle" w="300px">
-            <Card.Header />
-            <Stack spacing={4}>
-                <SelectRoot onChange={handleSortChange} collection={sortOptions} w="200px" mb={4}>
-                    <SelectLabel>Sort By</SelectLabel>
-                    <SelectTrigger>
-                        <SelectValueText placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {sortOptions.items.map((option) => (
-                            <SelectItem item={option} key={option.value}>
-                                {option.label}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </SelectRoot>
+        <DrawerRoot open={isOpen} onOpenChange={(e) => setIsOpen(e.open)} placement="left" size="xs">
+            <DrawerBackdrop />
+            <DrawerTrigger asChild>
+                <Button onClick={() => setIsOpen(true)} variant="surface"><GiHamburgerMenu /></Button>
+            </DrawerTrigger>
+            <DrawerContent offset="2" rounded="md">
+                <DrawerCloseTrigger />
+                <DrawerHeader>
+                <DrawerTitle />
+                </DrawerHeader>
+                        <Stack spacing={4} ml={5}>
+                            <SelectRoot 
+                                onChange={handleSortChange} 
+                                collection={sortOptions}
+                                w="200px" 
+                                mb={4}
+                                >
+                                <SelectLabel>Sort By</SelectLabel>
+                                <SelectTrigger>
+                                    <SelectValueText placeholder="Select" />
+                                </SelectTrigger>
+                                    <SelectContent portalled={false}>
+                                        {sortOptions.items.map((option) => (
+                                            <SelectItem item={option} key={option.value}>
+                                                {option.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                            </SelectRoot>
 
-                <Fieldset.Root onChange={handleBrandFilterChange}>
-                    <CheckboxGroup name="brand-filters" onChange={handleBrandFilterChange}>
-                        <Fieldset.Legend fontSize="sm" mb="2">Brands</Fieldset.Legend>
-                        <Fieldset.Content> 
-                            {brandOptions.map((brand) => (
-                                <Checkbox key={brand} value={brand}>
-                                    {brand}
-                                </Checkbox>
-                            ))}
-                        </Fieldset.Content>
-                    </CheckboxGroup>
-                </Fieldset.Root>
-            </Stack>
-        </Card.Root>
-        </CollapsibleContent>
-        </Collapsible.Root>
+                            <Fieldset.Root onChange={handleBrandFilterChange}>
+                                <CheckboxGroup name="brand-filters" onChange={handleBrandFilterChange}>
+                                    <Fieldset.Legend fontSize="sm" mb="2">Brands</Fieldset.Legend>
+                                    <Fieldset.Content> 
+                                        {brandOptions.map((brand) => (
+                                            <Checkbox key={brand} value={brand}>
+                                                {brand}
+                                            </Checkbox>
+                                        ))}
+                                    </Fieldset.Content>
+                                </CheckboxGroup>
+                            </Fieldset.Root>
+                        </Stack>
+                <DrawerFooter />
+            </DrawerContent>
+        </DrawerRoot>
     );
 };
 

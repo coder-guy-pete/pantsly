@@ -19,8 +19,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         const uniqueSizes = [...new Set(product.sizes)];
         return createListCollection({
             items: uniqueSizes.map(size => ({ value: size, label: size })),
-            itemToString: (item) => item.label, // Important: Add itemToString
-            itemToValue: (item) => item.value, // Important: Add itemToValue
+            itemToString: (item) => item.label,
+            itemToValue: (item) => item.value,
         });
     }, [product.sizes]);
 
@@ -29,8 +29,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         const uniqueColors = [...new Set(product.colors)];
         return createListCollection({
             items: uniqueColors.map(color => ({ value: color, label: color })),
-            itemToString: (item) => item.label, // Important: Add itemToString
-            itemToValue: (item) => item.value, // Important: Add itemToValue
+            itemToString: (item) => item.label,
+            itemToValue: (item) => item.value,
         });
     }, [product.colors]);
 
