@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Box, Heading, Highlight, Grid, Flex } from '@chakra-ui/react';
+import { Box, Heading, Highlight, Flex } from '@chakra-ui/react';
 import ProductCard from '@/components/ProductCard';
 import Products from '@/mock-data/Products';
 import SearchBar from '@/components/SearchBar';
@@ -72,23 +72,26 @@ const Shop = () => {
             </Heading>
             <SearchBar onSearch={handleSearch} />
 
-            <Flex gap={20}>
+            <Flex gap={10} direction={{ base: 'column', md: 'row' }}>
             <SortFilter 
                 products={Products} 
                 onSortChange={handleSortChange} 
                 onBrandFilterChange={handleBrandFilterChange} 
             /> 
-            <Grid templateColumns="repeat(3, 1fr)" gap={10} maxW="500px">
+            <Flex gap={10} justify="center" wrap="wrap">
                 {filteredAndSortedProducts.map(product => (
-                    <ProductCard
-                        key={product.product_id}
-                        product={product}
-                        addToCart={handleAddToCart}
-                        removeFromCart={handleRemoveFromCart}
-                        isProductInCart={isProductInCart(product)}
-                    />
+                    <Box key={product.product_id} w={{ base: "100%", md: "45%", lg: "30%" }}>
+                        <ProductCard
+                            key={product.product_id}
+                            product={product}
+                            as="article"
+                            addToCart={handleAddToCart}
+                            removeFromCart={handleRemoveFromCart}
+                            isProductInCart={isProductInCart(product)}
+                        />
+                    </Box>
                 ))}
-            </Grid>
+            </Flex>
             </Flex>
         </Box>
     );

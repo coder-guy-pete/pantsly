@@ -53,8 +53,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     };
 
     return (
-        <Box position="relative">
-            <Card.Root borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md">
+        <Box>
+            <Card.Root borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md" minW="350px">
                 <Card.Body gap="2">
                 <Image 
                     src={product.image_url} 

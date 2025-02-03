@@ -23,6 +23,7 @@ const sortOptions = createListCollection({
 const SortFilter = ({ products, onSortChange, onBrandFilterChange }) => {
     const [sortOption, setSortOption] = useState('name-asc');
     const [selectedBrands, setSelectedBrands] = useState([]);
+    const [isOpen, setIsOpen] = useState(false);
     
     const handleSortChange = (event) => {
         setSortOption(event.target.value);
@@ -46,9 +47,9 @@ const SortFilter = ({ products, onSortChange, onBrandFilterChange }) => {
     const brandOptions = useMemo(() => [...new Set(products.map(p => p.brand))], [products]);
 
     return (
-        <Collapsible.Root position="sticky" top="80px">
-        <Collapsible.Trigger>
-            <Button variant="surface" mb={2}>Sort/Filter</Button>
+        <Collapsible.Root position="sticky" top="80px" open={isOpen}>
+        <Collapsible.Trigger as="span">
+            <Button variant="surface" mb={2} onClick={() => setIsOpen(!isOpen)}>{isOpen ? '<' : '>'}</Button>
         </Collapsible.Trigger>
         <CollapsibleContent>
         <Card.Root p={4} variant="subtle" w="300px">
