@@ -7,8 +7,7 @@ import {
     Input,
     Stack,
     Button,
-    Text,
-    Link as ChakraLink,
+    Text
 } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
 
@@ -16,28 +15,35 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
+    };
+
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
+
+    const handleSubmit = (e) => {
         e.preventDefault();
         // REPLACE WITH LOGIN DETAILS HERE
-        setEmail(event.target.email.value);
-        setPassword(event.target.password.value);
-        console.log('Event:', event.target);
         console.log('Email:', email);
         console.log('Password:', password);
     };
 
     return (
         <Center>
-            <Card.Root w="md">
+            <Card.Root as="form" w="md">
                 <Card.Header>
                     <Heading size="xl" textAlign="center">Sign In</Heading>
                 </Card.Header>
                 <Card.Body p={6}>
-                    <Stack as="form" onSubmit={handleSubmit}>
+                    <Stack onSubmit={handleSubmit}>
                         <Field label="Email">
                             <Input
                                 name="email"
                                 type="email"
+                                value={email}
+                                onChange={handleEmailChange}
                                 required
                             />
                         </Field>
@@ -45,13 +51,15 @@ const Login = () => {
                             <Input
                                 name="password"
                                 type="password"
+                                value={password}
+                                onChange={handlePasswordChange}
                                 required
                                 />
                         </Field>
                     </Stack>
                 </Card.Body>
                 <Card.Footer>
-                    <Button type="submit" colorPalette="teal">
+                    <Button type="submit" colorPalette="teal" rounded="md">
                         Log In
                     </Button>
                     <Text>Don't have an account?{' '}</Text>
