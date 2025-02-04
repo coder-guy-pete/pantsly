@@ -1,11 +1,10 @@
-import { DataTypes, Model } from 'sequelize';
+import { DataTypes, Model } from "sequelize";
+import sequelize from "../config/connection.js";
 
-
-// Renamed class without adjusting the model just for testing routes setup
 class User extends Model {}
 
-export function UserFactory(sequelize) {
-  User.init({
+User.init(
+  {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -14,23 +13,34 @@ export function UserFactory(sequelize) {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    phoneNumber: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
-    phone: {
+    password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    notes: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-    }
-  }, {
-    tableName: 'volunteers',
+    isAdmin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+  },
+  {
+    tableName: "users",
     sequelize,
-  });
+  }
+);
 
-  return User;
-}
+export default User;
