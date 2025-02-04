@@ -1,4 +1,4 @@
-import { User } from '../../models/index.js'
+// import { User } from '../../models/index.js'
 
 // User GET 
 export const userGet = (req, res) => {
