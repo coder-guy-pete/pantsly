@@ -10,30 +10,21 @@ Order.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    orderDate: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: "pending",
-    },
-    shippingAddress: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    totalAmount: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-      defaultValue: 0.0,
-    },
     //Foreign Key
-    userId: {
+    user_Id: {
       type: DataTypes.INTEGER,
       references: {
         model: "users",
         key: "id",
       },
+    },
+    purchase_Date: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+    fulfillment_Date: {
+      type: DataTypes.STRING,
+      defaultValue: "pending",
     },
   },
   {

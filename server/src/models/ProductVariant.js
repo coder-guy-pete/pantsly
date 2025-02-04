@@ -10,47 +10,70 @@ ProductVariant.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    productId: {
+    product_name: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    description: {
+      type: DataTypes.STRING,
       allowNull: false,
     },
     brand: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     size: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: DataTypes.ENUM("small", "medium", "large", "extra-large"),
+      allowNull: false,
     },
     color: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: DataTypes.ENUM("red", "blue", "green", "black", "white"),
+      allowNull: false,
     },
     sku: {
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
     },
-    price: {
+    sell_price: {
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
-    stockQuantity: {
+    stock_Quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },
+    reorder_point: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    reorder_quantity: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    reorder_price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+    },
+    image_URL: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        isUrl: true,
+      },
+    },
     //Foreign Key
-    productId: {
+    product_Id: {
       type: DataTypes.INTEGER,
       references: {
-        model: "products",
+        model: "order",
         key: "id",
       },
     },
   },
   {
-    tableName: "productVariants",
+    tableName: "product_Variants",
     sequelize,
   }
 );
