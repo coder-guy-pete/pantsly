@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Box, Image, Text, Flex, Button, VStack, Card, createListCollection } from '@chakra-ui/react';
 import ProductModal from './ProductModal';
 import {

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { Stack, createListCollection, CheckboxGroup, Fieldset, Button, Center} from '@chakra-ui/react';
+import { Stack, createListCollection, CheckboxGroup, Fieldset, Button} from '@chakra-ui/react';
 import { Checkbox } from './ui/checkbox';
 import {
     SelectContent,
@@ -11,7 +11,6 @@ import {
 } from './ui/select';
 import {
     DrawerBackdrop,
-    DrawerBody,
     DrawerCloseTrigger,
     DrawerContent,
     DrawerFooter,
