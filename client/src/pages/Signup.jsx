@@ -29,7 +29,7 @@ const Signup = () => {
                     <Heading size="xl" textAlign="center">Sign In</Heading>
                 </Card.Header>
                 <Card.Body p={6}>
-                    <Stack>
+                    <Stack as="form" onSubmit={handleSubmit}>
                         <Field label="Email">
                             <Input
                                 name="email"
@@ -47,10 +47,10 @@ const Signup = () => {
                     </Stack>
                 </Card.Body>
                 <Card.Footer>
-                    <Button type="submit" colorPalette="teal" onSubmit={handleSubmit}>
+                    <Button type="submit" colorPalette="teal">
                         Log In
                     </Button>
-                    <Text>Don't have an account?{' '}<Link color="teal.500" href="/signup">Sign Up</Link></Text>
+                    <Text>Don't have an account?{' '}<Link to="/signup" color="teal.500">Sign Up</Link></Text>
                 </Card.Footer>
             </Card.Root>
         </Center>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
     Center,
     Card,
@@ -7,7 +8,7 @@ import {
     Stack,
     Button,
     Text,
-    Link,
+    Link as ChakraLink,
 } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
 
@@ -53,7 +54,8 @@ const Login = () => {
                     <Button type="submit" colorPalette="teal">
                         Log In
                     </Button>
-                    <Text>Don't have an account?{' '}<Link color="teal.500" to="/signup">Sign Up</Link></Text>
+                    <Text>Don't have an account?{' '}</Text>
+                    <Text color="teal.500" textDecoration="underline"><Link to="/signup">Sign Up</Link></Text>
                 </Card.Footer>
             </Card.Root>
         </Center>
