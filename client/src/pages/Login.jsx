@@ -27,6 +27,7 @@ const Login = () => {
         <Center>
         <Card.Root w="md">
             <Card.Body p={6}>
+                <form onSubmit={handleSubmit}>
                     <Fieldset.Root>
                         <Stack>
                             <Heading size="xl" textAlign="center">Sign In</Heading>
@@ -57,6 +58,7 @@ const Login = () => {
                                     </Link>
                                 </Text>
                     </Fieldset.Root>
+                </form>
             </Card.Body>
         </Card.Root>
         </Center>
