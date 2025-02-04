@@ -1,30 +1,28 @@
 import User from "./User";
-import Products from "./Products";
 import Order from "./Order";
 import OrderItem from "./OrderItem";
 import ProductVariant from "./ProductVariant";
 
 // Define associations
 User.hasMany(Order, {
-  foreignKey: "userId",
+  foreignKey: "user_Id",
 });
 Order.belongsTo(User, {
-  foreignKey: "userId",
+  foreignKey: "user_Id",
 });
 
 Order.hasMany(OrderItem, {
-  foreignKey: "orderId",
+  foreignKey: "order_Id",
 });
 OrderItem.belongsTo(Order, {
-  foreignKey: "orderId",
+  foreignKey: "order_Id",
 });
 
-Products.hasMany(ProductVariant, {
-  foreignKey: "productId",
+OrderItem.hasMany(ProductVariant, {
+  foreignKey: "product_Id",
 });
-ProductVariant.belongsTo(Products, {
-  foreignKey: "productId",
+ProductVariant.belongsTo(Order, {
+  foreignKey: "product_Id",
 });
 
-export { User, Products, Order, OrderItem, ProductVariant };
-
+export { User, Order, OrderItem, ProductVariant };
