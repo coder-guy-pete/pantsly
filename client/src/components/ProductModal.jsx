@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import {
     DialogRoot,
     DialogBackdrop,
@@ -12,10 +12,47 @@ import {
     Text,
     Flex,
     VStack,
+    createListCollection
 } from '@chakra-ui/react';
+import {
+    SelectContent,
+    SelectItem,
+    SelectLabel,
+    SelectRoot,
+    SelectTrigger,
+    SelectValueText,
+} from './ui/select';
 
 const ProductModal = ({ open, onOpenChange, product }) => {
     const cancelRef = React.useRef();
+    const [selectedSize, setSelectedSizeModal] = useState('');
+    const [selectedColor, setSelectedColorModal] = useState('');
+
+    const sizeOptionsModal = useMemo(() => {
+        const uniqueSizes = [...new Set(product.sizes)];
+        return createListCollection({
+            items: uniqueSizes.map(size => ({ value: size, label: size })),
+            itemToString: (item) => item.label,
+            itemToValue: (item) => item.value,
+        });
+    }, [product.sizes]);
+
+    const colorOptionsModal = useMemo(() => {
+        const uniqueColors = [...new Set(product.colors)];
+        return createListCollection({
+            items: uniqueColors.map(color => ({ value: color, label: color })),
+            itemToString: (item) => item.label,
+            itemToValue: (item) => item.value,
+        });
+    }, [product.colors]);
+
+    const handleSizeChangeModal = (event) => {
+        setSelectedSizeModal(event.target.value);
+    };
+
+    const handleColorChangeModal = (event) => {
+        setSelectedColorModal(event.target.value);
+    };
 
     if (!product) {
         return null;
@@ -45,13 +82,45 @@ const ProductModal = ({ open, onOpenChange, product }) => {
                             <Text fontSize="lg" color="teal.500">${product.sell_price}</Text>
                             <Text>{product.description}</Text>
 
-                            <Flex>
-                                <Text fontWeight="bold">Sizes:</Text>
-                                <Text ml={2}>{product.sizes.join(', ')}</Text>
-                            </Flex>
-                            <Flex>
-                                <Text fontWeight="bold">Colors:</Text>
-                                <Text ml={2}>{product.colors.join(', ')}</Text>
+                            <Flex gap={5}>
+                                <SelectRoot
+                                    onChange={handleSizeChangeModal}
+                                    size="sm"
+                                    mb={2}
+                                    collection={sizeOptionsModal}
+                                    disabled={product.sizes.length === 0}
+                                >
+                                    <SelectLabel>Size</SelectLabel>
+                                    <SelectTrigger minWidth="100px">
+                                        <SelectValueText />
+                                    </SelectTrigger>
+                                    <SelectContent portalled={false}>
+                                        {sizeOptionsModal.items.map((item) => (
+                                            <SelectItem key={item.value} item={item}>
+                                                {item.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </SelectRoot>
+
+                                <SelectRoot
+                                    onChange={handleColorChangeModal}
+                                    size="sm"
+                                    collection={colorOptionsModal}
+                                    disabled={product.colors.length === 0}
+                                >
+                                    <SelectLabel>Color</SelectLabel>
+                                    <SelectTrigger minWidth="100px">
+                                        <SelectValueText />
+                                    </SelectTrigger>
+                                    <SelectContent portalled={false}>
+                                        {colorOptionsModal.items.map((item) => (
+                                            <SelectItem key={item.value} item={item}>
+                                                {item.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </SelectRoot>
                             </Flex>
                         </VStack>
                     </Flex>
