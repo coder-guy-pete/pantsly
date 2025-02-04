@@ -11,16 +11,13 @@ import {
 } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
 
-const Login = () => {
+const Signup = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         // REPLACE WITH LOGIN DETAILS HERE
-        setEmail(event.target.email.value);
-        setPassword(event.target.password.value);
-        console.log('Event:', event.target);
         console.log('Email:', email);
         console.log('Password:', password);
     };
@@ -32,7 +29,7 @@ const Login = () => {
                     <Heading size="xl" textAlign="center">Sign In</Heading>
                 </Card.Header>
                 <Card.Body p={6}>
-                    <Stack as="form" onSubmit={handleSubmit}>
+                    <Stack>
                         <Field label="Email">
                             <Input
                                 name="email"
@@ -50,14 +47,14 @@ const Login = () => {
                     </Stack>
                 </Card.Body>
                 <Card.Footer>
-                    <Button type="submit" colorPalette="teal">
+                    <Button type="submit" colorPalette="teal" onSubmit={handleSubmit}>
                         Log In
                     </Button>
-                    <Text>Don't have an account?{' '}<Link color="teal.500" to="/signup">Sign Up</Link></Text>
+                    <Text>Don't have an account?{' '}<Link color="teal.500" href="/signup">Sign Up</Link></Text>
                 </Card.Footer>
             </Card.Root>
         </Center>
 );
 };
 
-export default Login;
+export default Signup;

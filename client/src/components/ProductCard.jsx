@@ -15,6 +15,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const [selectedColor, setSelectedColor] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
+    // NEED TO UPDATE THIS WITH API FETCH CALLS LATER
     const sizeOptions = useMemo(() => {
         const uniqueSizes = [...new Set(product.sizes)];
         return createListCollection({

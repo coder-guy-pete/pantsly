@@ -9,7 +9,7 @@ const Products = ProductVariants.reduce((acc, variant) => {
     } else {
         acc.push({
             product_id: variant.product_id,
-            name: variant.brand, // Or a more appropriate name if available
+            name: variant.name, // Or a more appropriate name if available
             description: `A stylish ${variant.color} ${variant.size} ${variant.brand} pants`,
             image_url: variant.image_url,
             sell_price: variant.sell_price,
