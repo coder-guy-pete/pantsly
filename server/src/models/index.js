@@ -27,3 +27,4 @@ ProductVariant.belongsTo(Products, {
 });
 
 export { User, Products, Order, OrderItem, ProductVariant };
+
