@@ -2,7 +2,7 @@ import { User } from '../../models/index.js';
 
 // Users GET
 export const usersGet = (req, res) => {
-  res.json({message: 'Placeholder for usersGet.'});
+  res.json({message: 'Placeholder for usersGet. Will likely be used to get all users'});
 }
 
 // Users POST
