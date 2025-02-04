@@ -4,7 +4,7 @@ import productsRoutes from './products.js';
 
 router.use('/products', productsRoutes);
 
-// GET api/products/
+// GET api/inventory/
 router.get('/', (req, res) => {
   res.json({ message: 'This is the route is for general inventory routes'});
 });
