@@ -15,25 +15,9 @@ User.init(
       allowNull: false,
       unique: true,
     },
-    address1: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    address2: {
+    address: {
       type: DataTypes.STRING,
       allowNull: true,
-    },
-    city: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    state: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    zip: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
     phoneNumber: {
       type: DataTypes.STRING,
@@ -46,7 +30,7 @@ User.init(
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
