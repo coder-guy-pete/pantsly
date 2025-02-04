@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS ecommerce;
-CREATE DATABASE ecommerce;
+DROP DATABASE IF EXISTS pantsly_db;
+CREATE DATABASE pantsly_db;
