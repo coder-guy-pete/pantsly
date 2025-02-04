@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Box, Image, Text, Flex, Button, VStack, Card, createListCollection } from '@chakra-ui/react';
 import ProductModal from './ProductModal';
 import {
@@ -19,8 +19,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         const uniqueSizes = [...new Set(product.sizes)];
         return createListCollection({
             items: uniqueSizes.map(size => ({ value: size, label: size })),
-            itemToString: (item) => item.label, // Important: Add itemToString
-            itemToValue: (item) => item.value, // Important: Add itemToValue
+            itemToString: (item) => item.label,
+            itemToValue: (item) => item.value,
         });
     }, [product.sizes]);
 
@@ -29,8 +29,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         const uniqueColors = [...new Set(product.colors)];
         return createListCollection({
             items: uniqueColors.map(color => ({ value: color, label: color })),
-            itemToString: (item) => item.label, // Important: Add itemToString
-            itemToValue: (item) => item.value, // Important: Add itemToValue
+            itemToString: (item) => item.label,
+            itemToValue: (item) => item.value,
         });
     }, [product.colors]);
 
@@ -48,13 +48,10 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
     const handleSizeChange = (event) => {
         setSelectedSize(event.target.value);
-        console.log("Sizes:", sizeOptions);
-        console.log("Selected Size: ", event.target.value);
     };
 
     const handleColorChange = (event) => {
         setSelectedColor(event.target.value);
-        console.log("Selected Color:", event.target.value);
     };
 
     return (
