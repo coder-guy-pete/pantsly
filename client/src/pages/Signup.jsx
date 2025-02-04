@@ -7,7 +7,6 @@ import {
     Input,
     Stack,
     Button,
-    Text
 } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
 
