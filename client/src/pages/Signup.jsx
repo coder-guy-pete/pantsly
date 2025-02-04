@@ -11,9 +11,14 @@ import {
 } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
 
-const Login = () => {
+const Signup = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const handleNameChange = (e) => {
+        setName(e.target.value);
+    };
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -25,7 +30,8 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // REPLACE WITH LOGIN DETAILS HERE
+        // REPLACE WITH SIGNUP DETAILS HERE
+        console.log('Name:', name);
         console.log('Email:', email);
         console.log('Password:', password);
     };
@@ -34,10 +40,19 @@ const Login = () => {
         <Center>
             <Card.Root as="form" w="md">
                 <Card.Header>
-                    <Heading size="xl" textAlign="center">Sign In</Heading>
+                    <Heading size="xl" textAlign="center">Sign Up</Heading>
                 </Card.Header>
                 <Card.Body p={6}>
                     <Stack onSubmit={handleSubmit}>
+                        <Field label="Name">
+                            <Input
+                                name="name"
+                                type="text"
+                                value={name}
+                                onChange={handleNameChange}
+                                required
+                            />
+                        </Field>
                         <Field label="Email">
                             <Input
                                 name="email"
@@ -58,16 +73,14 @@ const Login = () => {
                         </Field>
                     </Stack>
                 </Card.Body>
-                <Card.Footer>
+                <Card.Footer justifyContent="center">
                     <Button type="submit" colorPalette="teal" rounded="md">
-                        Log In
+                        Create User Account
                     </Button>
-                    <Text>Don't have an account?{' '}</Text>
-                    <Text color="teal.500" textDecoration="underline"><Link to="/signup">Sign Up</Link></Text>
                 </Card.Footer>
             </Card.Root>
         </Center>
 );
 };
 
-export default Login;
+export default Signup;

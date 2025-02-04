@@ -2,6 +2,7 @@ const ProductVariants = [
     {
         id: 1,
         product_id: 101, // You'll assign product IDs later
+        name: "Gap Shirt",
         brand: "Gap",
         color: "blue",
         size: "small",
@@ -16,6 +17,7 @@ const ProductVariants = [
         {
         id: 2,
         product_id: 101,
+        name: "Gap Shirt",
         brand: "Gap",
         color: "blue",
         size: "medium",
@@ -30,6 +32,7 @@ const ProductVariants = [
         {
         id: 3,
         product_id: 101,
+        name: "Gap Shirt",
         brand: "Gap",
         color: "black",
         size: "small",
@@ -44,6 +47,7 @@ const ProductVariants = [
         {
         id: 4,
         product_id: 102,
+        name: "J Crew Shirt",
         brand: "J Crew",
         color: "gray",
         size: "medium",
@@ -58,6 +62,7 @@ const ProductVariants = [
         {
         id: 5,
         product_id: 102,
+        name: "J Crew Shirt",
         brand: "J Crew",
         color: "navy",
         size: "large",
@@ -72,6 +77,7 @@ const ProductVariants = [
         {
         id: 6,
         product_id: 103,
+        name: "Levi's Jeans",
         brand: "Levi's",
         color: "blue",
         size: "32",
@@ -86,6 +92,7 @@ const ProductVariants = [
         {
         id: 7,
         product_id: 103,
+        name: "Levi's Jeans",
         brand: "Levi's",
         color: "black",
         size: "34",
@@ -100,6 +107,7 @@ const ProductVariants = [
         {
         id: 8,
         product_id: 104,
+        name: "Dockers Pants",
         brand: "Dockers",
         color: "khaki",
         size: "medium",
@@ -114,6 +122,7 @@ const ProductVariants = [
         {
         id: 9,
         product_id: 104,
+        name: "Dockers Pants",
         brand: "Dockers",
         color: "gray",
         size: "large",
@@ -128,6 +137,7 @@ const ProductVariants = [
         {
         id: 10,
         product_id: 105,
+        name: "Uniqlo Shirt",
         brand: "Uniqlo",
         color: "olive",
         size: "small",
