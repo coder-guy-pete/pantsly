@@ -1,8 +1,9 @@
-import { Product } from '../../models/index.js';
+// import { Product } from '../../models/index.js';
+import tempData from '../tempdata.js';
 
 // filter GET
 export const filterGet = (req, res) => {
-    res.json({message: 'Placeholder for filterGet. Will retrieve products based on filter criteria entered in the request body '})
+    res.json(tempData);
 
     // THE CODE BELOW WILL REPLACE THE CODE ABOVE ONCE THE DATABASE IS PROPERLY CONNECTED
     // try {
@@ -61,7 +62,7 @@ export const filterGet = (req, res) => {
 //         res.status(500).json({message: 'Server error'});
 //     }
 
-    }
+    // }
 }
 
 export const filterOptionsGet = (req, res) => {
