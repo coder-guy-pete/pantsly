@@ -54,7 +54,7 @@ const OrderHistory = () => {
     return (
         <Box p={4}>
             <Center>
-                <VStack spacing={4} w="75%">
+                <VStack spacing={4} w="50%">
                     <Heading as="h2" size="xl" textAlign="start" mb={4}>
                         Order History
                     </Heading>
