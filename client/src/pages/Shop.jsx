@@ -22,9 +22,9 @@ const Shop = () => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch products: ${response.status}`);
                 }
-                console.log("Hello");
                 const data = await response.json();
                 setProducts(data);
+                console.log("Products:", data);
             } catch (error) {
                 setError(error);
                 console.error("Error fetching products:", error);
@@ -35,8 +35,6 @@ const Shop = () => {
 
         fetchProducts();
     }, []);
-
-    console.log("Products:", products);
 
     const handleSearch = (query) => {
         setSearchQuery(query);

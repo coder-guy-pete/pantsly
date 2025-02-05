@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
     DialogRoot,
     DialogBackdrop,
@@ -27,24 +27,34 @@ const ProductModal = ({ open, onOpenChange, product }) => {
     const cancelRef = React.useRef();
     const [selectedSize, setSelectedSizeModal] = useState('');
     const [selectedColor, setSelectedColorModal] = useState('');
+    const [availableColors, setAvailableColors] = useState([]);
+
+    useEffect(() => {
+        if (product && selectedSize) {
+            setAvailableColors(product.colors[selectedSize] || []);
+        } else {
+            setAvailableColors([]);
+        }
+    }, [selectedSize, product]);
 
     const sizeOptionsModal = useMemo(() => {
-        const uniqueSizes = [...new Set(product.sizes)];
-        return createListCollection({
-            items: uniqueSizes.map(size => ({ value: size, label: size })),
-            itemToString: (item) => item.label,
-            itemToValue: (item) => item.value,
-        });
-    }, [product.sizes]);
+        if (product && product.sizes) {
+            return createListCollection({
+                items: product.sizes.map(size => ({ value: size, label: size })),
+                itemToString: (item) => item.label,
+                itemToValue: (item) => item.value,
+            });
+        }
+        return createListCollection({ items: [] });
+    }, [product?.sizes]);
 
     const colorOptionsModal = useMemo(() => {
-        const uniqueColors = [...new Set(product.colors)];
         return createListCollection({
-            items: uniqueColors.map(color => ({ value: color, label: color })),
+            items: availableColors.map(color => ({ value: color, label: color })),
             itemToString: (item) => item.label,
             itemToValue: (item) => item.value,
         });
-    }, [product.colors]);
+    }, [availableColors]);
 
     const handleSizeChangeModal = (event) => {
         setSelectedSizeModal(event.target.value);
@@ -107,7 +117,7 @@ const ProductModal = ({ open, onOpenChange, product }) => {
                                     onChange={handleColorChangeModal}
                                     size="sm"
                                     collection={colorOptionsModal}
-                                    disabled={product.colors?.length === 0}
+                                    disabled={availableColors.length === 0}
                                 >
                                     <SelectLabel>Color</SelectLabel>
                                     <SelectTrigger minWidth="100px">
