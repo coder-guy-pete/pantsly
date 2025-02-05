@@ -1,7 +1,7 @@
-import React, { useState, useMemo } from 'react';
-import { Box, Heading, Highlight, Flex } from '@chakra-ui/react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Box, Heading, Highlight, Flex, Center, Spinner, Text } from '@chakra-ui/react';
 import ProductCard from '@/components/ProductCard';
-import Products from '@/mock-data/Products';
+// import Products from '@/mock-data/Products';
 import SearchBar from '@/components/SearchBar';
 import SortFilter from '@/components/SortFilter';
 
@@ -10,6 +10,32 @@ const Shop = () => {
     const [cartItems, setCartItems] = useState([]);
     const [sortOption, setSortOption] = useState('name');
     const [selectedBrands, setSelectedBrands] = useState([]);
+    const [products, setProducts] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            setLoading(true);
+            try {
+                const response = await fetch('/api/inventory/products');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch products: ${response.status}`);
+                }
+                const data = await response.json();
+                setProducts(data);
+            } catch (error) {
+                setError(error);
+                console.error("Error fetching products:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    console.log("Products:", products);
 
     const handleSearch = (query) => {
         setSearchQuery(query);
@@ -35,9 +61,11 @@ const Shop = () => {
     };
 
     const filteredAndSortedProducts = useMemo(() => {
+        if (!products) return [];
+
         const lowerCaseQuery = searchQuery.toLowerCase();
 
-        let filtered = Products.filter(product => {
+        let filtered = products.filter(product => {
             const nameMatch = product.name.toLowerCase().includes(lowerCaseQuery);
             const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
             return nameMatch && brandMatch;
@@ -61,7 +89,23 @@ const Shop = () => {
         }
 
         return filtered;
-    }, [searchQuery, Products, sortOption, selectedBrands]);
+    }, [searchQuery, products, sortOption, selectedBrands]);
+
+    if (loading) {
+        return (
+            <Center>
+                <Spinner size="xl" />
+            </Center>
+        );
+    }
+
+    if (error) {
+        return <Center h="100vh"><Text color="red.500">Error: {error.message}</Text></Center>
+    }
+
+    if (!products || products.length === 0) {
+        return <Text>No products found.</Text>;
+    }
 
     return (
         <Box p={4}>
@@ -74,15 +118,15 @@ const Shop = () => {
 
             <Flex gap={10} direction={{ base: 'column', md: 'row' }}>
             <SortFilter 
-                products={Products} 
+                products={products} 
                 onSortChange={handleSortChange} 
                 onBrandFilterChange={handleBrandFilterChange} 
             /> 
             <Flex gap={10} justify="center" wrap="wrap">
                 {filteredAndSortedProducts.map(product => (
-                    <Box key={product.product_id} w={{ base: "100%", md: "45%", lg: "30%" }}>
+                    <Box key={product.product_group_id} w={{ base: "100%", md: "45%", lg: "30%" }}>
                         <ProductCard
-                            key={product.product_id}
+                            key={product.product_group_id}
                             product={product}
                             as="article"
                             addToCart={handleAddToCart}
