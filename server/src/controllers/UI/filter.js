@@ -1,7 +1,7 @@
-// import { Product } from '../../models/index.js';
+// import ProductVariants from '../../models/index.js';
 import { Op } from 'sequelize';
-import tempData from '../tempdata.js';
-import productResponse from '../utils/productResponse.js';
+import tempData from '../tempDataProducts.js';
+// import productResponse from '../utils/productResponse.js';
 
 // filter GET
 export const filterGet = async (req, res) => {
@@ -9,7 +9,7 @@ export const filterGet = async (req, res) => {
 
     // //THE CODE BELOW WILL REPLACE THE CODE ABOVE ONCE THE DATABASE IS PROPERLY CONNECTED
     // try {
-    //     const products = await Product.findAll({
+    //     const products = await ProductVariants.findAll({
     //     attributes: ['productId', 'product_name', 'brand', 'color', 'size', 'sell_price', 'stock_quantity', 'image_url'],
     //     where:
     //         {

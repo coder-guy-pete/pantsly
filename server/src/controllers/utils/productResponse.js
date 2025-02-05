@@ -1,4 +1,4 @@
-export default productResponse = (products) => {
+const productResponse = (products) => {
     const productMap = {};
 
             products.forEach((product) => {
@@ -36,3 +36,5 @@ export default productResponse = (products) => {
 
         return productMap;
 }
+
+export default productResponse;
