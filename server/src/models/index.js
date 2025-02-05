@@ -1,7 +1,7 @@
 import User from "./User.js";
 import Orders from "./Orders.js";
 import OrderItem from "./OrderItem.js";
-import ProductVariant from "./ProductVariant.js";
+import ProductVariants from "./ProductVariants.js";
 
 // Define associations
 User.hasMany(Orders, {
@@ -18,11 +18,11 @@ OrderItem.belongsTo(Orders, {
   foreignKey: "order_Id",
 });
 
-OrderItem.hasMany(ProductVariant, {
+OrderItem.hasMany(ProductVariants, {
   foreignKey: "product_Id",
 });
-ProductVariant.belongsTo(Order, {
+ProductVariants.belongsTo(Orders, {
   foreignKey: "product_Id",
 });
 
-export default { User, Orders, OrderItem, ProductVariant };
+export default { User, Orders, OrderItem, ProductVariants };

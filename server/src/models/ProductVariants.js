@@ -1,33 +1,37 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/connection.js";
 
-class ProductVariant extends Model {}
+class ProductVariants extends Model {}
 
-ProductVariant.init(
+ProductVariants.init(
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    product_name: {
+    //Foreign Key
+    product_Id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      references: {
+        model: "order",
+        key: "id",
+      },
     },
-    description: {
-      type: DataTypes.STRING,
+    name: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     brand: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    size: {
-      type: DataTypes.ENUM("small", "medium", "large", "extra-large"),
-      allowNull: false,
-    },
     color: {
       type: DataTypes.ENUM("red", "blue", "green", "black", "white"),
+      allowNull: false,
+    },
+    size: {
+      type: DataTypes.ENUM("small", "medium", "large", "extra-large"),
       allowNull: false,
     },
     sku: {
@@ -63,14 +67,6 @@ ProductVariant.init(
         isUrl: true,
       },
     },
-    //Foreign Key
-    product_Id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "order",
-        key: "id",
-      },
-    },
   },
   {
     tableName: "product_Variants",
@@ -78,4 +74,4 @@ ProductVariant.init(
   }
 );
 
-export default ProductVariant;
+export default ProductVariants;
