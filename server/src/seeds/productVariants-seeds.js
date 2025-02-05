@@ -1,4 +1,4 @@
-import { ProductVariants } from "../models/ProductVariant.js";
+import ProductVariants from "../models/ProductVariants.js";
 
 export const seedProductVariants = async () => {
   await ProductVariants.bulkCreate([

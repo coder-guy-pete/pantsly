@@ -1,6 +1,6 @@
 import { seedProductVariants } from "./productVariants-seeds.js";
 // import { seedTickets } from "./productVariants-seeds.js";
-import { sequelize } from "../models/index.js";
+import sequelize from "../config/connection.js";
 
 const seedAll = async () => {
   try {
