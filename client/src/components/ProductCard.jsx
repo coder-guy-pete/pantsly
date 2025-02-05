@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from 'react';
-import { Box, Image, Text, Flex, Button, VStack, Card, createListCollection } from '@chakra-ui/react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Box, Image, Text, Flex, Button, VStack, Card, createListCollection, Center, Spinner } from '@chakra-ui/react';
 import ProductModal from './ProductModal';
 import {
     SelectContent,
@@ -14,10 +14,38 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [productDetails, setProductDetails] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchProductDetails = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await fetch('/api/inventory/products');
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch product details: ${response.status}`);
+                }
+                const data = await response.json();
+            } catch (error) {
+                setError(error);
+                console.error("Error fetching product details:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (product && product.product_group_id) {
+            fetchProductDetails();
+        } else {
+            setLoading(false);
+        }
+    }, [product]);
 
     // NEED TO UPDATE THIS WITH API FETCH CALLS LATER
     const sizeOptions = useMemo(() => {
-        const uniqueSizes = [...new Set(product.sizes)];
+        const uniqueSizes = [...new Set(product.product_group_id.sizes)];
         return createListCollection({
             items: uniqueSizes.map(size => ({ value: size, label: size })),
             itemToString: (item) => item.label,
@@ -27,7 +55,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
         // UPDATE THIS WITH API FETCH CALLS LATER
     const colorOptions = useMemo(() => {
-        const uniqueColors = [...new Set(product.colors)];
+        const uniqueColors = [...new Set(product.product_group_id.colors)];
         return createListCollection({
             items: uniqueColors.map(color => ({ value: color, label: color })),
             itemToString: (item) => item.label,
@@ -55,6 +83,18 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         setSelectedColor(event.target.value);
     };
 
+    if (loading) {
+        return <Center h="100vh"><Spinner size="lg" /></Center>;
+    }
+
+    if (error) {
+        return <Center h="100vh"><Text color="red.500">Error: {error.message}</Text></Center>;
+    }
+
+    if (!productDetails) {
+        return <Text>Product details unavailable.</Text>;
+    }
+    
     return (
         <Box>
             <Card.Root borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md" minW="350px">
