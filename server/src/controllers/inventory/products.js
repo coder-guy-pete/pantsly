@@ -1,6 +1,6 @@
-// import { Product } from '../../models/index.js';
-import tempData from '../tempdata.js';
-import productResponse from '../utils/productResponse.js';
+// import ProductVariants from '../../models/index.js';
+import tempData from '../tempDataProducts.js';
+// import productResponse from '../utils/productResponse.js';
 
 // // Products GET
 export const productsGet = async (req, res) => {
@@ -8,8 +8,8 @@ export const productsGet = async (req, res) => {
 
 //THE CODE BELOW WILL REPLACE THE CODE ABOVE ONCE THE DATABASE IS PROPERLY CONNECTED
 //     try {
-//         const products = await Product.findAll({
-//         attributes: ['productId', 'product_name', 'brand', 'color', 'size', 'sell_price', 'stock_quantity', 'image_url'],
+//         const products = await ProductVariants.findAll({
+//         attributes: ['productId', 'product_name'],
 //         raw: true,
 //         });
 
