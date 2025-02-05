@@ -88,7 +88,7 @@ const ProductModal = ({ open, onOpenChange, product }) => {
                                     size="sm"
                                     mb={2}
                                     collection={sizeOptionsModal}
-                                    disabled={product.sizes.length === 0}
+                                    disabled={product.sizes?.length === 0}
                                 >
                                     <SelectLabel>Size</SelectLabel>
                                     <SelectTrigger minWidth="100px">
@@ -107,7 +107,7 @@ const ProductModal = ({ open, onOpenChange, product }) => {
                                     onChange={handleColorChangeModal}
                                     size="sm"
                                     collection={colorOptionsModal}
-                                    disabled={product.colors.length === 0}
+                                    disabled={product.colors?.length === 0}
                                 >
                                     <SelectLabel>Color</SelectLabel>
                                     <SelectTrigger minWidth="100px">

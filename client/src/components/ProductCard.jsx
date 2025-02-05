@@ -23,11 +23,12 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch('/api/inventory/products');
+                const response = await fetch(`api/inventory/products/product/${product.product_group_id}`);
                 if (!response.ok) {
                     throw new Error(`Failed to fetch product details: ${response.status}`);
                 }
                 const data = await response.json();
+                setProductDetails(data);
             } catch (error) {
                 setError(error);
                 console.error("Error fetching product details:", error);
@@ -43,7 +44,6 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         }
     }, [product]);
 
-    // NEED TO UPDATE THIS WITH API FETCH CALLS LATER
     const sizeOptions = useMemo(() => {
         const uniqueSizes = [...new Set(product.product_group_id.sizes)];
         return createListCollection({
@@ -119,7 +119,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                         size="sm"
                         mb={2} 
                         collection={sizeOptions}
-                        disabled={product.sizes.length === 0}>
+                        disabled={product.sizes?.length === 0}>
                     <SelectLabel>Size</SelectLabel>
                     <SelectTrigger minWidth="100px">
                         <SelectValueText />
@@ -137,7 +137,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                     onChange={handleColorChange} 
                     size="sm"
                     collection={colorOptions}
-                    disabled={product.colors.length === 0}>
+                    disabled={product.colors?.length === 0}>
                     <SelectLabel>Color</SelectLabel>
                     <SelectTrigger minWidth="100px">
                         <SelectValueText />

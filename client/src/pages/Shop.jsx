@@ -22,6 +22,7 @@ const Shop = () => {
                 if (!response.ok) {
                     throw new Error(`Failed to fetch products: ${response.status}`);
                 }
+                console.log("Hello");
                 const data = await response.json();
                 setProducts(data);
             } catch (error) {
