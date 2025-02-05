@@ -1,5 +1,5 @@
 {
-  "name": "volunteer-management-demo",
+  "name": "pantsly-ecommerce-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -17,7 +17,7 @@
     "render-build": "npm install && npm run build"
   },
   "keywords": [],
-  "author": "Latisha McNeel",
+  "author": "Peter Hintze, Jan Krajniak, Corey Parsons",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^9.1.2",

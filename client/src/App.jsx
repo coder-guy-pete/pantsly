@@ -7,6 +7,7 @@ import Navbar from "./components/Navbar"
 import Shop from "./pages/Shop"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
+import OrderHistory from "./pages/OrderHistory"
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" element={<Shop />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="order-history" element={<OrderHistory />} />
       </Routes>
     </Flex>
   )

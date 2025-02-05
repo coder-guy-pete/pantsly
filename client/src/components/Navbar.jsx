@@ -4,7 +4,7 @@ import { Flex, HStack, Button, Text, Spacer } from '@chakra-ui/react';
 import { HiOutlineShoppingCart } from "react-icons/hi";
 
 const Navbar = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // State for login status (REPLACE THIS WITH ACTUAL AUTHENTICATION)
+    const [isLoggedIn, setIsLoggedIn] = useState(true); // State for login status (REPLACE THIS WITH ACTUAL AUTHENTICATION)
     const [cartCount, setCartCount] = useState(3); // State for cart count (REPLACE THIS WITH ACTUAL CART COUNT)
 
     const isActive = (path) => location.pathname === path;
@@ -29,7 +29,7 @@ const Navbar = () => {
                 </Link>
                 ) : (
                 <Link to="/order-history">
-                    <Button colorPalette="orange" rounded="lg">Order History</Button>
+                    <Button variant="surface" colorPalette="orange" rounded="lg">Order History</Button>
                 </Link>
                 )}
                 <Link to="/cart">
