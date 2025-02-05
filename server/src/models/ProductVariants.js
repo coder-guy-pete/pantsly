@@ -1,9 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/connection.js";
 
-class ProductVariant extends Model {}
+class ProductVariants extends Model {}
 
-ProductVariant.init(
+ProductVariants.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -74,4 +74,4 @@ ProductVariant.init(
   }
 );
 
-export default ProductVariant;
+export default ProductVariants;
