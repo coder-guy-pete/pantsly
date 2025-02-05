@@ -23,7 +23,7 @@ import {
     SelectValueText,
 } from './ui/select';
 
-const ProductModal = ({ open, onOpenChange, product }) => {
+const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, isProductInCart }) => {
     const cancelRef = React.useRef();
     const [selectedSize, setSelectedSizeModal] = useState('');
     const [selectedColor, setSelectedColorModal] = useState('');
@@ -55,6 +55,14 @@ const ProductModal = ({ open, onOpenChange, product }) => {
             itemToValue: (item) => item.value,
         });
     }, [availableColors]);
+
+    const handleAddToCart = () => {
+        addToCart(product, selectedSize, selectedColor);
+    };
+
+    const handleRemoveFromCart = () => {
+        removeFromCart(product);
+    };
 
     const handleSizeChangeModal = (event) => {
         setSelectedSizeModal(event.target.value);
@@ -136,12 +144,13 @@ const ProductModal = ({ open, onOpenChange, product }) => {
                     </Flex>
                 </DialogBody>
                 <DialogFooter>
-                    <Button colorPalette="red" onClick={() => onOpenChange(false)} ref={cancelRef}>
+                    <Button size="sm" colorPalette="red" onClick={() => onOpenChange(false)} ref={cancelRef}>
                         Cancel
                     </Button>
-                    <Button colorPalette="teal" ml={3}>
-                        Add to Cart
-                    </Button>
+                    {isProductInCart ? (
+                        <Button size="sm" colorPalette="red" onClick={handleRemoveFromCart}>Remove from Cart</Button>
+                        ) : (<Button size="sm" colorPalette="teal" ml={3} onClick={handleAddToCart}>Add to Cart</Button>
+                        )}
                 </DialogFooter>
             </DialogContent>
         </DialogRoot>
