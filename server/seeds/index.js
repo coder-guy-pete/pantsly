@@ -1,5 +1,5 @@
-import { seedUsers } from "./user-seeds.js";
-import { seedTickets } from "./ticket-seeds.js";
+import { seedProductVariants } from "./productVariants-seeds.js";
+// import { seedTickets } from "./productVariants-seeds.js";
 import { sequelize } from "../models/index.js";
 
 const seedAll = async () => {
@@ -9,11 +9,11 @@ const seedAll = async () => {
     console.log("\n----- DATABASE SYNCED -----\n");
 
     // Seed users
-    await seedUsers();
-    console.log("\n----- USERS SEEDED -----\n");
+    // await seedUsers();
+    // console.log("\n----- USERS SEEDED -----\n");
 
     // Seed tickets
-    await seedTickets();
+    await seedProductVariants();
     console.log("\n----- TICKETS SEEDED -----\n");
 
     // Exit process successfully
