@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
     Box,
+    Card,
     Heading,
     VStack,
     Text,
@@ -9,6 +10,7 @@ import {
     Center,
     Spinner,
     Spacer,
+    Highlight
 } from '@chakra-ui/react';
 import Orders from '../mock-data/Orders'; // Import mock data
 
@@ -51,32 +53,41 @@ const OrderHistory = () => {
 
     return (
         <Box p={4}>
-        <Heading as="h2" size="lg" mb={4}>
-            Order History
-        </Heading>
-        <VStack spacing={4} align="stretch">
-            {orders.map((order) => (
-            <Box key={order.id} borderWidth="1px" borderRadius="md" p={4}>
-                <HStack justify="space-between" mb={2}>
-                <Text fontWeight="bold">Order # {order.number}</Text>
-                <Text>Purchase Date: {order.purchase_date}</Text>
-                </HStack>
-                <Spacer mb={2} />
-                {order.products.map((product) => (
-                <HStack key={product.id} alignItems="center" mb={2}>
-                    <Image src={product.image} alt={product.name} boxSize="50px" />
-                    <VStack align="start">
-                    <Text fontWeight="bold">{product.name}</Text>
-                    <Text>Qty: {product.quantity}</Text>
-                    </VStack>
-                </HStack>
-                ))}
-                <HStack justify="flex-end">
-                <Text fontWeight="bold">Total: ${order.purchase_amount}</Text>
-                </HStack>
-            </Box>
-            ))}
-        </VStack>
+            <Center>
+                <VStack spacing={4} w="75%">
+                    <Heading as="h2" size="xl" textAlign="start" mb={4}>
+                        Order History
+                    </Heading>
+                    {orders.map((order) => (
+                        <Card.Root key={order.id} variant="outline" w="full" p={4}>
+                        <Card.Header>
+                        <HStack justify="space-between" mb={2}>
+                        <Text fontWeight="bold">Order # {order.number}</Text>
+                        <VStack align="end">
+                        <Text fontSize="sm"><Highlight query="Purchased:" styles={{ color: 'teal.600' }}>Purchased:</Highlight> {order.purchase_date}</Text>
+                        <Text fontSize="sm"><Highlight query="Fulfilled:" styles={{ color: 'teal.600' }}>Fulfilled:</Highlight> {order.fulfillment_date}</Text>
+                        </VStack>
+                        </HStack>
+                        </Card.Header>
+                        <Spacer mb={2} />
+                        <Card.Body>
+                        {order.products.map((product) => (
+                        <HStack key={product.id} alignItems="center" gap="10" mb={2}>
+                            <Image src={product.image} alt={product.name} boxSize="50px" />
+                            <VStack align="start">
+                            <Text fontWeight="bold">{product.name}</Text>
+                            <Text>Qty: {product.quantity}</Text>
+                            </VStack>
+                        </HStack>
+                        ))}
+                        <HStack justify="flex-end">
+                        <Text fontWeight="bold">Total: ${order.purchase_amount}</Text>
+                        </HStack>
+                        </Card.Body>
+                    </Card.Root>
+                    ))}
+                </VStack>
+            </Center>
         </Box>
     );
 };
