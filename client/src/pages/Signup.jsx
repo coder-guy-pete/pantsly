@@ -73,9 +73,11 @@ const Signup = () => {
                     </Stack>
                 </Card.Body>
                 <Card.Footer justifyContent="center">
-                    <Button type="submit" colorPalette="teal" rounded="md">
-                        Create User Account
-                    </Button>
+                    <Link to="/login">
+                        <Button type="submit" colorPalette="teal" rounded="md">
+                            Create User Account
+                        </Button>
+                    </Link>
                 </Card.Footer>
             </Card.Root>
         </Center>
