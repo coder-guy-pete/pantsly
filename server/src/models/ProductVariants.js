@@ -14,7 +14,7 @@ ProductVariants.init(
     product_Id: {
       type: DataTypes.INTEGER,
       references: {
-        model: "order",
+        model: "orderItems",
         key: "id",
       },
     },

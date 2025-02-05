@@ -14,7 +14,7 @@ const seedAll = async () => {
 
     // Seed tickets
     await seedProductVariants();
-    console.log("\n----- TICKETS SEEDED -----\n");
+    console.log("\n----- PRODUCT VARIANTS SEEDED -----\n");
 
     // Exit process successfully
     process.exit(0);

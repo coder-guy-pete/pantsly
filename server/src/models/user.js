@@ -15,13 +15,29 @@ User.init(
       allowNull: false,
       unique: true,
     },
-    address: {
+    address1: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    address2: {
       type: DataTypes.STRING,
       allowNull: true,
     },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    zip: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     phoneNumber: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     },
     email: {
       type: DataTypes.STRING,

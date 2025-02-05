@@ -16,7 +16,15 @@ OrderItem.init(
       defaultValue: 1,
     },
     //Foreign Key
-    order_Id: {
+    product_variant_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: "product_Variants",
+        key: "id",
+      },
+    },
+    //Foreign Key
+    order_id: {
       type: DataTypes.INTEGER,
       references: {
         model: "orders",
