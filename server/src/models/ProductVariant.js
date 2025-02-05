@@ -10,24 +10,28 @@ ProductVariant.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    product_name: {
+    //Foreign Key
+    product_Id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      references: {
+        model: "order",
+        key: "id",
+      },
     },
-    description: {
-      type: DataTypes.STRING,
+    name: {
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     brand: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    size: {
-      type: DataTypes.ENUM("small", "medium", "large", "extra-large"),
-      allowNull: false,
-    },
     color: {
       type: DataTypes.ENUM("red", "blue", "green", "black", "white"),
+      allowNull: false,
+    },
+    size: {
+      type: DataTypes.ENUM("small", "medium", "large", "extra-large"),
       allowNull: false,
     },
     sku: {
@@ -61,14 +65,6 @@ ProductVariant.init(
       allowNull: true,
       validate: {
         isUrl: true,
-      },
-    },
-    //Foreign Key
-    product_Id: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "order",
-        key: "id",
       },
     },
   },
