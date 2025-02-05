@@ -11,10 +11,10 @@ ProductVariants.init(
       autoIncrement: true,
     },
     //Foreign Key
-    product_Id: {
+    product_id: {
       type: DataTypes.INTEGER,
       references: {
-        model: "order",
+        model: "orderItems",
         key: "id",
       },
     },
@@ -31,7 +31,7 @@ ProductVariants.init(
       allowNull: false,
     },
     size: {
-      type: DataTypes.ENUM("small", "medium", "large", "extra-large"),
+      type: DataTypes.ENUM("s", "m", "l", "xl", "xxl"),
       allowNull: false,
     },
     sku: {
@@ -43,7 +43,7 @@ ProductVariants.init(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
-    stock_Quantity: {
+    stock_quantity: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
@@ -60,7 +60,7 @@ ProductVariants.init(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
     },
-    image_URL: {
+    image_url: {
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
