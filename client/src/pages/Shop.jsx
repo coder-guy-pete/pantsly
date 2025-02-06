@@ -24,7 +24,6 @@ const Shop = () => {
                 }
                 const data = await response.json();
                 setProducts(data);
-                console.log("Products:", data);
             } catch (error) {
                 setError(error);
                 console.error("Error fetching products:", error);
@@ -66,7 +65,7 @@ const Shop = () => {
 
         let filtered = products.filter(product => {
             const nameMatch = product.name.toLowerCase().includes(lowerCaseQuery);
-            const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+            const brandMatch = (!selectedBrands || selectedBrands.length === 0) || (selectedBrands && selectedBrands.includes(product.brand));
             return nameMatch && brandMatch;
         });
 
