@@ -26,6 +26,12 @@ Orders.init(
       type: DataTypes.STRING,
       defaultValue: "pending",
     },
+    purchase_amount: {
+      type: DataTypes.DECIMAL(10, 2),
+    },
+    products: {
+      type: DataTypes.JSON,
+    },
   },
   {
     tableName: "orders",

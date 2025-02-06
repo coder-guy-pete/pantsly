@@ -3,7 +3,6 @@ import Orders from "../models/Orders.js";
 export const seedOrders = async () => {
   await Orders.bulkCreate([
     {
-      id: "order-123",
       number: "123456",
       user_id: "user-456",
       purchase_date: "2023-10-27",
@@ -25,7 +24,6 @@ export const seedOrders = async () => {
       ],
     },
     {
-      id: "order-456",
       number: "654321",
       user_id: "user-123",
       purchase_date: "2023-10-26",
