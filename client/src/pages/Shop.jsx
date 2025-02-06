@@ -44,11 +44,11 @@ const Shop = () => {
     };
 
     const handleRemoveFromCart = (product) => {
-        setCartItems(cartItems.filter((item) => item.product_id !== product.product_id));
+        setCartItems(cartItems.filter((item) => item.product_group_id !== product.product_group_id));
     };
 
     const isProductInCart = (product) =>
-        cartItems.some((item) => item.product_id === product.product_id);
+        cartItems.some((item) => item.product_group_id === product.product_group_id);
     
     const handleSortChange = (option) => {
         setSortOption(option);
@@ -129,7 +129,7 @@ const Shop = () => {
                             as="article"
                             addToCart={handleAddToCart}
                             removeFromCart={handleRemoveFromCart}
-                            isProductInCart={isProductInCart(product)}
+                            cartItems={cartItems}
                         />
                     </Box>
                 ))}

@@ -23,7 +23,7 @@ import {
     SelectValueText,
 } from './ui/select';
 
-const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, isProductInCart }) => {
+const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, cartItems}) => {
     const cancelRef = React.useRef();
     const [selectedSize, setSelectedSizeModal] = useState('');
     const [selectedColor, setSelectedColorModal] = useState('');
@@ -147,7 +147,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
                     <Button size="sm" colorPalette="red" onClick={() => onOpenChange(false)} ref={cancelRef}>
                         Cancel
                     </Button>
-                    {isProductInCart ? (
+                    {cartItems.some(item => item.product_group_id === product.product_group_id) ? (
                         <Button size="sm" colorPalette="red" onClick={handleRemoveFromCart}>Remove from Cart</Button>
                         ) : (<Button size="sm" colorPalette="teal" ml={3} onClick={handleAddToCart}>Add to Cart</Button>
                         )}

@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Box, Image, Text, Flex, Button, VStack, Card, createListCollection, Center } from '@chakra-ui/react';
+import { Box, Image, Text, Flex, Button, VStack, Card, createListCollection } from '@chakra-ui/react';
 import ProductModal from './ProductModal';
 import {
     SelectContent,
@@ -10,10 +10,11 @@ import {
     SelectValueText,
 } from './ui/select';
 
-const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) => {
+const ProductCard = ({ product, addToCart, removeFromCart, cartItems }) => {
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [availableColors, setAvailableColors] = useState([]);
+    const [isCurrentlyInCart, setIsCurrentlyInCart] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -23,6 +24,14 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
             setAvailableColors([]);
         }
     }, [selectedSize, product]);
+
+    useEffect(() => {
+        setIsCurrentlyInCart(checkIsProductInCart());
+    }, [cartItems, product.product_id]);
+
+    const checkIsProductInCart = () => {
+        return cartItems.some((item) => item.product_id === product.product_id);
+    };
 
     const sizeOptions = useMemo(() => {
         if (product && product.sizes) {
@@ -45,10 +54,12 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
     const handleAddToCart = () => {
         addToCart(product, selectedSize, selectedColor);
+        setIsCurrentlyInCart(true);
     };
 
     const handleRemoveFromCart = () => {
         removeFromCart(product);
+        setIsCurrentlyInCart(false);
     };
 
     const handleProductModal = () => {
@@ -63,6 +74,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         setSelectedColor(event.target.value);
     };
     
+    console.log("Cart Items: ", cartItems);
     return (
         <Box>
             <Card.Root borderWidth="1px" borderRadius="lg" overflow="hidden" p={4} boxShadow="md" minW="350px">
@@ -121,7 +133,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                 </Flex>
 
                 <Flex gap={5}>
-                    {isProductInCart ? (
+                    {isCurrentlyInCart ? (
                         <Button size="sm" colorPalette="red" onClick={handleRemoveFromCart}>Remove from Cart</Button>
                     ) : (
                         <Button size="sm" colorPalette='teal' onClick={handleAddToCart}>Add to Cart</Button>
@@ -138,7 +150,6 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                         product={product}
                         addToCart={addToCart}
                         removeFromCart={removeFromCart}
-                        isProductInCart={isProductInCart}
                     />
         </Box>
     );
