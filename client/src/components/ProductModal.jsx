@@ -23,19 +23,19 @@ import {
     SelectValueText,
 } from './ui/select';
 
-const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, isInCart}) => {
+const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, isProductInCart}) => {
     const cancelRef = React.useRef();
-    const [selectedSize, setSelectedSizeModal] = useState('');
-    const [selectedColor, setSelectedColorModal] = useState('');
+    const [selectedSizeModal, setSelectedSizeModal] = useState('');
+    const [selectedColorModal, setSelectedColorModal] = useState('');
     const [availableColors, setAvailableColors] = useState([]);
 
     useEffect(() => {
-        if (product && selectedSize) {
-            setAvailableColors(product.colors[selectedSize] || []);
+        if (product && selectedSizeModal) {
+            setAvailableColors(product.colors[selectedSizeModal] || []);
         } else {
             setAvailableColors([]);
         }
-    }, [selectedSize, product]);
+    }, [selectedSizeModal, product]);
 
     const sizeOptionsModal = useMemo(() => {
         if (product && product.sizes) {
@@ -56,14 +56,12 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
         });
     }, [availableColors]);
 
-    const handleAddToCart = () => {
-        addToCart(product, selectedSize, selectedColor);
-        product.isInCart = true;
+    const handleAddToCartModal = () => {
+        addToCart(product, selectedSizeModal, selectedColorModal);
     };
 
-    const handleRemoveFromCart = () => {
+    const handleRemoveFromCartModal = () => {
         removeFromCart(product);
-        product.isInCart = false;
     };
 
     const handleSizeChangeModal = (event) => {
@@ -149,9 +147,9 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
                     <Button size="sm" colorPalette="red" onClick={() => onOpenChange(false)} ref={cancelRef}>
                         Cancel
                     </Button>
-                    {isInCart ? (
-                        <Button size="sm" colorPalette="red" onClick={handleRemoveFromCart}>Remove from Cart</Button>
-                        ) : (<Button size="sm" colorPalette="teal" ml={3} onClick={handleAddToCart}>Add to Cart</Button>
+                    {isProductInCart(product) ? (
+                        <Button size="sm" colorPalette="red" onClick={handleRemoveFromCartModal}>Remove from Cart</Button>
+                        ) : (<Button size="sm" colorPalette="teal" ml={3} onClick={handleAddToCartModal}>Add to Cart</Button>
                         )}
                 </DialogFooter>
             </DialogContent>

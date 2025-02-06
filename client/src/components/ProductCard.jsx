@@ -141,7 +141,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                         product={product}
                         addToCart={addToCart}
                         removeFromCart={removeFromCart}
-                        isInCart={isProductInCart}
+                        isProductInCart={isProductInCart}
                     />
         </Box>
     );
