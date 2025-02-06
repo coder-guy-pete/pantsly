@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Box, Heading, Highlight, Flex, Center, Spinner, Text } from '@chakra-ui/react';
 import ProductCard from '@/components/ProductCard';
-// import Products from '@/mock-data/Products';
 import SearchBar from '@/components/SearchBar';
 import SortFilter from '@/components/SortFilter';
 
@@ -129,7 +128,6 @@ const Shop = () => {
                             as="article"
                             addToCart={handleAddToCart}
                             removeFromCart={handleRemoveFromCart}
-                            cartItems={cartItems}
                         />
                     </Box>
                 ))}
