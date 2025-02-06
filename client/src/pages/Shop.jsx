@@ -3,15 +3,18 @@ import { Box, Heading, Highlight, Flex, Center, Spinner, Text } from '@chakra-ui
 import ProductCard from '@/components/ProductCard';
 import SearchBar from '@/components/SearchBar';
 import SortFilter from '@/components/SortFilter';
+import ProductModal from '@/components/ProductModal';
 
 const Shop = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [cartItems, setCartItems] = useState([]);
-    const [sortOption, setSortOption] = useState('name');
+    const [sortOption, setSortOption] = useState('name-asc');
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [selectedProduct, setSelectedProduct] = useState([]);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -39,15 +42,19 @@ const Shop = () => {
     };
 
     const handleAddToCart = (product, size, color) => {
-        setCartItems([...cartItems, { ...product, size, color }]);
+        setCartItems(prevItems => [...prevItems, { ...product, size, color }]);
     };
 
     const handleRemoveFromCart = (product) => {
-        setCartItems(cartItems.filter((item) => item.product_group_id !== product.product_group_id));
+        setCartItems(prevItems => prevItems.filter((item) => item.product_group_id !== product.product_group_id));
     };
 
-    const isProductInCart = (product) =>
-        cartItems.some((item) => item.product_group_id === product.product_group_id);
+    const isProductInCart = (product) => cartItems.some(item => item.product_id === product.product_id);
+
+    const openModalWithProduct = (product) => {
+        setSelectedProduct(product);
+        setIsModalOpen(true);
+    };
     
     const handleSortChange = (option) => {
         setSortOption(option);
@@ -128,10 +135,23 @@ const Shop = () => {
                             as="article"
                             addToCart={handleAddToCart}
                             removeFromCart={handleRemoveFromCart}
+                            openModal={() => openModalWithProduct(product)}
+                            isProductInCart={isProductInCart}
                         />
                     </Box>
                 ))}
             </Flex>
+
+            {selectedProduct && (
+                <ProductModal
+                    open={isModalOpen}
+                    onOpenChange={setIsModalOpen}
+                    product={selectedProduct}
+                    addToCart={handleAddToCart}
+                    removeFromCart={handleRemoveFromCart}
+                    isProductInCart={isProductInCart}
+                />
+            )}
             </Flex>
         </Box>
     );
