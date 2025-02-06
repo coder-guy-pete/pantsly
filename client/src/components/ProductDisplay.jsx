@@ -9,7 +9,7 @@ import {
     SelectValueText,
 } from './ui/select';
 
-const ProductDisplay = ({ product, addToCart, removeFromCart, isProductInCart, isModal = false, onClose }) => { // isModal prop
+const ProductDisplay = ({ product, addToCart, removeFromCart, isProductInCart, isModal = false, onClose }) => {
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [availableColors, setAvailableColors] = useState([]);
@@ -43,6 +43,13 @@ const ProductDisplay = ({ product, addToCart, removeFromCart, isProductInCart, i
 
     const handleAddToCart = () => {
         addToCart(product, selectedSize, selectedColor);
+    };
+
+    const handleAddToCartModal = () => {
+        addToCart(product, selectedSize, selectedColor);
+        if (isModal) {
+            onClose();
+        }
     };
 
     const handleRemoveFromCart = () => {
@@ -99,18 +106,27 @@ const ProductDisplay = ({ product, addToCart, removeFromCart, isProductInCart, i
                             </SelectRoot>
                         </Flex>
 
-                        {!isModal && ( // Conditionally render buttons
-                            <Flex gap={5}>
-                                {isProductInCart ? (
-                                    <Button size="sm" colorPalette="red" onClick={handleRemoveFromCart}>Remove from Cart</Button>
-                                ) : (
-                                    <Button size="sm" colorPalette='teal' onClick={handleAddToCart}>Add to Cart</Button>
-                                )}
-                                <Button size="sm" variant="outline" onClick={onClose}> {/* Call onClose */}
-                                    Product Details
-                                </Button>
-                            </Flex>
-                        )}
+                        <Flex gap={5}>
+                            {isModal ? ( // Buttons for Modal
+                                <>
+                                    {isProductInCart ? (
+                                        <Button size="sm" colorPalette="red" onClick={handleRemoveFromCart}>Remove from Cart</Button>
+                                    ) : (
+                                        <Button size="sm" colorPalette='teal' onClick={handleAddToCartModal}>Add to Cart</Button>
+                                    )}
+                                    <Button size="sm" variant="outline" onClick={onClose}>Close</Button>
+                                </>
+                            ) : ( // Buttons for Product Card
+                                <>
+                                    {isProductInCart ? (
+                                        <Button size="sm" colorPalette="red" onClick={handleRemoveFromCart}>Remove from Cart</Button>
+                                    ) : (
+                                        <Button size="sm" colorPalette='teal' onClick={handleAddToCart}>Add to Cart</Button>
+                                    )}
+                                    <Button size="sm" variant="outline" onClick={onClose}>Product Details</Button>
+                                </>
+                            )}
+                        </Flex>
                     </VStack>
                 </Card.Body>
             </Card.Root>
