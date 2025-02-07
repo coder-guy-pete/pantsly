@@ -1,0 +1,67 @@
+const orderHistory = [
+  {
+    order_id: 1,
+    purchase_date: '01/01/2025',
+    order_amount: 254.24,
+    fulfillment_date: '01/07/2025',
+    order_items: [
+        {
+            name: "Addidas shirt",
+            color: "blue",
+            size: 'm',
+            quantity: 2,
+            image_url: 'https://placehold.co/600x400',
+        },
+        {
+            name: "Addidat shirt",
+            color: "red",
+            size: 'm',
+            quantity: 1,
+            image_url: 'https://placehold.co/600x400',
+        }],
+    },
+    {
+        order_id: 2,
+        purchase_date: '01/01/2025',
+        order_amount: 254.24,
+        fulfillment_date: '01/07/2025',
+        order_items: [
+            {
+                name: "Addidat shirt",
+                color: "blue",
+                size: 'm',
+                quantity: 2,
+                image_url: 'https://placehold.co/600x400',
+            },
+            {
+                name: "Addidat shirt",
+                color: "red",
+                size: 'm',
+                quantity: 1,
+                image_url: 'https://placehold.co/600x400',
+            }],
+        },
+    {
+        order_id: 3,
+        purchase_date: '01/01/2025',
+        order_amount: 254.24,
+        fulfillment_date: '01/07/2025',
+        order_items: [
+            {
+                name: "Addidat shirt",
+                color: "blue",
+                size: 'm',
+                quantity: 2,
+                image_url: 'https://placehold.co/600x400',
+            },
+            {
+                name: "Addidat shirt",
+                color: "red",
+                size: 'm',
+                quantity: 1,
+                image_url: 'https://placehold.co/600x400',
+            }],
+    }
+];
+
+export default orderHistory;

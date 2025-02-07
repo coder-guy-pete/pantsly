@@ -1,9 +1,11 @@
 // import { Order, OrderDetails } from '../../models/index.js';
+import tempDataOrderHistory from '../tempDataOrderHistory.js';
 
 // Order GET
 export const ordersGet = async (req, res) => {
-    res.json({message: `Placeholder for orderGet. Will likely be used to retrieve all orders with a get to api/orders/`})
-}
+    res.json(tempDataOrderHistory);
+    console.log(`This is the order history for the user with the user id ${req.params.user_id}`);
+};
 
 // Order POST
 export const ordersPost = async (req, res) => {
