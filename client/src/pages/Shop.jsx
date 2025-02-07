@@ -41,9 +41,9 @@ const Shop = () => {
         setSearchQuery(query);
     };
 
-    const handleAddToCart = (product, size, color) => {
+    const handleAddToCart = (product, size, color, quantity) => {
         setCartItems(prevItems => {
-            const newItem = { ...product, size, color };
+            const newItem = { ...product, size, color, quantity };
             const updatedItems = [...prevItems, newItem];
             localStorage.setItem('shoppingCart', JSON.stringify(updatedItems));
             return updatedItems;
