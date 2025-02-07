@@ -173,6 +173,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                         addToCart={addToCart}
                         removeFromCart={removeFromCart}
                         isProductInCart={isProductInCart}
+                        quantity={quantity}
+                        setQuantity={setQuantity}
                     />
         </Box>
     );
