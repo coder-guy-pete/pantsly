@@ -14,7 +14,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [availableColors, setAvailableColors] = useState([]);
-    const [isInCart, setIsInCart] = useState(false);
+    const [quantity, setQuantity] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -24,10 +24,6 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
             setAvailableColors([]);
         }
     }, [selectedSize, product]);
-
-    useEffect(() => {
-        setIsInCart(isProductInCart(product));
-    }, [product, isProductInCart]);
 
     const sizeOptions = useMemo(() => {
         if (product && product.sizes) {
@@ -48,14 +44,28 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         });
     }, [availableColors]);
 
+    const quantityOptions = useMemo(() => {
+        const options = [];
+        for (let i = 1; i <= 10; i++) {
+            options.push({ value: i, label: i });
+        }
+        return createListCollection({
+            items: options,
+            itemToString: (item) => item.label,
+            itemToValue: (item) => item.value,
+        });
+    }, []);
+
     const handleAddToCartCard = () => {
-        addToCart(product, selectedSize, selectedColor);
-        setIsInCart(true);
+        if (!selectedSize || !selectedColor || !quantity) {
+            alert('Please select size, color, and quantity');
+            return;
+        }
+        addToCart(product, selectedSize, selectedColor, quantity);
     };
 
     const handleRemoveFromCartCard = () => {
         removeFromCart(product);
-        setIsInCart(false);
     };
 
     const handleProductModal = () => {
@@ -68,6 +78,10 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
     const handleColorChange = (event) => {
         setSelectedColor(event.target.value);
+    };
+
+    const handleQuantityChange = (event) => {
+        setQuantity(parseInt(event.target.value, 10));
     };
     
     return (
@@ -125,10 +139,28 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                         ))}
                     </SelectContent>
                 </SelectRoot>
+
+                <SelectRoot
+                    onChange={handleQuantityChange}
+                    size="sm"
+                    collection={quantityOptions}
+                    defaultValue={[1]}>
+                    <SelectLabel>Quantity</SelectLabel>
+                    <SelectTrigger>
+                        <SelectValueText />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {quantityOptions.items.map((item) => (
+                            <SelectItem key={item.value} item={item}>
+                                {item.label}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </SelectRoot>
                 </Flex>
 
                 <Flex gap={5}>
-                    {isProductInCart ? (
+                    {isProductInCart(product) ? (
                         <Button size="sm" colorPalette="red" onClick={handleRemoveFromCartCard}>Remove from Cart</Button>
                     ) : (
                         <Button size="sm" colorPalette='teal' onClick={handleAddToCartCard}>Add to Cart</Button>
@@ -146,6 +178,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                         addToCart={addToCart}
                         removeFromCart={removeFromCart}
                         isProductInCart={isProductInCart}
+                        quantity={quantity}
+                        setQuantity={setQuantity}
                     />
         </Box>
     );

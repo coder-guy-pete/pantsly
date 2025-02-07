@@ -4,17 +4,13 @@ import ProductCard from '@/components/ProductCard';
 import SearchBar from '@/components/SearchBar';
 import SortFilter from '@/components/SortFilter';
 
-const Shop = () => {
+const Shop = ({ addToCart, removeFromCart, isProductInCart }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOption, setSortOption] = useState('name-asc');
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [cartItems, setCartItems] = useState(() =>{
-        const storedCartItems = localStorage.getItem('shoppingCart');
-        return storedCartItems ? JSON.parse(storedCartItems) : [];
-    });
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -41,25 +37,6 @@ const Shop = () => {
         setSearchQuery(query);
     };
 
-    const handleAddToCart = (product, size, color) => {
-        setCartItems(prevItems => {
-            const newItem = { ...product, size, color };
-            const updatedItems = [...prevItems, newItem];
-            localStorage.setItem('shoppingCart', JSON.stringify(updatedItems));
-            return updatedItems;
-        });
-    };
-
-    const handleRemoveFromCart = (product) => {
-        setCartItems(prevItems => {
-            const updatedItems = prevItems.filter((item) => item.product_group_id !== product.product_group_id);
-            localStorage.setItem('shoppingCart', JSON.stringify(updatedItems));
-            return updatedItems;
-        });
-    };
-
-    const isProductInCart = (product) => cartItems.some(item => item.product_group_id === product.product_group_id);
-    
     const handleSortChange = (option) => {
         setSortOption(option);
     };
@@ -136,8 +113,8 @@ const Shop = () => {
                         <ProductCard
                             product={product}
                             as="article"
-                            addToCart={handleAddToCart}
-                            removeFromCart={handleRemoveFromCart}
+                            addToCart={addToCart}
+                            removeFromCart={removeFromCart}
                             openModal={() => openModalWithProduct(product)}
                             isProductInCart={isProductInCart}
                         />
