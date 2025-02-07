@@ -73,21 +73,43 @@ export const ordersPost = async (req, res) => {
     
     const t = await sequelize.transaction();
     
-    try {
+    // try {
         
-        const newOrder = await Orders.create({
-            user_id: req.body.user_id,
-            purchase_date: new Date(),
-
-        })
+    //     const newOrder = await Orders.create({
+    //         user_id: req.body.user_id,
+    //         purchase_date: new Date(),
+    //     },
+    //     {transaction: t})
         
-        const product_id = await ProductVariants.findOne({
-            where: {
-                product_group_id: 
-            }
-        })
+    //     const orderItemsData = [];
 
-    } catch {
+    //     for (const orderItem of req.body.)
+        
+    //     // req.body.order_items.forEach((orderItem) => {
+    //     //     const product_id = await ProductVariants.findOne({
+    //     //         where: {
+    //     //             product_group_id: orderItem.product_group_id,
+    //     //             color: orderItem.color,
+    //     //             size: orderItem.size,
+    //     //         }
+    //     //     });
 
-    }
+    //     //     orderItemsData.push({
+    //     //         order_id: newOrder.id,
+    //     //         id: product_id,
+    //     //         purchase_quantity: orderItem.quantity,
+
+    //     //     })
+
+    //     // });
+
+    //     await OrderItem.bulkCreate(orderItemsData, {transaction: t});
+
+    //     await t.commit();
+
+    //     return res.json();
+
+    // } catch {
+
+    // }
 }
