@@ -101,7 +101,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
     }
 
     return (
-        <DialogRoot open={open} onOpenChange={onOpenChange}>
+        <DialogRoot open={open} onOpenChange={onOpenChange} placement="center" scrollBehavior="inside">
             <DialogBackdrop />
             <DialogContent maxW="md" position="fixed" top="50%" left="50%" transform="translate(-50%, -50%)">
                 <DialogHeader>
