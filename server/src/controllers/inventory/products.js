@@ -1,6 +1,6 @@
 // import ProductVariants from '../../models/index.js';
 import tempData from '../tempDataProducts.js';
-// import productResponse from '../utils/productResponse.js';
+// import productsResponse from '../utils/productsResponse.js';
 
 // // Products GET
 export const productsGet = async (req, res) => {
@@ -27,16 +27,16 @@ export const productsGet = async (req, res) => {
 }
 
 
-// Products POST
+// Products POST - relevant for building the inventory side of the platform
 export const productsPost = async (req, res) => {
     res.json({message: 'Placeholder for productsPost. Will be used to create new product'});
 }
 
-// Products PUT
+// Products PUT - relelant for building the inventory side of the platform
 export const productsPut = async (req, res) => {
     res.json({message: `Placeholder for productsPut. Will update product with ID: ${req.params.id} entered as a param for api/products/:id`})};
 
-// Products DELETE
+// Products DELETE - relevant for building the inventory side of the platform
 export const productsDelete = async (req, res) => {
     res.json({ message: `Placeholder for productsDelete. Will delete product with ID: ${req.params.id} entered as a param for api/products/:id`});
 }
