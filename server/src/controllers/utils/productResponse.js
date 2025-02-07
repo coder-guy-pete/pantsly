@@ -21,7 +21,6 @@ const productsResponse = (products) => {
                         xxxl: [],
                     },
                     description: '',
-                    quantity: stock_quantity,
                 }
             }
 
