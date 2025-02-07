@@ -6,7 +6,7 @@ router.use('/products', productsRoutes);
 
 // GET api/inventory/
 router.get('/', (req, res) => {
-  res.json({ message: 'This is the route is for general inventory routes'});
+  res.json({ message: 'This is the route for general inventory routes'});
 });
 
 export default router;

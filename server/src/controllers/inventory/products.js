@@ -1,5 +1,5 @@
 // import ProductVariants from '../../models/index.js';
-import tempData from '../tempDataProducts.js';
+import tempData from '../tempDataProduct.js';
 // import productResponse from '../utils/productResponse.js';
 
 // // Products GET

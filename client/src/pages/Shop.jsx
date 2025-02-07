@@ -1,18 +1,20 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Box, Heading, Highlight, Flex, Center, Spinner, Text } from '@chakra-ui/react';
 import ProductCard from '@/components/ProductCard';
-// import Products from '@/mock-data/Products';
 import SearchBar from '@/components/SearchBar';
 import SortFilter from '@/components/SortFilter';
 
 const Shop = () => {
     const [searchQuery, setSearchQuery] = useState('');
-    const [cartItems, setCartItems] = useState([]);
-    const [sortOption, setSortOption] = useState('name');
+    const [sortOption, setSortOption] = useState('name-asc');
     const [selectedBrands, setSelectedBrands] = useState([]);
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [cartItems, setCartItems] = useState(() =>{
+        const storedCartItems = localStorage.getItem('shoppingCart');
+        return storedCartItems ? JSON.parse(storedCartItems) : [];
+    });
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -35,22 +37,28 @@ const Shop = () => {
         fetchProducts();
     }, []);
 
-    console.log("Products:", products);
-
     const handleSearch = (query) => {
         setSearchQuery(query);
     };
 
     const handleAddToCart = (product, size, color) => {
-        setCartItems([...cartItems, { ...product, size, color }]);
+        setCartItems(prevItems => {
+            const newItem = { ...product, size, color };
+            const updatedItems = [...prevItems, newItem];
+            localStorage.setItem('shoppingCart', JSON.stringify(updatedItems));
+            return updatedItems;
+        });
     };
 
     const handleRemoveFromCart = (product) => {
-        setCartItems(cartItems.filter((item) => item.product_id !== product.product_id));
+        setCartItems(prevItems => {
+            const updatedItems = prevItems.filter((item) => item.product_group_id !== product.product_group_id);
+            localStorage.setItem('shoppingCart', JSON.stringify(updatedItems));
+            return updatedItems;
+        });
     };
 
-    const isProductInCart = (product) =>
-        cartItems.some((item) => item.product_id === product.product_id);
+    const isProductInCart = (product) => cartItems.some(item => item.product_group_id === product.product_group_id);
     
     const handleSortChange = (option) => {
         setSortOption(option);
@@ -67,7 +75,7 @@ const Shop = () => {
 
         let filtered = products.filter(product => {
             const nameMatch = product.name.toLowerCase().includes(lowerCaseQuery);
-            const brandMatch = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+            const brandMatch = (!selectedBrands || selectedBrands.length === 0) || (selectedBrands && selectedBrands.includes(product.brand));
             return nameMatch && brandMatch;
         });
 
@@ -126,12 +134,12 @@ const Shop = () => {
                 {filteredAndSortedProducts.map(product => (
                     <Box key={product.product_group_id} w={{ base: "100%", md: "45%", lg: "30%" }}>
                         <ProductCard
-                            key={product.product_group_id}
                             product={product}
                             as="article"
                             addToCart={handleAddToCart}
                             removeFromCart={handleRemoveFromCart}
-                            isProductInCart={isProductInCart(product)}
+                            openModal={() => openModalWithProduct(product)}
+                            isProductInCart={isProductInCart}
                         />
                     </Box>
                 ))}
