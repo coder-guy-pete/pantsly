@@ -56,6 +56,15 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
         });
     }, [availableColors]);
 
+    
+    const handleSizeChangeModal = (event) => {
+        setSelectedSizeModal(event.target.value);
+    };
+    
+    const handleColorChangeModal = (event) => {
+        setSelectedColorModal(event.target.value);
+    };
+    
     const handleAddToCartModal = () => {
         addToCart(product, selectedSizeModal, selectedColorModal);
     };
@@ -63,15 +72,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
     const handleRemoveFromCartModal = () => {
         removeFromCart(product);
     };
-
-    const handleSizeChangeModal = (event) => {
-        setSelectedSizeModal(event.target.value);
-    };
-
-    const handleColorChangeModal = (event) => {
-        setSelectedColorModal(event.target.value);
-    };
-
+    
     if (!product) {
         return null;
     }

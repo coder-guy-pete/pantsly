@@ -14,7 +14,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [availableColors, setAvailableColors] = useState([]);
-    const [isInCart, setIsInCart] = useState(isProductInCart);
+    const [isInCart, setIsInCart] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -24,6 +24,10 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
             setAvailableColors([]);
         }
     }, [selectedSize, product]);
+
+    useEffect(() => {
+        setIsInCart(isProductInCart(product));
+    }, [product, isProductInCart]);
 
     const sizeOptions = useMemo(() => {
         if (product && product.sizes) {
@@ -44,12 +48,12 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         });
     }, [availableColors]);
 
-    const handleAddToCart = () => {
+    const handleAddToCartCard = () => {
         addToCart(product, selectedSize, selectedColor);
         setIsInCart(true);
     };
 
-    const handleRemoveFromCart = () => {
+    const handleRemoveFromCartCard = () => {
         removeFromCart(product);
         setIsInCart(false);
     };
@@ -124,10 +128,10 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                 </Flex>
 
                 <Flex gap={5}>
-                    {isInCart ? (
-                        <Button size="sm" colorPalette="red" onClick={handleRemoveFromCart}>Remove from Cart</Button>
+                    {isProductInCart ? (
+                        <Button size="sm" colorPalette="red" onClick={handleRemoveFromCartCard}>Remove from Cart</Button>
                     ) : (
-                        <Button size="sm" colorPalette='teal' onClick={handleAddToCart}>Add to Cart</Button>
+                        <Button size="sm" colorPalette='teal' onClick={handleAddToCartCard}>Add to Cart</Button>
                     )}
                     <Button size="sm" variant="outline" onClick={handleProductModal}>Product Details</Button>
                 </Flex>
