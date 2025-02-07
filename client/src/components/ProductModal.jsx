@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import {
     DialogRoot,
     DialogBackdrop,
@@ -23,37 +23,56 @@ import {
     SelectValueText,
 } from './ui/select';
 
-const ProductModal = ({ open, onOpenChange, product }) => {
+const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, isProductInCart}) => {
     const cancelRef = React.useRef();
-    const [selectedSize, setSelectedSizeModal] = useState('');
-    const [selectedColor, setSelectedColorModal] = useState('');
+    const [selectedSizeModal, setSelectedSizeModal] = useState('');
+    const [selectedColorModal, setSelectedColorModal] = useState('');
+    const [availableColors, setAvailableColors] = useState([]);
+
+    useEffect(() => {
+        if (product && selectedSizeModal) {
+            setAvailableColors(product.colors[selectedSizeModal] || []);
+        } else {
+            setAvailableColors([]);
+        }
+    }, [selectedSizeModal, product]);
 
     const sizeOptionsModal = useMemo(() => {
-        const uniqueSizes = [...new Set(product.sizes)];
-        return createListCollection({
-            items: uniqueSizes.map(size => ({ value: size, label: size })),
-            itemToString: (item) => item.label,
-            itemToValue: (item) => item.value,
-        });
-    }, [product.sizes]);
+        if (product && product.sizes) {
+            return createListCollection({
+                items: product.sizes.map(size => ({ value: size, label: size })),
+                itemToString: (item) => item.label,
+                itemToValue: (item) => item.value,
+            });
+        }
+        return createListCollection({ items: [] });
+    }, [product?.sizes]);
 
     const colorOptionsModal = useMemo(() => {
-        const uniqueColors = [...new Set(product.colors)];
         return createListCollection({
-            items: uniqueColors.map(color => ({ value: color, label: color })),
+            items: availableColors.map(color => ({ value: color, label: color })),
             itemToString: (item) => item.label,
             itemToValue: (item) => item.value,
         });
-    }, [product.colors]);
+    }, [availableColors]);
 
+    
     const handleSizeChangeModal = (event) => {
         setSelectedSizeModal(event.target.value);
     };
-
+    
     const handleColorChangeModal = (event) => {
         setSelectedColorModal(event.target.value);
     };
+    
+    const handleAddToCartModal = () => {
+        addToCart(product, selectedSizeModal, selectedColorModal);
+    };
 
+    const handleRemoveFromCartModal = () => {
+        removeFromCart(product);
+    };
+    
     if (!product) {
         return null;
     }
@@ -88,7 +107,7 @@ const ProductModal = ({ open, onOpenChange, product }) => {
                                     size="sm"
                                     mb={2}
                                     collection={sizeOptionsModal}
-                                    disabled={product.sizes.length === 0}
+                                    disabled={product.sizes?.length === 0}
                                 >
                                     <SelectLabel>Size</SelectLabel>
                                     <SelectTrigger minWidth="100px">
@@ -107,7 +126,7 @@ const ProductModal = ({ open, onOpenChange, product }) => {
                                     onChange={handleColorChangeModal}
                                     size="sm"
                                     collection={colorOptionsModal}
-                                    disabled={product.colors.length === 0}
+                                    disabled={availableColors.length === 0}
                                 >
                                     <SelectLabel>Color</SelectLabel>
                                     <SelectTrigger minWidth="100px">
@@ -126,12 +145,13 @@ const ProductModal = ({ open, onOpenChange, product }) => {
                     </Flex>
                 </DialogBody>
                 <DialogFooter>
-                    <Button colorPalette="red" onClick={() => onOpenChange(false)} ref={cancelRef}>
+                    <Button size="sm" colorPalette="red" onClick={() => onOpenChange(false)} ref={cancelRef}>
                         Cancel
                     </Button>
-                    <Button colorPalette="teal" ml={3}>
-                        Add to Cart
-                    </Button>
+                    {isProductInCart(product) ? (
+                        <Button size="sm" colorPalette="red" onClick={handleRemoveFromCartModal}>Remove from Cart</Button>
+                        ) : (<Button size="sm" colorPalette="teal" ml={3} onClick={handleAddToCartModal}>Add to Cart</Button>
+                        )}
                 </DialogFooter>
             </DialogContent>
         </DialogRoot>

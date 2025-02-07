@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Box, Image, Text, Flex, Button, VStack, Card, createListCollection, Center, Spinner } from '@chakra-ui/react';
+import { Box, Image, Text, Flex, Button, VStack, Card, createListCollection } from '@chakra-ui/react';
 import ProductModal from './ProductModal';
 import {
     SelectContent,
@@ -13,62 +13,49 @@ import {
 const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) => {
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
+    const [availableColors, setAvailableColors] = useState([]);
+    const [isInCart, setIsInCart] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [productDetails, setProductDetails] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchProductDetails = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const response = await fetch('/api/inventory/products');
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch product details: ${response.status}`);
-                }
-                const data = await response.json();
-            } catch (error) {
-                setError(error);
-                console.error("Error fetching product details:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        if (product && product.product_group_id) {
-            fetchProductDetails();
+        if (product && selectedSize) {
+            setAvailableColors(product.colors[selectedSize] || []);
         } else {
-            setLoading(false);
+            setAvailableColors([]);
         }
-    }, [product]);
+    }, [selectedSize, product]);
 
-    // NEED TO UPDATE THIS WITH API FETCH CALLS LATER
+    useEffect(() => {
+        setIsInCart(isProductInCart(product));
+    }, [product, isProductInCart]);
+
     const sizeOptions = useMemo(() => {
-        const uniqueSizes = [...new Set(product.product_group_id.sizes)];
-        return createListCollection({
-            items: uniqueSizes.map(size => ({ value: size, label: size })),
-            itemToString: (item) => item.label,
-            itemToValue: (item) => item.value,
-        });
-    }, [product.sizes]);
+        if (product && product.sizes) {
+            return createListCollection({
+                items: product.sizes.map(size => ({ value: size, label: size })),
+                itemToString: (item) => item.label,
+                itemToValue: (item) => item.value,
+            });
+        }
+        return createListCollection({ items: []});
+    }, [product?.sizes]);
 
-        // UPDATE THIS WITH API FETCH CALLS LATER
     const colorOptions = useMemo(() => {
-        const uniqueColors = [...new Set(product.product_group_id.colors)];
         return createListCollection({
-            items: uniqueColors.map(color => ({ value: color, label: color })),
+            items: availableColors.map(color => ({ value: color, label: color })),
             itemToString: (item) => item.label,
             itemToValue: (item) => item.value,
         });
-    }, [product.colors]);
+    }, [availableColors]);
 
-    const handleAddToCart = () => {
+    const handleAddToCartCard = () => {
         addToCart(product, selectedSize, selectedColor);
+        setIsInCart(true);
     };
 
-    const handleRemoveFromCart = () => {
+    const handleRemoveFromCartCard = () => {
         removeFromCart(product);
+        setIsInCart(false);
     };
 
     const handleProductModal = () => {
@@ -82,18 +69,6 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const handleColorChange = (event) => {
         setSelectedColor(event.target.value);
     };
-
-    if (loading) {
-        return <Center h="100vh"><Spinner size="lg" /></Center>;
-    }
-
-    if (error) {
-        return <Center h="100vh"><Text color="red.500">Error: {error.message}</Text></Center>;
-    }
-
-    if (!productDetails) {
-        return <Text>Product details unavailable.</Text>;
-    }
     
     return (
         <Box>
@@ -119,7 +94,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                         size="sm"
                         mb={2} 
                         collection={sizeOptions}
-                        disabled={product.sizes.length === 0}>
+                        disabled={product.sizes?.length === 0}>
                     <SelectLabel>Size</SelectLabel>
                     <SelectTrigger minWidth="100px">
                         <SelectValueText />
@@ -137,7 +112,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                     onChange={handleColorChange} 
                     size="sm"
                     collection={colorOptions}
-                    disabled={product.colors.length === 0}>
+                    disabled={availableColors.length === 0}>
                     <SelectLabel>Color</SelectLabel>
                     <SelectTrigger minWidth="100px">
                         <SelectValueText />
@@ -154,9 +129,9 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
                 <Flex gap={5}>
                     {isProductInCart ? (
-                        <Button size="sm" colorPalette="red" onClick={handleRemoveFromCart}>Remove from Cart</Button>
+                        <Button size="sm" colorPalette="red" onClick={handleRemoveFromCartCard}>Remove from Cart</Button>
                     ) : (
-                        <Button size="sm" colorPalette='teal' onClick={handleAddToCart}>Add to Cart</Button>
+                        <Button size="sm" colorPalette='teal' onClick={handleAddToCartCard}>Add to Cart</Button>
                     )}
                     <Button size="sm" variant="outline" onClick={handleProductModal}>Product Details</Button>
                 </Flex>
@@ -167,7 +142,10 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
             <ProductModal
                         open={isModalOpen}
                         onOpenChange={handleProductModal}
-                        product={product} 
+                        product={product}
+                        addToCart={addToCart}
+                        removeFromCart={removeFromCart}
+                        isProductInCart={isProductInCart}
                     />
         </Box>
     );

@@ -1,9 +1,9 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/connection.js";
 
-class Order extends Model {}
+class Orders extends Model {}
 
-Order.init(
+Orders.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -26,6 +26,12 @@ Order.init(
       type: DataTypes.STRING,
       defaultValue: "pending",
     },
+    purchase_amount: {
+      type: DataTypes.DECIMAL(10, 2),
+    },
+    products: {
+      type: DataTypes.JSON,
+    },
   },
   {
     tableName: "orders",
@@ -33,4 +39,4 @@ Order.init(
   }
 );
 
-export default Order;
+export default Orders;
