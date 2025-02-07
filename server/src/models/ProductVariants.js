@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/connection.js";
+import OrderItem from "./OrderItem.js";
 
 class ProductVariants extends Model {}
 
@@ -11,15 +12,11 @@ ProductVariants.init(
       autoIncrement: true,
     },
     //Foreign Key
-    product_id: {
+    product_group_id: {
       type: DataTypes.INTEGER,
-      references: {
-        model: "orderItems",
-        key: "id",
-      },
     },
     name: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     brand: {
@@ -39,32 +36,36 @@ ProductVariants.init(
       unique: true,
       allowNull: false,
     },
-    sell_price: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-    },
-    stock_quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-    },
-    reorder_point: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    reorder_quantity: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    reorder_price: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-    },
+    // sell_price: {
+    //   type: DataTypes.DECIMAL(10, 2),
+    //   allowNull: false,
+    // },
+    // stock_quantity: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    //   defaultValue: 0,
+    // },
+    // reorder_point: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    // },
+    // reorder_quantity: {
+    //   type: DataTypes.INTEGER,
+    //   allowNull: false,
+    // },
+    // reorder_price: {
+    //   type: DataTypes.DECIMAL(10, 2),
+    //   allowNull: false,
+    // },
     image_url: {
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
         isUrl: true,
+      },
+      desctription: {
+        type: DataTypes.STRING,
+        allowNull: true,
       },
     },
   },
