@@ -2,12 +2,12 @@ const productsResponse = (products) => {
     const productMap = {};
 
             products.forEach((product) => {
-            const {productId, product_name, brand, color, size, sell_price, stock_quantity, image_url} = product;
+            const {product_group_id, name, brand, color, size, sell_price, stock_quantity, image_url} = product;
 
-            if (!productMap[productId]) {
-                productMap[productId] = {
-                    product_group_id: productId,
-                    name: product_name,
+            if (!productMap[product_group_id]) {
+                productMap[product_group_id] = {
+                    product_group_id: product_group_id,
+                    name: name,
                     image_url: image_url,
                     brand: brand,
                     price: sell_price,
@@ -21,16 +21,15 @@ const productsResponse = (products) => {
                         xxxl: [],
                     },
                     description: '',
-                    quantity: stock_quantity,
                 }
             }
 
-            if (!productMap[productId].sizes.includes(size)) {
-                productMap[productId].sizes.push(size);
+            if (!productMap[product_group_id].sizes.includes(size)) {
+                productMap[product_group_id].sizes.push(size);
             }
 
-            if (!productMap[productId].colors[size].includes(color)) {
-                productMap[productId].colors[size].push(color);
+            if (!productMap[product_group_id].colors[size].includes(color)) {
+                productMap[product_group_id].colors[size].push(color);
             }
         });
 

@@ -25,4 +25,4 @@ ProductVariants.belongsTo(OrderItem, {
   foreignKey: "product_Id",
 });
 
-export default { User, Orders, OrderItem, ProductVariants };
+export { User, Orders, OrderItem, ProductVariants };

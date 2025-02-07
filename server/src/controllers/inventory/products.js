@@ -1,30 +1,30 @@
-// import ProductVariants from '../../models/index.js';
+import { ProductVariants} from '../../models/index.js';
 
 import tempData from '../tempDataProduct.js';
-// import productResponse from '../utils/productResponse.js';
+import productsResponse from '../utils/productsResponse.js';
 
 // // Products GET
 export const productsGet = async (req, res) => {
-    res.json(tempData);
+    // res.json(tempData);
 
 //THE CODE BELOW WILL REPLACE THE CODE ABOVE ONCE THE DATABASE IS PROPERLY CONNECTED
-//     try {
-//         const products = await ProductVariants.findAll({
-//         attributes: ['productId', 'product_name'],
-//         raw: true,
-//         });
+    try {
+        const products = await ProductVariants.findAll({
+        attributes: ['product_group_id', 'name', 'brand', 'color', 'size', 'sell_price', 'image_url'],
+        raw: true,
+        });
 
-//         if (!products) {
-//             return res.json([]);
-//         } else {
-//             const productMap = productResponse(products);
+        if (!products) {
+            return res.json([]);
+        } else {
+            const productMap = productsResponse(products);
 
-//             return res.json(Object.values(productMap));
-//         }
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json([]);
-//     }
+            return res.json(Object.values(productMap));
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json([]);
+    }
 }
 
 

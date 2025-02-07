@@ -36,10 +36,10 @@ ProductVariants.init(
       unique: true,
       allowNull: false,
     },
-    // sell_price: {
-    //   type: DataTypes.DECIMAL(10, 2),
-    //   allowNull: false,
-    // },
+    sell_price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: true,
+    },
     // stock_quantity: {
     //   type: DataTypes.INTEGER,
     //   allowNull: false,
