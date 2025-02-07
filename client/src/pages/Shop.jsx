@@ -59,7 +59,7 @@ const Shop = () => {
     };
 
     const isProductInCart = (product) => cartItems.some(item => item.product_group_id === product.product_group_id);
-    
+
     const handleSortChange = (option) => {
         setSortOption(option);
     };

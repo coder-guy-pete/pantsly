@@ -14,7 +14,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [availableColors, setAvailableColors] = useState([]);
-    const [isInCart, setIsInCart] = useState(false);
+    const [isInCart, setIsInCart] = useState(isProductInCart(product));
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -128,7 +128,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                 </Flex>
 
                 <Flex gap={5}>
-                    {isProductInCart ? (
+                    {isProductInCart(product) ? (
                         <Button size="sm" colorPalette="red" onClick={handleRemoveFromCartCard}>Remove from Cart</Button>
                     ) : (
                         <Button size="sm" colorPalette='teal' onClick={handleAddToCartCard}>Add to Cart</Button>

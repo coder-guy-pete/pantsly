@@ -64,7 +64,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
     const handleColorChangeModal = (event) => {
         setSelectedColorModal(event.target.value);
     };
-    
+
     const handleAddToCartModal = () => {
         addToCart(product, selectedSizeModal, selectedColorModal);
     };
@@ -72,7 +72,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
     const handleRemoveFromCartModal = () => {
         removeFromCart(product);
     };
-    
+
     if (!product) {
         return null;
     }
