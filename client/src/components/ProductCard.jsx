@@ -44,17 +44,21 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         });
     }, [availableColors]);
 
+    // console.log('Color Options:', colorOptions);
+
     const quantityOptions = useMemo(() => {
         const options = [];
         for (let i = 1; i <= 10; i++) {
             options.push({ value: i, label: i });
         }
         return createListCollection({
-            items: options,
+            items: options.map(option => ({ value: option.value, label: option.label })),
             itemToString: (item) => item.label,
             itemToValue: (item) => item.value,
         });
     }, []);
+
+    // console.log('Quantity Options:', quantityOptions);
 
     const handleAddToCartCard = () => {
         if (!selectedSize || !selectedColor || !quantity) {
@@ -74,6 +78,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
     const handleSizeChange = (event) => {
         setSelectedSize(event.target.value);
+        console.log('Size Event:',event.target);
+        console.log('Size Value:',event.target.value);
     };
 
     const handleColorChange = (event) => {
@@ -81,8 +87,11 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     };
 
     const handleQuantityChange = (event) => {
-        setQuantity(parseInt(event.target.value, 10));
+        setQuantity(event.target.value);
+        console.log('Quantity Event:', event.target);
+        console.log('Quantity Value:', event.target.value);
     };
+
     
     return (
         <Box>
@@ -143,8 +152,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                 <SelectRoot
                     onChange={handleQuantityChange}
                     size="sm"
-                    collection={quantityOptions}
-                    defaultValue={[1]}>
+                    collection={quantityOptions}>
                     <SelectLabel>Quantity</SelectLabel>
                     <SelectTrigger>
                         <SelectValueText />
