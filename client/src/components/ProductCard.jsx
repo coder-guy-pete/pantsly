@@ -14,7 +14,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [availableColors, setAvailableColors] = useState([]);
-    const [quantity, setQuantity] = useState(parseInt(1, 10));
+    const [quantity, setQuantity] = useState(['1']);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -47,7 +47,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const quantityOptions = useMemo(() => {
         const options = [];
         for (let i = 1; i <= 10; i++) {
-            options.push({ value: i, label: i });
+            options.push({ value: i.toString(), label: i.toString() });
         }
         return createListCollection({
             items: options,
@@ -61,8 +61,9 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
             alert('Please select size, color, and quantity');
             return;
         }
+
         addToCart(product, selectedSize, selectedColor, parseInt(quantity, 10));
-        setQuantity(1);
+        setQuantity(['1']);
         setSelectedSize('');
         setSelectedColor('');
     };
@@ -77,8 +78,6 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
 
     const handleSizeChange = (event) => {
         setSelectedSize(event.target.value);
-        console.log('Size Event:',event.target);
-        console.log('Size Value:',event.target.value);
     };
 
     const handleColorChange = (event) => {
@@ -86,9 +85,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     };
 
     const handleQuantityChange = (event) => {
-        setQuantity(parseInt(event.target.value, 10));
-        console.log('Quantity Event:', event.target);
-        console.log('Quantity Value:', event.target.value);
+        setQuantity(event.value);
     };
 
     
@@ -130,7 +127,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                     </SelectContent>
                 </SelectRoot>
 
-                <SelectRoot 
+                <SelectRoot
                     onChange={handleColorChange} 
                     size="sm"
                     collection={colorOptions}
@@ -149,9 +146,10 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                 </SelectRoot>
 
                 <SelectRoot
-                    onChange={handleQuantityChange}
                     size="sm"
-                    collection={quantityOptions}>
+                    collection={quantityOptions}
+                    value={quantity}
+                    onValueChange={handleQuantityChange}>
                     <SelectLabel>Quantity</SelectLabel>
                     <SelectTrigger>
                         <SelectValueText />

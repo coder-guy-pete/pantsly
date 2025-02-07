@@ -77,8 +77,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
     };
 
     const handleQuantityChangeModal = (event) => {
-        setQuantity(parseInt(event.target.value, 10));
-        console.log('Quantity:', quantity);
+        setQuantity(event.value);
     };
 
     const handleAddToCartModal = () => {
@@ -86,7 +85,11 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
             alert('Please select size, color, and quantity');
             return;
         }
-        addToCart(product, selectedSizeModal, selectedColorModal, quantity);
+        addToCart(product, selectedSizeModal, selectedColorModal, parseInt(quantity, 10));
+        setSelectedSizeModal('');
+        setSelectedColorModal('');
+        setQuantity(['1']);
+        onOpenChange(false);
     };
 
     const handleRemoveFromCartModal = () => {
@@ -162,10 +165,10 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
                                 </SelectRoot>
 
                                 <SelectRoot
-                                    onChange={handleQuantityChangeModal}
                                     size="sm"
                                     collection={quantityOptionsModal}
-                                    defaultValue={[1]}>
+                                    value={quantity}
+                                    onValueChange={handleQuantityChangeModal}>
                                     <SelectLabel>Quantity</SelectLabel>
                                     <SelectTrigger>
                                         <SelectValueText />

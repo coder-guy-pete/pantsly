@@ -4,7 +4,7 @@ import { LuShoppingCart } from 'react-icons/lu';
 
 const Cart = ({ cartItems, setCartItems }) => {
 
-    const totalPrice = cartItems.reduce((total, item) => total + item.sell_price * item.quantity, 0);
+    const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const [userInfo, setUserInfo] = React.useState({
         name: '',
@@ -19,7 +19,7 @@ const Cart = ({ cartItems, setCartItems }) => {
 
     const handleQuantityChange = (product, newQuantity) => {
         const updatedCartItems = cartItems.map(item => {
-            if (item.product_group_id === product.product_group_id && item.size === product.size && item.color === product.color) { // Match on product and variation
+            if (item.product_group_id === product.product_group_id && item.size === product.size && item.color === product.color) {
                 return { ...item, quantity: newQuantity };
             }
             return item;
@@ -98,7 +98,7 @@ const Cart = ({ cartItems, setCartItems }) => {
                                 />
                             </Table.Cell>
                             <Table.Cell>
-                                {`$${item.sell_price*item.quantity}`} 
+                                {`$${item.price*item.quantity}`} 
                             </Table.Cell>
                             <Table.Cell>
                                 <Button colorScheme="red" size="sm" onClick={() => handleRemoveFromCart(item)}>
