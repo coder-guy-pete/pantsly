@@ -57,6 +57,10 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     }, []);
 
     const handleAddToCartCard = () => {
+        if (!selectedSize || !selectedColor || !quantity) {
+            alert('Please select size, color, and quantity');
+            return;
+        }
         addToCart(product, selectedSize, selectedColor, quantity);
     };
 

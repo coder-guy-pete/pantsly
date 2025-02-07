@@ -67,8 +67,6 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
             itemToValue: (item) => item.value,
         });
     }, []);
-
-    console.log(quantityOptionsModal);
     
     const handleSizeChangeModal = (event) => {
         setSelectedSizeModal(event.target.value);
