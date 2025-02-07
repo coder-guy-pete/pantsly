@@ -25,6 +25,7 @@ const Cart = ({ cartItems, setCartItems }) => {
             return item;
         });
         setCartItems(updatedCartItems);
+        console.log("Updated Cart Items:", updatedCartItems);
     };
 
     const handleInputChange = (e) => {
@@ -42,7 +43,7 @@ const Cart = ({ cartItems, setCartItems }) => {
     };
 
     const handleRemoveFromCart = (product) => {
-        const updatedCartItems = cartItems.filter(item => item.product_group_id !== product.product_group_id || item.size !== product.size || item.color !== product.color); // Match on product and variation
+        const updatedCartItems = cartItems.filter(item => item.product_group_id !== product.product_group_id || item.size !== product.size || item.color !== product.color);
         setCartItems(updatedCartItems);
     };
 

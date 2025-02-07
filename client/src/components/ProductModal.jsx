@@ -78,6 +78,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
 
     const handleQuantityChangeModal = (event) => {
         setQuantity(parseInt(event.target.value, 10));
+        console.log('Quantity:', quantity);
     };
 
     const handleAddToCartModal = () => {

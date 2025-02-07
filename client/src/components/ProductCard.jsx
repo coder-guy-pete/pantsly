@@ -14,7 +14,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [availableColors, setAvailableColors] = useState([]);
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(parseInt(1, 10));
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -44,28 +44,27 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
         });
     }, [availableColors]);
 
-    // console.log('Color Options:', colorOptions);
-
     const quantityOptions = useMemo(() => {
         const options = [];
         for (let i = 1; i <= 10; i++) {
             options.push({ value: i, label: i });
         }
         return createListCollection({
-            items: options.map(option => ({ value: option.value, label: option.label })),
+            items: options,
             itemToString: (item) => item.label,
             itemToValue: (item) => item.value,
         });
     }, []);
-
-    // console.log('Quantity Options:', quantityOptions);
 
     const handleAddToCartCard = () => {
         if (!selectedSize || !selectedColor || !quantity) {
             alert('Please select size, color, and quantity');
             return;
         }
-        addToCart(product, selectedSize, selectedColor, quantity);
+        addToCart(product, selectedSize, selectedColor, parseInt(quantity, 10));
+        setQuantity(1);
+        setSelectedSize('');
+        setSelectedColor('');
     };
 
     const handleRemoveFromCartCard = () => {
@@ -87,7 +86,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     };
 
     const handleQuantityChange = (event) => {
-        setQuantity(event.target.value);
+        setQuantity(parseInt(event.target.value, 10));
         console.log('Quantity Event:', event.target);
         console.log('Quantity Value:', event.target.value);
     };
