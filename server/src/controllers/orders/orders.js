@@ -71,7 +71,7 @@ export const ordersPost = async (req, res) => {
 
     // THE CODE BELOW WILL REPLACE THE CODE ABOVE ONCE THE DATABASE IS PROPERLY CONNECTED
     
-    const t = await sequelize.transaction();
+    // const t = await sequelize.transaction();
     
     // try {
         
