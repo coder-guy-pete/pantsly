@@ -81,6 +81,10 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
     };
 
     const handleAddToCartModal = () => {
+        if (!selectedSizeModal || !selectedColorModal || !quantity) {
+            alert('Please select size, color, and quantity');
+            return;
+        }
         addToCart(product, selectedSizeModal, selectedColorModal, quantity);
     };
 
@@ -159,7 +163,8 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
                                 <SelectRoot
                                     onChange={handleQuantityChangeModal}
                                     size="sm"
-                                    collection={quantityOptionsModal}>
+                                    collection={quantityOptionsModal}
+                                    defaultValue={[1]}>
                                     <SelectLabel>Quantity</SelectLabel>
                                     <SelectTrigger>
                                         <SelectValueText />

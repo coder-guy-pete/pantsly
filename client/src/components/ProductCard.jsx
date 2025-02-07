@@ -143,7 +143,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                 <SelectRoot
                     onChange={handleQuantityChange}
                     size="sm"
-                    collection={quantityOptions}>
+                    collection={quantityOptions}
+                    defaultValue={[1]}>
                     <SelectLabel>Quantity</SelectLabel>
                     <SelectTrigger>
                         <SelectValueText />
