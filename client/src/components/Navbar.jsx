@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { Flex, HStack, Button, Text, Spacer } from '@chakra-ui/react';
 import { HiOutlineShoppingCart } from "react-icons/hi";
 
-const Navbar = () => {
+const Navbar = ({ cartItems }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(false); // State for login status (REPLACE THIS WITH ACTUAL AUTHENTICATION)
-    const [cartCount, setCartCount] = useState(3); // State for cart count (REPLACE THIS WITH ACTUAL CART COUNT)
+    const cartCount = cartItems.length;
 
     const isActive = (path) => location.pathname === path;
 

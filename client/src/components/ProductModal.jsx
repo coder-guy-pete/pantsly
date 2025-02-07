@@ -23,7 +23,7 @@ import {
     SelectValueText,
 } from './ui/select';
 
-const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, isProductInCart}) => {
+const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, isProductInCart, quantity, setQuantity }) => {
     const cancelRef = React.useRef();
     const [selectedSizeModal, setSelectedSizeModal] = useState('');
     const [selectedColorModal, setSelectedColorModal] = useState('');
@@ -56,6 +56,17 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
         });
     }, [availableColors]);
 
+    const quantityOptionsModal = useMemo(() => {
+        const options = [];
+        for (let i = 1; i <= 10; i++) {
+            options.push({ value: i, label: i });
+        }
+        return createListCollection({
+            items: options,
+            itemToString: (item) => item.label,
+            itemToValue: (item) => item.value,
+        });
+    }, []);
     
     const handleSizeChangeModal = (event) => {
         setSelectedSizeModal(event.target.value);
@@ -64,15 +75,23 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
     const handleColorChangeModal = (event) => {
         setSelectedColorModal(event.target.value);
     };
-    
+
+    const handleQuantityChangeModal = (event) => {
+        setQuantity(parseInt(event.target.value, 10));
+    };
+
     const handleAddToCartModal = () => {
-        addToCart(product, selectedSizeModal, selectedColorModal);
+        if (!selectedSizeModal || !selectedColorModal || !quantity) {
+            alert('Please select size, color, and quantity');
+            return;
+        }
+        addToCart(product, selectedSizeModal, selectedColorModal, quantity);
     };
 
     const handleRemoveFromCartModal = () => {
         removeFromCart(product);
     };
-    
+
     if (!product) {
         return null;
     }
@@ -137,6 +156,24 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
                                             <SelectItem key={item.value} item={item}>
                                                 {item.label}
                                             </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </SelectRoot>
+
+                                <SelectRoot
+                                    onChange={handleQuantityChangeModal}
+                                    size="sm"
+                                    collection={quantityOptionsModal}
+                                    defaultValue={[1]}>
+                                    <SelectLabel>Quantity</SelectLabel>
+                                    <SelectTrigger>
+                                        <SelectValueText />
+                                    </SelectTrigger>
+                                    <SelectContent portalled={false}>
+                                        {quantityOptionsModal.items.map((item) => (
+                                        <SelectItem key={item.value} item={item}>
+                                            {item.label}
+                                        </SelectItem>
                                         ))}
                                     </SelectContent>
                                 </SelectRoot>
