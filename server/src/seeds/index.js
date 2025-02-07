@@ -1,4 +1,7 @@
-import { seedProductVariants } from "./productVariants-seeds.js";
+import { seedUsers } from "./user-seed.js";
+import { seedOrders } from "./orders-seed.js";
+import { seedOrderItem } from "./orderItem-seed.js";
+import { seedProductVariants } from "./productVariants-seed.js";
 // import { seedTickets } from "./productVariants-seeds.js";
 import sequelize from "../config/connection.js";
 
@@ -12,17 +15,17 @@ const seedAll = async () => {
     await seedUsers();
     console.log("\n----- USERS SEEDED -----\n");
 
-    // Seed Product Variants
-    await seedProductVariants();
-    console.log("\n----- PRODUCT VARIANTS SEEDED -----\n");
+    // Seed Order Items
+    await seedOrderItem();
+    console.log("\n----- ORDER ITEMS SEEDED -----\n");
 
     //Seed Orders
     await seedOrders();
     console.log("\n----- ORDERS SEEDED -----\n");
 
-    // Seed Order Items
-    await seedOrderItem();
-    console.log("\n----- ORDER ITEMS SEEDED -----\n");
+    // Seed Product Variants
+    await seedProductVariants();
+    console.log("\n----- PRODUCT VARIANTS SEEDED -----\n");
 
     // Exit process successfully
     process.exit(0);
