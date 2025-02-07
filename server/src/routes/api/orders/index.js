@@ -6,10 +6,10 @@ import { ordersGet, ordersPost } from '../../../controllers/orders/orders.js';
 
 router.use('/order', order);
 
-// GET api/orders
-router.get('/', ordersGet);
+// GET api/orders/:user_id
+router.get('/:user_id', ordersGet);
 
-// POST api/orders
+// POST api/order - will be used when creating a new order on cart submit
 router.post('/', ordersPost);
 
 
