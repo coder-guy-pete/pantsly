@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Image, Button, VStack, HStack, Table, Heading, EmptyState, Card, Flex, Text } from '@chakra-ui/react';
 import { LuShoppingCart } from 'react-icons/lu';
