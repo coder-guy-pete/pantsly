@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import {
     Center,
@@ -10,10 +10,14 @@ import {
     Text
 } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
+import { AuthContext } from '../context/AuthContext';
+import { mockUsers } from '../mock-data/login';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { login } = useContext(AuthContext);
+    const [loginError, setLoginError] = useState(null);
 
     const handleEmailChange = (e) => {
         setEmail(e.target.value);
@@ -25,9 +29,18 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // REPLACE WITH LOGIN DETAILS HERE
-        console.log('Email:', email);
-        console.log('Password:', password);
+        setLoginError(null);
+        
+        setTimeout(() => {
+            const user = mockUsers.find(user => user.email === email && user.password === password);
+            if (user) {
+                login(user);
+                navigate("/");
+            } else {
+                setLoginError("Invalid email or password.");
+            }
+            setIsLoading(false);
+        }, 1000);
     };
 
     return (
