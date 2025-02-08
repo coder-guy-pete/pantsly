@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     Center,
     Card,
@@ -7,40 +7,32 @@ import {
     Input,
     Stack,
     Button,
-    Text
+    Text,
+    Spinner,
+    Alert,
 } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
 import { AuthContext } from '../context/AuthContext';
-import { mockUsers } from '../mock-data/Users';
+// import { mockUsers } from '../mock-data/Users';
 
-const Login = () => {
+const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const { login } = useContext(AuthContext);
-    const [loginError, setLoginError] = useState(null);
+    const { login, isLoading } = useContext(AuthContext);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setLoginError(null);
-        
-        setTimeout(() => {
-            const user = mockUsers.find(user => user.email === email && user.password === password);
-            if (user) {
-                login(user);
-                navigate("/");
-            } else {
-                setLoginError("Invalid email or password.");
-            }
-            setIsLoading(false);
-        }, 1000);
+        setError(null);
+
+        try {
+            await login(email, password);
+            navigate("/");
+        } catch (err) {
+            console.error("Login error:", err);
+            setError(err.message);
+        }
     };
 
     return (
@@ -57,7 +49,7 @@ const Login = () => {
                                     name="email"
                                     type="email"
                                     value={email}
-                                    onChange={handleEmailChange}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     required
                                 />
                             </Field>
@@ -66,14 +58,20 @@ const Login = () => {
                                     name="password"
                                     type="password"
                                     value={password}
-                                    onChange={handlePasswordChange}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     required
                                     />
                             </Field>
+                            {error && (
+                                <Alert.Root status="error">
+                                    <Alert.Indicator />
+                                    <Alert.Title>User not found</Alert.Title>
+                                </Alert.Root>
+                            )}
                         </Stack>
                     </Card.Body>
                     <Card.Footer>
-                        <Button type="submit" colorPalette="teal" rounded="md">
+                        <Button type="submit" colorPalette="teal" rounded="md" isLoading={isLoading}>
                             Log In
                         </Button>
                         <Text>Don't have an account?{' '}</Text>
@@ -85,4 +83,4 @@ const Login = () => {
 );
 };
 
-export default Login;
+export default LoginPage;

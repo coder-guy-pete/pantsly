@@ -1,28 +1,6 @@
 import { mockUsers } from '../mock-data/Users';
 
-const Auth = {
-    login: async (email, password) => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const user = mockUsers.find(user => user.email === email && user.password === password)
-                if (user) {
-                    const mockToken = generateMockJWT(user)
-                    resolve({ token: mockToken })
-                } else {
-                    reject(new Error('Invalid email or password'))
-                }
-            }, 1000);
-        });
-    },
-
-    logout: async () => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve()
-            }, 500);
-        });
-    },
-
+const authService = {
     generateMockJWT: (user) => {
         const payload = {
             id: user.id,
@@ -44,6 +22,28 @@ const Auth = {
             return null;
         }
     },
+
+    login: async (email, password) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const user = mockUsers.find(user => user.email === email && user.password === password)
+                if (user) {
+                    const mockToken = generateMockJWT(user)
+                    resolve({ token: mockToken })
+                } else {
+                    reject(new Error('Invalid email or password'))
+                }
+            }, 1000);
+        });
+    },
+
+    logout: async () => {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve()
+            }, 500);
+        });
+    },
 };
 
-export default Auth;
+export default authService;

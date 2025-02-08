@@ -12,7 +12,6 @@ import {
     Spacer,
     Highlight
 } from '@chakra-ui/react';
-// import Orders from '../mock-data/Orders'; // Import mock data
 import { AuthContext } from '@/context/AuthContext';
 
 const OrderHistory = () => {
