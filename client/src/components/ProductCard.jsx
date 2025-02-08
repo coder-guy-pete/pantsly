@@ -104,7 +104,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                     <Card.Title fontWeight="bold" fontSize="lg">{product.name}</Card.Title>
                     <Text color="gray.600" fontSize="sm">{product.brand}</Text>
                     <Flex alignItems="center" justifyContent="space-between">
-                        <Text fontSize="md" color="teal.500">${product.sell_price}</Text>
+                        <Text fontSize="md" color="teal.500">${product.price}</Text>
                     </Flex>
 
                 <Flex gap={5}>

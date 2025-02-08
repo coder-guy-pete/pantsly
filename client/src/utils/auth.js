@@ -24,11 +24,13 @@ const authService = {
     },
 
     login: async (email, password) => {
+        console.log('this inside login', this);
         return new Promise((resolve, reject) => {
             setTimeout(() => {
+                console.log('this inside setTimeout (login)', this);
                 const user = mockUsers.find(user => user.email === email && user.password === password)
                 if (user) {
-                    const mockToken = generateMockJWT(user)
+                    const mockToken = this.generateMockJWT(user)
                     resolve({ token: mockToken })
                 } else {
                     reject(new Error('Invalid email or password'))

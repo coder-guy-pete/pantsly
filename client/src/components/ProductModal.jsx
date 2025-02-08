@@ -121,7 +121,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
                         <VStack align="start" spacing={2}>
                             <Text fontWeight="bold" fontSize="xl">{product.name}</Text>
                             <Text color="gray.600" fontSize="md">{product.brand}</Text>
-                            <Text fontSize="lg" color="teal.500">${product.sell_price}</Text>
+                            <Text fontSize="lg" color="teal.500">${product.price}</Text>
                             <Text>{product.description}</Text>
 
                             <Flex gap={5}>

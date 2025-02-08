@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { Routes, Route } from "react-router-dom"
 // Components
 import { Flex } from "@chakra-ui/react"
@@ -21,7 +21,7 @@ function App() {
     localStorage.setItem("shoppingCart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  const handleAddToCart = (product, size, color, quantity) => {
+  const handleAddToCart = useCallback((product, size, color, quantity) => {
     setCartItems(prevItems => {
         const newItem = { ...product, size, color, quantity };
         const existingItemIndex = prevItems.findIndex(
@@ -36,14 +36,14 @@ function App() {
           return [...prevItems, newItem];
       }
   });
-};
+}, []);
 
-const handleRemoveFromCart = (product) => {
+const handleRemoveFromCart = useCallback((product) => {
     setCartItems(prevItems => {
         const updatedItems = prevItems.filter((item) => item.product_group_id !== product.product_group_id);
         return updatedItems;
     });
-};
+}, []);
 
 const isProductInCart = (product) => cartItems.some(item => item.product_group_id === product.product_group_id);
 

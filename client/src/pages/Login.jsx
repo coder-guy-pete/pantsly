@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
 import { AuthContext } from '../context/AuthContext';
-// import { mockUsers } from '../mock-data/Users';
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
