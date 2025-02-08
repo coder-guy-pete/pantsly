@@ -32,39 +32,41 @@ const Login = () => {
 
     return (
         <Center>
-            <Card.Root as="form" w="md">
-                <Card.Header>
-                    <Heading size="xl" textAlign="center">Sign In</Heading>
-                </Card.Header>
-                <Card.Body p={6}>
-                    <Stack onSubmit={handleSubmit}>
-                        <Field label="Email">
-                            <Input
-                                name="email"
-                                type="email"
-                                value={email}
-                                onChange={handleEmailChange}
-                                required
-                            />
-                        </Field>
-                        <Field label="Password">
-                            <Input
-                                name="password"
-                                type="password"
-                                value={password}
-                                onChange={handlePasswordChange}
-                                required
+            <Card.Root w="md">
+                <form onSubmit={handleSubmit}>
+                    <Card.Header>
+                        <Heading size="xl" textAlign="center">Sign In</Heading>
+                    </Card.Header>
+                    <Card.Body p={6}>
+                        <Stack>
+                            <Field label="Email">
+                                <Input
+                                    name="email"
+                                    type="email"
+                                    value={email}
+                                    onChange={handleEmailChange}
+                                    required
                                 />
-                        </Field>
-                    </Stack>
-                </Card.Body>
-                <Card.Footer>
-                    <Button type="submit" colorPalette="teal" rounded="md">
-                        Log In
-                    </Button>
-                    <Text>Don't have an account?{' '}</Text>
-                    <Text color="teal.500" textDecoration="underline"><Link to="/signup">Sign Up</Link></Text>
-                </Card.Footer>
+                            </Field>
+                            <Field label="Password">
+                                <Input
+                                    name="password"
+                                    type="password"
+                                    value={password}
+                                    onChange={handlePasswordChange}
+                                    required
+                                    />
+                            </Field>
+                        </Stack>
+                    </Card.Body>
+                    <Card.Footer>
+                        <Button type="submit" colorPalette="teal" rounded="md">
+                            Log In
+                        </Button>
+                        <Text>Don't have an account?{' '}</Text>
+                        <Text color="teal.500" textDecoration="underline"><Link to="/signup">Sign Up</Link></Text>
+                    </Card.Footer>
+                    </form>
             </Card.Root>
         </Center>
 );
