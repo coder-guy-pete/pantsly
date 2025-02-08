@@ -9,6 +9,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import OrderHistory from "./pages/OrderHistory"
 import Cart from "./pages/Cart"
+import Checkout from "./pages/Checkout"
 
 function App() {
   const [cartItems, setCartItems] = useState(() => {
@@ -60,6 +61,7 @@ const isProductInCart = (product) => cartItems.some(item => item.product_group_i
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="order-history" element={<OrderHistory />} />
+        <Route path="/checkout" element={<Checkout cartItems={cartItems} setCartItems={setCartItems} />} />
       </Routes>
     </Flex>
   )

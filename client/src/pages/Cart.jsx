@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Image, Button, VStack, HStack, Table, Heading, EmptyState, Card, Flex, Text } from '@chakra-ui/react';
 import { LuShoppingCart } from 'react-icons/lu';
+import { AuthContext } from '../context/AuthContext';
 
 const Cart = ({ cartItems, setCartItems }) => {
+    const navigate = useNavigate();
+    const { user } = useContext(AuthContext);
 
     const subTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const formattedSubTotal = subTotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -18,11 +22,11 @@ const Cart = ({ cartItems, setCartItems }) => {
     };
 
     const handleCheckout = () => {
-        // NEED TO IMPLEMENT ACTUAL CHECKOUT FUNCTIONALITY
-
-        setCartItems([]);
-        // Add route to order history
-        alert("Order placed successfully! (This is a mock checkout.)");
+        if (user) {
+            navigate('/checkout', { state: { cartItems, userInfo: user } });
+        } else {
+            navigate('/checkout', { state: { cartItems } });
+        }
     };
 
     const handleRemoveFromCart = (product) => {

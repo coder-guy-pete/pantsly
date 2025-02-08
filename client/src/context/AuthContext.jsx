@@ -7,7 +7,7 @@ export const AuthContext = createContext({
 });
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState({ name: 'Guest' });
+    const [user, setUser] = useState({ name: 'Guest', email: 'guest@email.com', address1: '123 Main Street', city: 'Anytown', state: 'CA', zipcode: '12345' });
 
     const login = (userData) => {
         console.log("Mock Login:", userData);
