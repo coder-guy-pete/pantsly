@@ -1,12 +1,8 @@
-import React, { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
 import { Box, Image, Button, VStack, HStack, Table, Heading, EmptyState, Card, Flex, Text } from '@chakra-ui/react';
 import { LuShoppingCart } from 'react-icons/lu';
-import { AuthContext } from '../context/AuthContext';
 
 const Cart = ({ cartItems, setCartItems }) => {
-    const navigate = useNavigate();
-    const { user } = useContext(AuthContext);
 
     const subTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const formattedSubTotal = subTotal.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
@@ -22,11 +18,11 @@ const Cart = ({ cartItems, setCartItems }) => {
     };
 
     const handleCheckout = () => {
-        if (user) {
-            navigate('/checkout', { state: { cartItems, userInfo: user } });
-        } else {
-            navigate('/checkout', { state: { cartItems } });
-        }
+        // NEED TO IMPLEMENT ACTUAL CHECKOUT FUNCTIONALITY
+
+        setCartItems([]);
+        // Add route to order history
+        alert("Order placed successfully! (This is a mock checkout.)");
     };
 
     const handleRemoveFromCart = (product) => {
@@ -70,7 +66,7 @@ const Cart = ({ cartItems, setCartItems }) => {
                 <Table.Body>
                     {cartItems.map(item => (
                         <Table.Row key={`${item.product_group_id}-${item.size}-${item.color}`}>
-                            <Table.Cell><Image src={item.image_url} alt={item.name} w="150px" rounded="md" /></Table.Cell> {/* Smaller image */}
+                            <Table.Cell><Image src={item.image_url} alt={item.name} w="150px" rounded="md" /></Table.Cell>
                             <Table.Cell>{item.name}</Table.Cell>
                             <Table.Cell>{item.brand}</Table.Cell>
                             <Table.Cell>
@@ -83,7 +79,7 @@ const Cart = ({ cartItems, setCartItems }) => {
                                 />
                             </Table.Cell>
                             <Table.Cell>
-                                {`$${(item.price*item.quantity).toFixed(2)}`} 
+                                {`$${(item.price*item.quantity).toFixed(2)}`}
                             </Table.Cell>
                             <Table.Cell>
                                 <Button colorPalette="red" size="sm" onClick={() => handleRemoveFromCart(item)}>
