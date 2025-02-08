@@ -34,13 +34,13 @@ const Checkout = () => {
         // Placeholder for submitting the order (backend integration)
         console.log("Order submitted:", { cartItems, userInfo });
         alert("Order submitted successfully! (Placeholder)");
-        navigate('/order-confirmation'); // Navigate to confirmation page
+        navigate('/order-history'); // Navigate to confirmation page
     };
 
     return (
         <Box p={4}>
             <Heading as="h2" size="2xl" fontWeight="bold" mb={4}>Checkout</Heading>
-            <Flex justify="space-around">
+            <Flex gap={10} justify="center">
             <Card.Root p={4} w="40%">
                 <Card.Header>
                     <Card.Title>Shipping Information</Card.Title>
