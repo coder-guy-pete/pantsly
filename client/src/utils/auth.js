@@ -1,4 +1,4 @@
-import { mockUsers } from '../mock-data/login'
+import { mockUsers } from '../mock-data/Users';
 
 const Auth = {
     login: async (email, password) => {
