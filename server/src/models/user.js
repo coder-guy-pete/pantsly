@@ -1,5 +1,6 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/connection.js";
+import bcrypt from 'bcrypt';
 
 class User extends Model {}
 
@@ -13,7 +14,6 @@ User.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     address1: {
       type: DataTypes.STRING,
@@ -31,7 +31,10 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-
+    zip: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     phoneNumber: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -39,11 +42,11 @@ User.init(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     password: {
       type: DataTypes.STRING,
       allowNull: true,
+      defaultValue: null,
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,
@@ -53,6 +56,20 @@ User.init(
   {
     tableName: "users",
     sequelize,
+    hooks: {
+      async beforeCreate(user) {
+        if (user.password) {
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(user.password, salt);
+        }
+      },
+      async beforeUpdate(user) {
+        if (user.password) {
+          const salt = await bcrypt.genSalt(10);
+          user.password = await bcrypt.hash(user.password, salt);
+        }
+      },
+    },
   }
 );
 

@@ -11,7 +11,8 @@ export const seedUsers = async () => {
       address2: "Apt 4B",
       city: "New York",
       state: "NY",
-      phoneNumber: "555-123-4567",
+      zip: 10001, // Added ZIP
+      phoneNumber: 5551234567, // Converted to integer
       email: "johndoe@example.com",
       password: "password123",
       isAdmin: false,
@@ -22,7 +23,8 @@ export const seedUsers = async () => {
       address2: null,
       city: "Los Angeles",
       state: "CA",
-      phoneNumber: "555-987-6543",
+      zip: 90001, // Added ZIP
+      phoneNumber: 5559876543, // Converted to integer
       email: "janesmith@example.com",
       password: "securePass!",
       isAdmin: true,
@@ -33,7 +35,8 @@ export const seedUsers = async () => {
       address2: "Suite 100",
       city: "Chicago",
       state: "IL",
-      phoneNumber: "555-456-7890",
+      zip: 60601, // Added ZIP
+      phoneNumber: 5554567890, // Converted to integer
       email: "michaelj@example.com",
       password: "pass1234",
     },
@@ -43,7 +46,8 @@ export const seedUsers = async () => {
       address2: "",
       city: "Houston",
       state: "TX",
-      phoneNumber: "555-234-5678",
+      zip: 77001, // Added ZIP
+      phoneNumber: 5552345678, // Converted to integer
       email: "emilyd@example.com",
       password: "12345secure",
       isAdmin: false,
@@ -54,7 +58,8 @@ export const seedUsers = async () => {
       address2: null,
       city: "Miami",
       state: "FL",
-      phoneNumber: "555-678-1234",
+      zip: 33101, // Added ZIP
+      phoneNumber: 5556781234, // Converted to integer
       email: "davidw@example.com",
       password: "floridaMan2023",
       isAdmin: true,
