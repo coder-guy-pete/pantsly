@@ -2,14 +2,14 @@ import { jwtDecode } from 'jwt-decode';
 
 const AuthService = {
     getProfile() {
-        try {
-            const token = this.getToken();
-            if (token) {
-                return jwtDecode(token);
-            }
+        const token = this.getToken();
+        if (!token) {
             return null;
-        } catch (error) {
-            console.error("Error getting profile:", error);
+        }
+        try {
+            return jwtDecode(token);
+        } catch (err) {
+            console.error('Error decoding token:', err);
             return null;
         }
     },
@@ -22,38 +22,26 @@ const AuthService = {
     isTokenExpired(token) {
         try {
             const decoded = jwtDecode(token);
-            return decoded.exp < Date.now() / 1000;
+            return decoded?.exp < Date.now() / 1000;
         } catch (err) {
-            return true; // Consider expired if there's an error
+            return false;
         }
     },
 
     getToken() {
-        return localStorage.getItem('token');
+        const loggedUser = localStorage.getItem('token') || '';
+        return loggedUser;
     },
 
-    login(idToken) {
-        localStorage.setItem('id_token', idToken);
-        return true;
+    login(token) {
+        localStorage.setItem('id_token', token);
+        window.location.assign('/');
     },
 
     logout() {
         localStorage.removeItem('id_token');
-        return true;
+        window.location.assign('/');
     },
-
-    getHardcodedUser() {
-        return {
-            name: "Test User",
-            email: "hardcoded@example.com",
-            password: "password123",
-            address1: "1234 Elm St",
-            address2: "Apt 123",
-            city: "Springfield",
-            state: "IL",
-            zip: "62701",
-        };
-    }
 };
 
 export default AuthService;

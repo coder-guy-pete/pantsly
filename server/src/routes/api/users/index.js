@@ -10,10 +10,10 @@ router.use('/user', userRoutes);
 router.get('/', usersGet);
 
 //POST api/users
-router.post('/', usersPost);
+router.post('/', usersPost); //NEED to hash password
 
 // PUT api/users/id
-router.put('/:user_id', usersPut)
+router.put('/:id', usersPut) //NEED to hash password
 
 // DELETE api/users/id
 router.delete('/:id', usersDelete)

@@ -1,18 +1,16 @@
 import { User } from '../../models/index.js';
 
-// Users GET
-export const usersGet = async (req, res) => {
-  // res.json({message: 'Placeholder for usersGet. Will return all users'});
-
+// GET /Users
+export const usersGet = async (_req, res) => {
   try {
-    const users = await User.findAll();
-    return res.status(200).json(users);
+    const users = await User.findAll({
+      attributes: { exclude: ['password'] },
+    });
+    res.status(200).json(users);
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({message: 'Could not retrieve users'});
+    res.status(500).json({ message: error.message });
   }
 };
-
 
 // Users POST
 export const usersPost = async (req, res) => {
