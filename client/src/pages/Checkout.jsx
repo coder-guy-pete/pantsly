@@ -35,7 +35,6 @@ const Checkout = () => {
 
                 const userData = await response.json();
                 setFormValues(userData);
-                console.log
             } catch (error) {
                 console.error(error);
                 setError(error.message);
@@ -46,6 +45,8 @@ const Checkout = () => {
 
         fetchUserInfo();
     }, [user]);
+
+    console.log(formValues);
 
     const subTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const taxes = subTotal * 0.0745;
@@ -105,25 +106,25 @@ const Checkout = () => {
                 <Card.Body>
                     <VStack spacing={4}>
                         <Field label="Name" required>
-                            <Input type="text" name="name" value={formValues.name} onChange={handleInputChange} />
+                            <Input type="text" name="name" value={user.name} onChange={handleInputChange} />
                         </Field>
                         <Field label="Email" required>
-                            <Input type="email" name="email" value={formValues.email} onChange={handleInputChange} />
+                            <Input type="email" name="email" value={user.email} onChange={handleInputChange} />
                         </Field>
                         <Field label="Address 1" required>
-                            <Input type="text" name="address1" value={formValues.address1} onChange={handleInputChange} />
+                            <Input type="text" name="address1" value={user.address1} onChange={handleInputChange} />
                         </Field>
                         <Field label="Address 2 (Optional)">
-                            <Input type="text" name="address2" value={formValues.address2} onChange={handleInputChange} />
+                            <Input type="text" name="address2" value={user.address2} onChange={handleInputChange} />
                         </Field>
                         <Field label="City" required>
-                            <Input type="text" name="city" value={formValues.city} onChange={handleInputChange} />
+                            <Input type="text" name="city" value={user.city} onChange={handleInputChange} />
                         </Field>
                         <Field label="State" required>
-                            <Input type="text" name="state" value={formValues.state} onChange={handleInputChange} />
+                            <Input type="text" name="state" value={user.state} onChange={handleInputChange} />
                         </Field>
                         <Field label="Zip" required>
-                            <Input type="text" name="zip" value={formValues.zipcode} onChange={handleInputChange} />
+                            <Input type="text" name="zip" value={user.zipcode} onChange={handleInputChange} />
                         </Field>
                     </VStack>
                 </Card.Body>
