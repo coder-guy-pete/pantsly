@@ -21,24 +21,33 @@ const LoginPage = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    const handleHardcodedLogin = async () => {
-        await login('dummyToken');
-        navigate('/');
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
 
         try {
-            await login(email, password);
-            if (user) {
+            const response = await fetch('/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            if (!response.ok) {
+                throw new Error(response.json().message || 'Login failed');
+            }
+
+            const data = await response.json();
+            const token = data.token;
+
+            const success = await login(token);
+            if (success) {
                 navigate('/');
             } else {
-                setError('User not found');
+                setError('Login failed');
             }
         } catch (err) {
-            console.error("Login error:", err);
             setError(err.message);
         }
     };
@@ -79,9 +88,6 @@ const LoginPage = () => {
                         </Stack>
                     </Card.Body>
                     <Card.Footer>
-                    <Button colorPalette="orange" rounded="md" onClick={handleHardcodedLogin}>
-                            Log In (Hardcoded)
-                        </Button>
                         <Button type="submit" colorPalette="teal" rounded="md" isLoading={isLoading}>
                             Log In
                         </Button>
