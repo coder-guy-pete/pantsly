@@ -9,6 +9,9 @@ const router = Router();
 router.get('/', (req, res) => {
   res.send('Hello World!');
 });
+router.get('/auth', (req, res) => {
+  res.send('Hello Auth!');
+});
 router.use('/auth', authRoutes);
 router.use('/api', api); // Add authToken once done testing auth routes
 
