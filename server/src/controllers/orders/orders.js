@@ -90,15 +90,17 @@ export const ordersPost = async (req, res) => {
         const orderItemsData = [];
 
         for (const orderItem of req.body.orderItems) {
-            const product_variant_id = await ProductVariants.findOne({
+            const product_variant = await ProductVariants.findOne({
                 where: {
                     product_group_id: orderItem.product_group_id,
                     color: orderItem.color,
                     size: orderItem.size,
-                }})
+                },
+                attributes: ['id'],
+                raw: true});
             const newOrderItem = {
                 quantity: orderItem.quantity,
-                product_variant_id: product_variant_id,
+                product_variant_id: product_variant.id,
                 order_id: newOrder.id,
             }
             orderItemsData.push(newOrderItem);

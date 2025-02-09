@@ -8,7 +8,7 @@ const Checkout = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { user, isLoading: authLoading } = useContext(AuthContext);
-    const [formValues, setFormValues] = useState(null);
+    const [formValues, setFormValues] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [orderConfirmed, setOrderConfirmed] = useState(false);
@@ -46,8 +46,6 @@ const Checkout = () => {
         fetchUserInfo();
     }, [user]);
 
-    console.log(formValues);
-
     const subTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const taxes = subTotal * 0.0745;
     const total = subTotal + taxes;
@@ -60,16 +58,42 @@ const Checkout = () => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value });
     };
 
-    const handleConfirmOrder = () => {
-        setOrderConfirmed(true);
+    const handleConfirmOrder = async () => {
+        if (!user) {
+            try {
+            const response = await fetch(`api/users/${formValues.email}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            const data = await response.json()
+            const existingUser = data.has_account
+
+            if (existingUser) {
+                alert('User already exists. Please login to continue');
+                navigate('/login');
+            }
+
+        } catch (error) {
+            console.error(error);
+            setError(error.message); 
+        }} else {
+            setOrderConfirmed(true);
+        }
     };
 
     const handleSubmit = async () => {
         try {
-            const token = localStorage.getItem('id_token');
-
             const orderData = {
-                items: cartItems,
+                items: [...cartItems.map((item) => ({
+                        product_group_id: item.product_group_id,
+                        size: item.size,
+                        color: item.color,
+                        quantity: item.quantity,
+                    })),
+                ],
                 user: formValues,
             };
 
@@ -77,11 +101,11 @@ const Checkout = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(orderData),
             });
 
+            console.log(orderData);
             if (!response.ok) {
                 throw new Error('Failed to submit order');
             }
@@ -106,25 +130,25 @@ const Checkout = () => {
                 <Card.Body>
                     <VStack spacing={4}>
                         <Field label="Name" required>
-                            <Input type="text" name="name" value={user.name} onChange={handleInputChange} />
+                            <Input type="text" name="name" value={formValues.name} onChange={handleInputChange} />
                         </Field>
                         <Field label="Email" required>
-                            <Input type="email" name="email" value={user.email} onChange={handleInputChange} />
+                            <Input type="email" name="email" value={formValues.email} onChange={handleInputChange} />
                         </Field>
                         <Field label="Address 1" required>
-                            <Input type="text" name="address1" value={user.address1} onChange={handleInputChange} />
+                            <Input type="text" name="address1" value={formValues.address1} onChange={handleInputChange} />
                         </Field>
                         <Field label="Address 2 (Optional)">
-                            <Input type="text" name="address2" value={user.address2} onChange={handleInputChange} />
+                            <Input type="text" name="address2" value={formValues.address2} onChange={handleInputChange} />
                         </Field>
                         <Field label="City" required>
-                            <Input type="text" name="city" value={user.city} onChange={handleInputChange} />
+                            <Input type="text" name="city" value={formValues.city} onChange={handleInputChange} />
                         </Field>
                         <Field label="State" required>
-                            <Input type="text" name="state" value={user.state} onChange={handleInputChange} />
+                            <Input type="text" name="state" value={formValues.state} onChange={handleInputChange} />
                         </Field>
-                        <Field label="Zip" required>
-                            <Input type="text" name="zip" value={user.zipcode} onChange={handleInputChange} />
+                        <Field label="Zipcode" required>
+                            <Input type="text" name="zipcode" value={formValues.zipcode} onChange={handleInputChange} />
                         </Field>
                     </VStack>
                 </Card.Body>
