@@ -11,7 +11,6 @@ ProductVariants.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    //Foreign Key
     product_group_id: {
       type: DataTypes.INTEGER,
     },
