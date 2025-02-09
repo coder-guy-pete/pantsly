@@ -57,11 +57,11 @@ const isProductInCart = (product) => cartItems.some(item => item.product_group_i
             removeFromCart={handleRemoveFromCart}
             isProductInCart={isProductInCart}
           />} />
-        <Route path="/cart" element={ <Cart cartItems={cartItems} setCartItems={setCartItems} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="order-history" element={<OrderHistory />} />
+        <Route path="/cart" element={ <Cart cartItems={cartItems} setCartItems={setCartItems} />} />
         <Route path="/checkout" element={<Checkout cartItems={cartItems} setCartItems={setCartItems} />} />
+        <Route path="order-history" element={<OrderHistory />} />
       </Routes>
     </Flex>
   )

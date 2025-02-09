@@ -21,13 +21,22 @@ const LoginPage = () => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    const handleHardcodedLogin = async () => {
+        await login('dummyToken');
+        navigate('/');
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
 
         try {
             await login(email, password);
-            navigate("/");
+            if (user) {
+                navigate('/');
+            } else {
+                setError('User not found');
+            }
         } catch (err) {
             console.error("Login error:", err);
             setError(err.message);
@@ -70,6 +79,9 @@ const LoginPage = () => {
                         </Stack>
                     </Card.Body>
                     <Card.Footer>
+                    <Button colorPalette="orange" rounded="md" onClick={handleHardcodedLogin}>
+                            Log In (Hardcoded)
+                        </Button>
                         <Button type="submit" colorPalette="teal" rounded="md" isLoading={isLoading}>
                             Log In
                         </Button>
