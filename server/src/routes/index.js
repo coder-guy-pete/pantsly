@@ -7,7 +7,7 @@ const router = Router();
 
 router.use('/api', api);
 
-// localhost:3001/
+// localhost:5173/
 router.get('/', (req, res) => {
   res.send('Hello World!');
 });
