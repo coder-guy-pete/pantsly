@@ -1,5 +1,18 @@
 import { User } from '../../models/index.js';
 
+// Users GET
+export const usersGet = async (req, res) => {
+  // res.json({message: 'Placeholder for usersGet. Will return all users'});
+
+  try {
+    const users = await User.findAll();
+    return res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({message: 'Could not retrieve users'});
+  }
+};
+
 
 // Users POST
 export const usersPost = async (req, res) => {
@@ -26,16 +39,41 @@ export const usersPost = async (req, res) => {
 
   try {
     const user = await User.create(newUser);
-    return res.status(200).json({ user_id: user.id });
+    return res.status(200).json({ user_id: user.id , message: 'User created'});
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ user_id: null });
+    return res.status(500).json({ user_id: null, message: 'User could not be created' });
   }
 };
 
 // Users PUT
-export const usersPut = (req, res) => {
-  res.json({message: `Placeholder for usersPut. Will update user with ID: ${req.params.id} entered as a param for api/users/:id`})};
+export const usersPut = async (req, res) => {
+  // res.json({message: `Placeholder for usersPut. Will update user with ID: ${req.params.id} entered as a param for api/users/:id`})};
+
+  try {
+    const user = await User.findOne({ where: { id: req.params.user_id } });
+
+    if (req.body.name) user.name = req.body.name;
+    if (req.body.address1) user.address1 = req.body.address1;
+    if (req.body.address2) user.address2 = req.body.address2;
+    if (req.body.city) user.city = req.body.city;
+    if (req.body.state) user.state = req.body.state;
+    if (req.body.zip) user.zip = req.body.zip;
+    if (req.body.phoneNumber) user.phoneNumber = req.body.phoneNumber;
+    if (req.body.email) user.email = req.body.email;
+    if (req.body.password) user.password = req.body.password;
+    if (req.body.isAdmin) user.isAdmin = req.body.isAdmin;
+  
+    await user.save()
+    
+    return res.status(200).json({ user_id: user.id, message: 'User updated' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ user_id: null });
+  };
+};
+
+
 
 //Users DELETE
 export const usersDelete = (req, res) => {
