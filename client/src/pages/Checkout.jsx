@@ -76,28 +76,40 @@ const Checkout = () => {
                 navigate('/login');
             }
 
+            setOrderConfirmed(true);
+
         } catch (error) {
             console.error(error);
             setError(error.message); 
-        }} else {
-            setOrderConfirmed(true);
-        }
+        }}
     };
 
     const handleSubmit = async () => {
+        if (user) {
         try {
             const orderData = {
-                items: [...cartItems.map((item) => ({
+                orderItems: [...cartItems.map((item) => ({
                         product_group_id: item.product_group_id,
                         size: item.size,
                         color: item.color,
                         quantity: item.quantity,
                     })),
                 ],
-                user: formValues,
+                user_id: user.id,
             };
+            const responseUser = await fetch(`/api/users/${user.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formValues),
+            });
 
-            const response = await fetch('/api/orders', {
+            if (!responseUser.ok) {
+                throw new Error('Failed to update user');
+            }
+
+            const responseOrder = await fetch('/api/orders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -105,8 +117,7 @@ const Checkout = () => {
                 body: JSON.stringify(orderData),
             });
 
-            console.log(orderData);
-            if (!response.ok) {
+            if (!responseOrder.ok) {
                 throw new Error('Failed to submit order');
             }
 
@@ -116,6 +127,47 @@ const Checkout = () => {
             console.error(error);
             setError(error.message);
         }
+    } else {
+        try {
+        const responseUser = await fetch(`/api/users/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formValues),
+        });
+
+        console.log(formValues);
+        if (!responseUser.ok) {
+            throw new Error('Failed to add user');
+        }
+
+        const orderData = {
+            orderItems: [...cartItems.map((item) => ({
+                    product_group_id: item.product_group_id,
+                    size: item.size,
+                    color: item.color,
+                    quantity: item.quantity,
+                })),
+            ],
+            user_id: responseUser.user_id,
+        };
+
+        const responseOrder = await fetch('/api/orders', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(orderData),
+        });
+        
+        if (!responseOrder.ok) {
+            throw new Error('Failed to submit order');
+        }
+    } catch (error) {
+        console.error(error);
+        setError(error.message);
+    }}
     };
 
     return (
@@ -127,6 +179,7 @@ const Checkout = () => {
                 <Card.Header>
                     <Card.Title>Shipping Information</Card.Title>
                 </Card.Header>
+                <form>
                 <Card.Body>
                     <VStack spacing={4}>
                         <Field label="Name" required>
@@ -150,8 +203,14 @@ const Checkout = () => {
                         <Field label="Zipcode" required>
                             <Input type="text" name="zipcode" value={formValues.zipcode} onChange={handleInputChange} />
                         </Field>
+                        {!user ? (
+                            <Field label="Password" helperText="Enter a password to create an account">
+                                <Input type="password" name="password" value={formValues.password} onChange={handleInputChange} />
+                            </Field>
+                        ) : null}
                     </VStack>
                 </Card.Body>
+                </form>
             </Card.Root>
 
             <Card.Root p={4}>
