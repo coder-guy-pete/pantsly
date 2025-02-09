@@ -12,6 +12,31 @@ export const usersGet = async (_req, res) => {
   }
 };
 
+// GET /Users/:email
+export const usersValidate = async (req, res) => {
+  const allUsers = await User.findAll({
+      where: {
+          email: req.params.email
+      }
+  });
+
+  let has_account = false;
+
+ if (!allUsers) {
+      return res.json({ has_account: has_account });
+ } else {
+      for (const user of allUsers) {
+          if (user.password) {
+              has_account = true;
+              return res.json({ has_account: has_account });
+          }
+      }
+ }
+
+  return res.json({ has_account: has_account });
+
+}
+
 // Users POST
 export const usersPost = async (req, res) => {
   // res.json({message: 'Placeholder for usersPost. Will be used to create new user'});
