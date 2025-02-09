@@ -39,9 +39,10 @@ const Checkout = () => {
 
     return (
         <Box p={4}>
+            <VStack spacing={4}>
             <Heading as="h2" size="2xl" fontWeight="bold" mb={4}>Checkout</Heading>
             <Flex gap={10} justify="center">
-            <Card.Root p={4} w="40%">
+            <Card.Root p={4} w="md">
                 <Card.Header>
                     <Card.Title>Shipping Information</Card.Title>
                 </Card.Header>
@@ -72,7 +73,7 @@ const Checkout = () => {
                 </Card.Body>
             </Card.Root>
 
-            <Card.Root p={4} w="30%">
+            <Card.Root p={4}>
                 <Card.Header>
                     <Card.Title>Order Summary</Card.Title>
                 </Card.Header>
@@ -115,6 +116,7 @@ const Checkout = () => {
                 </Card.Body>
             </Card.Root>
             </Flex>
+            </VStack>
         </Box>
     );
 };

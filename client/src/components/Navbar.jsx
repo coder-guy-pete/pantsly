@@ -14,7 +14,6 @@ const Navbar = ({ cartItems }) => {
         <Flex as="nav" p={4}>
 
             <Spacer />
-
             <HStack spacing={4}>
                 <Link to="/">
                     <Button variant="ghost" fontWeight={isActive("/") ? "bold" : "normal"}>Shop</Button>
