@@ -28,7 +28,8 @@ export const AuthProvider = ({ children }) => {
     const login = async (token) => {
         try {
             AuthService.login(token);
-            setUser(AuthService.getProfile());
+            const profile = AuthService.getProfile();
+            setUser(profile);
             navigate('/');
             setIsLoading(false);
             return true;
