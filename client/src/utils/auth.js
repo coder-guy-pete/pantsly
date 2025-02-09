@@ -1,5 +1,4 @@
 import { jwtDecode } from 'jwt-decode';
-import { Navigate as navigate } from 'react-router-dom';
 
 const AuthService = {
     getProfile() {
@@ -35,12 +34,12 @@ const AuthService = {
 
     login(idToken) {
         localStorage.setItem('id_token', idToken);
-        navigate('/');
+        return true;
     },
 
     logout() {
         localStorage.removeItem('id_token');
-        navigate('/');
+        return true;
     },
 
     getHardcodedUser() {

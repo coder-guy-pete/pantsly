@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AuthService from '../utils/auth';
 
 export const AuthContext = createContext({
@@ -11,6 +12,7 @@ export const AuthContext = createContext({
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -30,13 +32,19 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = async (idToken) => {
-        AuthService.login(idToken);
-        setUser(AuthService.getProfile());
+        const success = AuthService.login(idToken);
+        if (success) {
+            setUser(AuthService.getProfile());
+            navigate('/');
+        } else {
+            return false;
+        }
     };
 
-    const logout = () => {
+    const logout = async () => {
         AuthService.logout();
         setUser(null);
+        navigate('/');
     };
 
     return (
