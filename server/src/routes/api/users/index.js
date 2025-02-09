@@ -1,13 +1,16 @@
 import express from 'express';
 const router = express.Router();
 import userRoutes from './user.js';
-import { usersGet, usersPost, usersPut, usersDelete } from '../../../controllers/users/users.js';
+import { usersGet, usersPost, usersPut, usersDelete, usersValidate } from '../../../controllers/users/users.js';
 
 
 router.use('/user', userRoutes);
 
 // GET api/users
 router.get('/', usersGet);
+
+// GET api/users/:email
+router.get('/:email', usersValidate);
 
 //POST api/users
 router.post('/', usersPost); //NEED to hash password
