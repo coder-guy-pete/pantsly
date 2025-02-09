@@ -1,28 +1,28 @@
 import React, { createContext, useState, useEffect } from 'react';
-import authService from '../utils/auth';
+import { useNavigate } from 'react-router-dom';
+import AuthService from '../utils/auth';
 
 export const AuthContext = createContext({
     user: null,
     login: () => {},
     logout: () => {},
+    isLoading: true,
 });
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const checkAuth = async () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                try {
-                    const decodedToken = authService.decodeJwt(token);
-                    if (decodedToken) {
-                        setUser(decodedToken);
-                    }
-                } catch (error) {
-                    console.error("Token verification error:", error);
-                    localStorage.removeItem('token');
+            if (AuthService.loggedIn()) {
+                setUser(AuthService.getProfile());
+            } else {
+                // Check for hardcoded user only if not logged in normally
+                const hardcodedUser = AuthService.getHardcodedUser();
+                if (hardcodedUser) {
+                    setUser(hardcodedUser);
                 }
             }
             setIsLoading(false);
@@ -31,26 +31,20 @@ export const AuthProvider = ({ children }) => {
         checkAuth();
     }, []);
 
-    const login = async (email, password) => {
-        try {
-            const data = await authService.login(email, password);
-            const decodedToken = authService.decodeJwt(data.token);
-            if (decodedToken) {
-                setUser(decodedToken);
-                localStorage.setItem('token', data.token);
-                } else {
-                console.error("Invalid JWT token provided");
-                }
-            } catch (error) {
-                console.error("Login Error:", error);
-                throw error;
-            }
+    const login = async (idToken) => {
+        const success = AuthService.login(idToken);
+        if (success) {
+            setUser(AuthService.getProfile());
+            navigate('/');
+        } else {
+            return false;
+        }
     };
 
     const logout = async () => {
-        await authService.logout();
+        AuthService.logout();
         setUser(null);
-        localStorage.removeItem('token');
+        navigate('/');
     };
 
     return (
