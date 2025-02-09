@@ -27,10 +27,15 @@ const OrderHistory = () => {
             }
 
             try {
+                const token = localStorage.getItem('id_token');
+                if (!token) {
+                    throw new Error('No token found');
+                }
+
                 const response = await fetch(`/api/orders/${user.id}`, {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${user.token}`,
+                        'Authorization': `Bearer ${token}`,
                     },
                 });
 
@@ -93,7 +98,7 @@ const OrderHistory = () => {
                         <Heading>Order # {order.id}</Heading>
                         <VStack align="end">
                         <Text fontSize="sm"><Highlight query="Purchased:" styles={{ color: 'teal.600' }}>Purchased:</Highlight> {order.purchase_date}</Text>
-                        <Text fontSize="sm"><Highlight query="Fulfilled:" styles={{ color: 'teal.600' }}>Shipped:</Highlight> {order.fulfillment_date}</Text>
+                        <Text fontSize="sm"><Highlight query="Shipped:" styles={{ color: 'teal.600' }}>Shipped:</Highlight> {order.fulfillment_date}</Text>
                         </VStack>
                         </HStack>
                         </Card.Header>
@@ -109,7 +114,7 @@ const OrderHistory = () => {
                         </HStack>
                         ))}
                         <HStack justify="flex-end">
-                        <Text fontWeight="bold">Total: ${order.amount}</Text>
+                        <Text fontWeight="bold">Total: ${order.amount.toFixed(2)}</Text>
                         </HStack>
                         </Card.Body>
                     </Card.Root>

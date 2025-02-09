@@ -6,7 +6,6 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 
 const Navbar = ({ cartItems }) => {
     const { user, logout } = useContext(AuthContext);
-    console.log('User in Navbar:', user);
     const cartCount = cartItems.length;
 
     const isActive = (path) => window.location.pathname === path;
@@ -16,7 +15,7 @@ const Navbar = ({ cartItems }) => {
             <Spacer />
             <HStack spacing={4}>
                 <Link to="/">
-                    <Button variant="ghost" fontWeight={isActive("/") ? "bold" : "normal"}>Shop</Button>
+                    <Button variant="ghost" size="lg" fontWeight={isActive("/") ? "bold" : "normal"}>Shop</Button>
                 </Link>
                 {/* ADD OTHER NAVIGATION HERE */}
             </HStack>

@@ -10,16 +10,16 @@ export const userValidate = async (req, res) => {
 
     let has_account = false;
 
-   if (!allUsers) {
+    if (!allUsers) {
         return res.json({ has_account: has_account });
-   } else {
+    } else {
         for (const user of allUsers) {
             if (user.password) {
                 has_account = true;
                 return res.json({ has_account: has_account });
             }
         }
-   }
+    }
 
     return res.json({ has_account: has_account });
 

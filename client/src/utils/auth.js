@@ -3,12 +3,12 @@ import { jwtDecode } from 'jwt-decode';
 const AuthService = {
     getProfile() {
         const token = this.getToken();
-        if (!token) {
-            return null;
+        try{
+        if (!token) return null; {
+            const decoded = jwtDecode(token);
+            return decoded;
         }
-        try {
-            return jwtDecode(token);
-        } catch (err) {
+    } catch (err) {
             console.error('Error decoding token:', err);
             return null;
         }
@@ -29,7 +29,7 @@ const AuthService = {
     },
 
     getToken() {
-        const loggedUser = localStorage.getItem('token') || '';
+        const loggedUser = localStorage.getItem('id_token') || '';
         return loggedUser;
     },
 
