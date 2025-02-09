@@ -25,3 +25,4 @@ const authToken = (req, res, next) => {
     } else {
         return res.sendStatus(401).json({ message: 'Unauthorized' });
     }
+};
