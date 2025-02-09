@@ -1,12 +1,17 @@
-import express from 'express';
-const router = express.Router();
+import { Router } from 'express';
+import authRoutes from './auth-routes.js';
 import api from './api/index.js';
+// import { authToken } from '../middleware/auth.js';
+
+const router = Router();
 
 router.use('/api', api);
 
-// Test route to make sure API connection is working
+// localhost:3001/
 router.get('/', (req, res) => {
   res.send('Hello World!');
 });
+router.use('/auth', authRoutes);
+router.use('/api', authRoutes); // Add authToken once done testing auth routes
 
 export default router;
