@@ -1,6 +1,13 @@
-// import { User } from '../../models/index.js'
+import { User } from '../../models/index.js'
 
-// User GET 
-export const userGet = (req, res) => {
-    res.json({ message: `Will retrieve user with ID ${req.params.id} entered as a param for api/users/user/:id` });
-}
+// GET User
+export const userGet = async (req, res) => {
+    try {
+        const user = await User.findByPk(req.params.id, {
+            attributes: { exclude: ['password'] },
+        });
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
