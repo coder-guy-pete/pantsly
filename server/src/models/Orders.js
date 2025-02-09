@@ -11,18 +11,18 @@ Orders.init(
       autoIncrement: true,
     },
     //Foreign Key
-    user_Id: {
+    user_id: {
       type: DataTypes.INTEGER,
       references: {
         model: "users",
         key: "id",
       },
     },
-    purchase_Date: {
+    purchase_date: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
-    fulfillment_Date: {
+    fulfillment_date: {
       type: DataTypes.STRING,
       defaultValue: "pending",
     },

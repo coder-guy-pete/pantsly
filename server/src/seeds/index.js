@@ -11,21 +11,21 @@ const seedAll = async () => {
     await sequelize.sync({ force: true });
     console.log("\n----- DATABASE SYNCED -----\n");
 
+    // Seed Product Variants
+    await seedProductVariants();
+    console.log("\n----- PRODUCT VARIANTS SEEDED -----\n");
+
     // Seed users
     await seedUsers();
     console.log("\n----- USERS SEEDED -----\n");
 
-    // Seed Order Items
-    await seedOrderItem();
-    console.log("\n----- ORDER ITEMS SEEDED -----\n");
-
     //Seed Orders
     await seedOrders();
     console.log("\n----- ORDERS SEEDED -----\n");
-
-    // Seed Product Variants
-    await seedProductVariants();
-    console.log("\n----- PRODUCT VARIANTS SEEDED -----\n");
+    
+    // Seed Order Items
+    await seedOrderItem();
+    console.log("\n----- ORDER ITEMS SEEDED -----\n");
 
     // Exit process successfully
     process.exit(0);

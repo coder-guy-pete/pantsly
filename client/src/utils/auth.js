@@ -30,6 +30,7 @@ const authService = {
             setTimeout(() => {
                 console.log('this inside setTimeout (login)', this);
                 const user = mockUsers.find(user => user.email === email && user.password === password)
+                console.log('user', user);
                 if (user) {
                     const mockToken = this.generateMockJWT(user)
                     resolve({ token: mockToken })
