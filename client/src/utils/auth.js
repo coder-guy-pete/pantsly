@@ -1,52 +1,60 @@
-import { mockUsers } from '../mock-data/Users';
-console.log('mockUsers', mockUsers);
+import { jwtDecode } from 'jwt-decode';
+import { Navigate as navigate } from 'react-router-dom';
 
-const authService = {
-    generateMockJWT: (user) => {
-        const payload = {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-        };
-        const base64Payload = btoa(JSON.stringify(payload));
-        return `mock.${base64Payload}.signature`;
-    },
-
-    decodeJwt: (token) => {
+const AuthService = {
+    getProfile() {
         try {
-            const base64Payload = token.split('.')[1];
-            const payloadJson = atob(base64Payload);
-            const payload = JSON.parse(payloadJson);
-            return payload;
+            const token = this.getToken();
+            if (token) {
+                return jwtDecode(token);
+            }
+            return null;
         } catch (error) {
-            console.error("Error decoding mock JWT:", error);
+            console.error("Error getting profile:", error);
             return null;
         }
     },
 
-    login: async (email, password) => {
-        console.log('this inside login', this);
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                console.log('this inside setTimeout (login)', this);
-                const user = mockUsers.find(user => user.email === email && user.password === password)
-                if (user) {
-                    const mockToken = this.generateMockJWT(user)
-                    resolve({ token: mockToken })
-                } else {
-                    reject(new Error('Invalid email or password'))
-                }
-            }, 1000);
-        });
+    loggedIn() {
+        const token = this.getToken();
+        return !!token && !this.isTokenExpired(token);
     },
 
-    logout: async () => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve()
-            }, 500);
-        });
+    isTokenExpired(token) {
+        try {
+            const decoded = jwtDecode(token);
+            return decoded.exp < Date.now() / 1000;
+        } catch (err) {
+            return true; // Consider expired if there's an error
+        }
     },
+
+    getToken() {
+        return localStorage.getItem('token');
+    },
+
+    login(idToken) {
+        localStorage.setItem('id_token', idToken);
+        navigate('/');
+    },
+
+    logout() {
+        localStorage.removeItem('id_token');
+        navigate('/');
+    },
+
+    getHardcodedUser() {
+        return {
+            name: "Test User",
+            email: "hardcoded@example.com",
+            password: "password123",
+            address1: "1234 Elm St",
+            address2: "Apt 123",
+            city: "Springfield",
+            state: "IL",
+            zip: "62701",
+        };
+    }
 };
 
-export default authService;
+export default AuthService;
