@@ -1,13 +1,10 @@
 import express from 'express';
 const router = express.Router();
 import userRoutes from './user.js';
-import { usersGet, usersPost, usersPut, usersDelete } from '../../../controllers/users/users.js';
+import { usersPost, usersPut, usersDelete } from '../../../controllers/users/users.js';
 
 
 router.use('/user', userRoutes);
-
-//GET api/users
-router.get('/', usersGet);
 
 //POST api/users
 router.post('/', usersPost);

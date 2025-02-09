@@ -32,7 +32,10 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-
+    zip: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
     phoneNumber: {
       type: DataTypes.STRING,
       allowNull: false,
