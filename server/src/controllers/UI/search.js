@@ -1,7 +1,7 @@
 // import ProductVariants from '../../models/index.js';
 import { Op } from 'sequelize';
 import tempData from '../tempDataProducts.js';
-// import productResponse from '../utils/productResponse.js';
+// import productsResponse from '../utils/productsResponse.js';
 
 
 // search GET
