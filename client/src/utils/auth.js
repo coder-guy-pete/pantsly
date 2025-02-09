@@ -1,4 +1,5 @@
 import { mockUsers } from '../mock-data/Users';
+console.log('mockUsers', mockUsers);
 
 const authService = {
     generateMockJWT: (user) => {
