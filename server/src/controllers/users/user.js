@@ -2,16 +2,25 @@ import { User } from '../../models/index.js'
 
 // User GET 
 export const userGet = async (req, res) => {
-    const userDetails = await User.findAll({
+    const allUsers = await User.findAll({
         where: {
-            id: req.params.id
+            email: req.body.email
         }
     });
 
-    if (userDetails.length > 0) {
-        return res.status(200).json(userDetails);
-    } else {
-        return res.status(404).json({ message: 'User not found' });
-    }
-    
+    let has_account = false;
+
+   if (!allUsers) {
+        return res.json({ has_account: has_account });
+   } else {
+        for (const user of allUsers) {
+            if (user.password) {
+                has_account = true;
+                return res.json({ has_account: has_account });
+            }
+        }
+   }
+
+    return res.json({ has_account: has_account });
+
 }

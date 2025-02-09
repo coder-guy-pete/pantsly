@@ -64,7 +64,7 @@ export const usersPut = async (req, res) => {
     if (req.body.password) user.password = req.body.password;
     if (req.body.isAdmin) user.isAdmin = req.body.isAdmin;
   
-    await user.save()
+    await user.save();
     
     return res.status(200).json({ user_id: user.id, message: 'User updated' });
   } catch (error) {
