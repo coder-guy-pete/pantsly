@@ -9,7 +9,7 @@ router.use('/order', order);
 // GET api/orders/:user_id
 router.get('/:user_id', ordersGet);
 
-// POST api/order - will be used when creating a new order on cart submit
+// POST api/orders - will be used when creating a new order on cart submit
 router.post('/', ordersPost);
 
 

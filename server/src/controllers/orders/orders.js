@@ -1,7 +1,8 @@
 import { Orders, OrderItem, ProductVariants } from '../../models/index.js';
-// import Op from 'sequelize';
+import sequelize from '../../config/connection.js';
 
-import tempDataOrderHistory from '../tempDataOrderHistory.js';
+
+// import tempDataOrderHistory from '../tempDataOrderHistory.js';
 
 // Order GET
 export const ordersGet = async (req, res) => {
@@ -72,49 +73,47 @@ export const ordersGet = async (req, res) => {
 
 // Order POST
 export const ordersPost = async (req, res) => {
-    res.json({message: `Placeholder for orderPost. Will be used to create new order with a post to api/orders/`})
+    // res.json({message: `Placeholder for orderPost. Will be used to create new order with a post to api/orders/`})
 
     // THE CODE BELOW WILL REPLACE THE CODE ABOVE ONCE THE DATABASE IS PROPERLY CONNECTED
     
-    // const t = await sequelize.transaction();
+    const t = await sequelize.transaction();
     
-    // try {
+    try {
         
-    //     const newOrder = await Orders.create({
-    //         user_id: req.body.user_id,
-    //         purchase_date: new Date(),
-    //     },
-    //     {transaction: t})
+        const newOrder = await Orders.create({
+            user_id: req.body.user_id,
+            purchase_date: new Date(),
+        },
+        {transaction: t})
         
-    //     const orderItemsData = [];
+        const orderItemsData = [];
 
-    //     for (const orderItem of req.body.)
-        
-    //     // req.body.order_items.forEach((orderItem) => {
-    //     //     const product_id = await ProductVariants.findOne({
-    //     //         where: {
-    //     //             product_group_id: orderItem.product_group_id,
-    //     //             color: orderItem.color,
-    //     //             size: orderItem.size,
-    //     //         }
-    //     //     });
+        for (const orderItem of req.body.orderItems) {
+            const product_variant_id = await ProductVariants.findOne({
+                where: {
+                    product_group_id: orderItem.product_group_id,
+                    color: orderItem.color,
+                    size: orderItem.size,
+                }})
+            const newOrderItem = {
+                quantity: orderItem.quantity,
+                product_variant_id: product_variant_id,
+                order_id: newOrder.id,
+            }
+            orderItemsData.push(newOrderItem);
+        };
 
-    //     //     orderItemsData.push({
-    //     //         order_id: newOrder.id,
-    //     //         id: product_id,
-    //     //         purchase_quantity: orderItem.quantity,
+        await OrderItem.bulkCreate(orderItemsData, {transaction: t});
 
-    //     //     })
+        await t.commit();
 
-    //     // });
+        return res.status(200).json({message: 'Order successfully created.'});
 
-    //     await OrderItem.bulkCreate(orderItemsData, {transaction: t});
+    } catch (error) {
+        console.error('Error creating order: ', error);
+        await t.rollback();
+        return res.status(500).json({message: 'Error creating order.'});
+    }
 
-    //     await t.commit();
-
-    //     return res.json();
-
-    // } catch {
-
-    // }
 }
