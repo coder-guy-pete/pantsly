@@ -18,8 +18,6 @@ export const AuthProvider = ({ children }) => {
         const checkAuth = async () => {
             if (AuthService.loggedIn()) {
                 setUser(AuthService.getProfile());
-            } else {
-                setUser(null);
             }
             setIsLoading(false);
         };
@@ -32,10 +30,11 @@ export const AuthProvider = ({ children }) => {
             AuthService.login(token);
             setUser(AuthService.getProfile());
             navigate('/');
+            setIsLoading(false);
             return true;
         } catch (err) {
             console.error('Login error:', err);
-            setUser(null);
+            setIsLoading(false);
             return false;
         }
     };

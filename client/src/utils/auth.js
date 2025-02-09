@@ -2,7 +2,16 @@ import { jwtDecode } from 'jwt-decode';
 
 const AuthService = {
     getProfile() {
-        return jwtDecode(this.getToken());
+        const token = this.getToken();
+        if (!token) {
+            return null;
+        }
+        try {
+            return jwtDecode(token);
+        } catch (err) {
+            console.error('Error decoding token:', err);
+            return null;
+        }
     },
 
     loggedIn() {
@@ -13,10 +22,7 @@ const AuthService = {
     isTokenExpired(token) {
         try {
             const decoded = jwtDecode(token);
-
-            if (decoded?.exp && decoded?.exp < Date.now() / 1000) {
-                return true;
-            }
+            return decoded?.exp < Date.now() / 1000;
         } catch (err) {
             return false;
         }
