@@ -5,13 +5,11 @@ import api from './api/index.js';
 
 const router = Router();
 
-router.use('/api', api);
-
 // localhost:5173/
 router.get('/', (req, res) => {
   res.send('Hello World!');
 });
 router.use('/auth', authRoutes);
-router.use('/api', authRoutes); // Add authToken once done testing auth routes
+router.use('/api', api); // Add authToken once done testing auth routes
 
 export default router;

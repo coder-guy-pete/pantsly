@@ -27,8 +27,8 @@ const AuthService = {
         return loggedUser;
     },
 
-    login(idToken) {
-        localStorage.setItem('id_token', idToken);
+    login(token) {
+        localStorage.setItem('id_token', token);
         window.location.assign('/');
     },
 
@@ -36,19 +36,6 @@ const AuthService = {
         localStorage.removeItem('id_token');
         window.location.assign('/');
     },
-
-    getHardcodedUser() {
-        return {
-            name: "Test User",
-            email: "hardcoded@example.com",
-            password: "password123",
-            address1: "1234 Elm St",
-            address2: "Apt 123",
-            city: "Springfield",
-            state: "IL",
-            zip: "62701",
-        };
-    }
 };
 
 export default AuthService;

@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
 const authToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
@@ -16,13 +16,13 @@ const authToken = (req, res, next) => {
 
         jwt.verify(token, secretKey, (err, user) => {
             if (err) {
-                return res.sendStatus(403).json({ message: 'Token expired or invavlid' });
+                return res.status(403).json({ message: 'Token expired or invavlid' });
             }
 
             req.user = user;
             return next();
         });
     } else {
-        return res.sendStatus(401).json({ message: 'Unauthorized' });
+        return res.status(401).json({ message: 'Unauthorized' });
     }
 };
