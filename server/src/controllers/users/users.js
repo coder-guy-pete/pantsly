@@ -1,9 +1,16 @@
-// import { User } from '../../models/index.js';
+import { User } from '../../models/index.js';
 
-// Users GET
-export const usersGet = (req, res) => {
-  res.json({message: 'Placeholder for usersGet. Will likely be used to get all users'});
-}
+// GET /Users
+export const usersGet = async (_req, res) => {
+  try {
+    const users = await User.findAll({
+      attributes: { exclude: ['password'] },
+    });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // Users POST
 export const usersPost = (req, res) => {
