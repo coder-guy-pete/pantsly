@@ -6,7 +6,7 @@ import { usersGet, usersPost, usersPut, usersDelete } from '../../../controllers
 
 router.use('/user', userRoutes);
 
-//GET api/users
+// GET api/users
 router.get('/', usersGet);
 
 //POST api/users
