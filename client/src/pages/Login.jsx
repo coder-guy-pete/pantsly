@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
     Center,
     Card,
@@ -7,67 +7,79 @@ import {
     Input,
     Stack,
     Button,
-    Text
+    Text,
+    Spinner,
+    Alert,
 } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
+import { AuthContext } from '../context/AuthContext';
 
-const Login = () => {
+const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const { login, isLoading } = useContext(AuthContext);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // REPLACE WITH LOGIN DETAILS HERE
-        console.log('Email:', email);
-        console.log('Password:', password);
+        setError(null);
+
+        try {
+            await login(email, password);
+            navigate("/");
+        } catch (err) {
+            console.error("Login error:", err);
+            setError(err.message);
+        }
     };
 
     return (
         <Center>
-            <Card.Root as="form" w="md">
-                <Card.Header>
-                    <Heading size="xl" textAlign="center">Sign In</Heading>
-                </Card.Header>
-                <Card.Body p={6}>
-                    <Stack onSubmit={handleSubmit}>
-                        <Field label="Email">
-                            <Input
-                                name="email"
-                                type="email"
-                                value={email}
-                                onChange={handleEmailChange}
-                                required
-                            />
-                        </Field>
-                        <Field label="Password">
-                            <Input
-                                name="password"
-                                type="password"
-                                value={password}
-                                onChange={handlePasswordChange}
-                                required
+            <Card.Root w="md">
+                <form onSubmit={handleSubmit}>
+                    <Card.Header>
+                        <Heading size="xl" textAlign="center">Sign In</Heading>
+                    </Card.Header>
+                    <Card.Body p={6}>
+                        <Stack>
+                            <Field label="Email">
+                                <Input
+                                    name="email"
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    required
                                 />
-                        </Field>
-                    </Stack>
-                </Card.Body>
-                <Card.Footer>
-                    <Button type="submit" colorPalette="teal" rounded="md">
-                        Log In
-                    </Button>
-                    <Text>Don't have an account?{' '}</Text>
-                    <Text color="teal.500" textDecoration="underline"><Link to="/signup">Sign Up</Link></Text>
-                </Card.Footer>
+                            </Field>
+                            <Field label="Password">
+                                <Input
+                                    name="password"
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                    />
+                            </Field>
+                            {error && (
+                                <Alert.Root status="error">
+                                    <Alert.Indicator />
+                                    <Alert.Title>User not found</Alert.Title>
+                                </Alert.Root>
+                            )}
+                        </Stack>
+                    </Card.Body>
+                    <Card.Footer>
+                        <Button type="submit" colorPalette="teal" rounded="md" isLoading={isLoading}>
+                            Log In
+                        </Button>
+                        <Text>Don't have an account?{' '}</Text>
+                        <Text color="teal.500" textDecoration="underline"><Link to="/signup">Sign Up</Link></Text>
+                    </Card.Footer>
+                    </form>
             </Card.Root>
         </Center>
 );
 };
 
-export default Login;
+export default LoginPage;

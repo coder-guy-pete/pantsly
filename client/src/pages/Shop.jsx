@@ -88,10 +88,6 @@ const Shop = ({ addToCart, removeFromCart, isProductInCart }) => {
         return <Center h="100vh"><Text color="red.500">Error: {error.message}</Text></Center>
     }
 
-    if (!products || products.length === 0) {
-        return <Text>No products found.</Text>;
-    }
-
     return (
         <Box p={4}>
             <Heading size="3xl" ml={10} mb={5}>
@@ -106,7 +102,8 @@ const Shop = ({ addToCart, removeFromCart, isProductInCart }) => {
                 products={products} 
                 onSortChange={handleSortChange} 
                 onBrandFilterChange={handleBrandFilterChange} 
-            /> 
+            />
+            {(!products || products.length === 0) ? (<Text>No products found.</Text> ) : (
             <Flex gap={10} justify="center" wrap="wrap">
                 {filteredAndSortedProducts.map(product => (
                     <Box key={product.product_group_id} w={{ base: "100%", md: "45%", lg: "30%" }}>
@@ -121,6 +118,7 @@ const Shop = ({ addToCart, removeFromCart, isProductInCart }) => {
                     </Box>
                 ))}
             </Flex>
+            )}
             </Flex>
         </Box>
     );

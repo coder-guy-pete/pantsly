@@ -1,11 +1,12 @@
 const orderHistory = [
   {
-    order_id: 1,
+    id: 1,
     purchase_date: '01/01/2025',
-    order_amount: 254.24,
     fulfillment_date: '01/07/2025',
-    order_items: [
+    amount: 254.24,
+    items: [
         {
+            id: 1,
             name: "Addidas shirt",
             color: "blue",
             size: 'm',
@@ -13,7 +14,8 @@ const orderHistory = [
             image_url: 'https://placehold.co/600x400',
         },
         {
-            name: "Addidat shirt",
+            id: 2,
+            name: "Addidas shirt",
             color: "red",
             size: 'm',
             quantity: 1,
@@ -21,20 +23,22 @@ const orderHistory = [
         }],
     },
     {
-        order_id: 2,
+        id: 2,
         purchase_date: '01/01/2025',
-        order_amount: 254.24,
+        amount: 254.24,
         fulfillment_date: '01/07/2025',
-        order_items: [
+        items: [
             {
-                name: "Addidat shirt",
+                id: 1,
+                name: "Addidas shirt",
                 color: "blue",
                 size: 'm',
                 quantity: 2,
                 image_url: 'https://placehold.co/600x400',
             },
             {
-                name: "Addidat shirt",
+                id: 2,
+                name: "Addidas shirt",
                 color: "red",
                 size: 'm',
                 quantity: 1,
@@ -42,19 +46,21 @@ const orderHistory = [
             }],
         },
     {
-        order_id: 3,
+        id: 3,
         purchase_date: '01/01/2025',
-        order_amount: 254.24,
+        amount: 254.24,
         fulfillment_date: '01/07/2025',
-        order_items: [
+        items: [
             {
-                name: "Addidat shirt",
+                id: 1,
+                name: "Addidas shirt",
                 color: "blue",
                 size: 'm',
                 quantity: 2,
                 image_url: 'https://placehold.co/600x400',
             },
             {
+                id: 2,
                 name: "Addidat shirt",
                 color: "red",
                 size: 'm',

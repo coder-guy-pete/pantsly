@@ -14,7 +14,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const [selectedSize, setSelectedSize] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
     const [availableColors, setAvailableColors] = useState([]);
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(['1']);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -47,7 +47,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     const quantityOptions = useMemo(() => {
         const options = [];
         for (let i = 1; i <= 10; i++) {
-            options.push({ value: i, label: i });
+            options.push({ value: i.toString(), label: i.toString() });
         }
         return createListCollection({
             items: options,
@@ -61,7 +61,11 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
             alert('Please select size, color, and quantity');
             return;
         }
-        addToCart(product, selectedSize, selectedColor, quantity);
+
+        addToCart(product, selectedSize, selectedColor, parseInt(quantity, 10));
+        setQuantity(['1']);
+        setSelectedSize('');
+        setSelectedColor('');
     };
 
     const handleRemoveFromCartCard = () => {
@@ -81,8 +85,9 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
     };
 
     const handleQuantityChange = (event) => {
-        setQuantity(parseInt(event.target.value, 10));
+        setQuantity(event.value);
     };
+
     
     return (
         <Box>
@@ -99,7 +104,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                     <Card.Title fontWeight="bold" fontSize="lg">{product.name}</Card.Title>
                     <Text color="gray.600" fontSize="sm">{product.brand}</Text>
                     <Flex alignItems="center" justifyContent="space-between">
-                        <Text fontSize="md" color="teal.500">${product.sell_price}</Text>
+                        <Text fontSize="md" color="teal.500">${product.price}</Text>
                     </Flex>
 
                 <Flex gap={5}>
@@ -122,7 +127,7 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                     </SelectContent>
                 </SelectRoot>
 
-                <SelectRoot 
+                <SelectRoot
                     onChange={handleColorChange} 
                     size="sm"
                     collection={colorOptions}
@@ -141,10 +146,10 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                 </SelectRoot>
 
                 <SelectRoot
-                    onChange={handleQuantityChange}
                     size="sm"
                     collection={quantityOptions}
-                    defaultValue={[1]}>
+                    value={quantity}
+                    onValueChange={handleQuantityChange}>
                     <SelectLabel>Quantity</SelectLabel>
                     <SelectTrigger>
                         <SelectValueText />

@@ -30,7 +30,7 @@ const Navbar = ({ cartItems }) => {
             <HStack spacing={4}>
                 {!isLoggedIn ? (
                 <Link to="/login">
-                    <Button colorPalette="cyan" rounded="lg">Login</Button>
+                    <Button colorPalette="teal" rounded="lg">Login</Button>
                 </Link>
                 ) : (
                 <Link to="/order-history">

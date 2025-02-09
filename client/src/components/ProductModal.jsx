@@ -77,7 +77,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
     };
 
     const handleQuantityChangeModal = (event) => {
-        setQuantity(parseInt(event.target.value, 10));
+        setQuantity(event.value);
     };
 
     const handleAddToCartModal = () => {
@@ -85,7 +85,11 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
             alert('Please select size, color, and quantity');
             return;
         }
-        addToCart(product, selectedSizeModal, selectedColorModal, quantity);
+        addToCart(product, selectedSizeModal, selectedColorModal, parseInt(quantity, 10));
+        setSelectedSizeModal('');
+        setSelectedColorModal('');
+        setQuantity(['1']);
+        onOpenChange(false);
     };
 
     const handleRemoveFromCartModal = () => {
@@ -97,7 +101,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
     }
 
     return (
-        <DialogRoot open={open} onOpenChange={onOpenChange}>
+        <DialogRoot open={open} onOpenChange={onOpenChange} placement="center" scrollBehavior="inside">
             <DialogBackdrop />
             <DialogContent maxW="md" position="fixed" top="50%" left="50%" transform="translate(-50%, -50%)">
                 <DialogHeader>
@@ -117,7 +121,7 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
                         <VStack align="start" spacing={2}>
                             <Text fontWeight="bold" fontSize="xl">{product.name}</Text>
                             <Text color="gray.600" fontSize="md">{product.brand}</Text>
-                            <Text fontSize="lg" color="teal.500">${product.sell_price}</Text>
+                            <Text fontSize="lg" color="teal.500">${product.price}</Text>
                             <Text>{product.description}</Text>
 
                             <Flex gap={5}>
@@ -161,10 +165,10 @@ const ProductModal = ({ open, onOpenChange, product, addToCart, removeFromCart, 
                                 </SelectRoot>
 
                                 <SelectRoot
-                                    onChange={handleQuantityChangeModal}
                                     size="sm"
                                     collection={quantityOptionsModal}
-                                    defaultValue={[1]}>
+                                    value={quantity}
+                                    onValueChange={handleQuantityChangeModal}>
                                     <SelectLabel>Quantity</SelectLabel>
                                     <SelectTrigger>
                                         <SelectValueText />
