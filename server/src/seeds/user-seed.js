@@ -1,7 +1,10 @@
-import User from "../models/User.js";
+import bcrypt from "bcrypt";
+import User from "../models/user.js";
 
 export const seedUsers = async () => {
-  await User.bulkCreate([
+  const saltRounds = 10;
+
+  const usersToSeed = [
     {
       name: "John Doe",
       address1: "123 Main St",
@@ -56,5 +59,14 @@ export const seedUsers = async () => {
       password: "floridaMan2023",
       isAdmin: true,
     },
-  ]);
+  ];
+
+  const hashedUsers = await Promise.all(
+    usersToSeed.map(async (user) => {
+      const hashedPassword = await bcrypt.hash(user.password, saltRounds);
+      return { ...user, password: hashedPassword };
+    })
+  );
+
+  await User.bulkCreate(hashedUsers);
 };

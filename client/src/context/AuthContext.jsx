@@ -18,12 +18,6 @@ export const AuthProvider = ({ children }) => {
         const checkAuth = async () => {
             if (AuthService.loggedIn()) {
                 setUser(AuthService.getProfile());
-            } else {
-                // Check for hardcoded user only if not logged in normally
-                const hardcodedUser = AuthService.getHardcodedUser();
-                if (hardcodedUser) {
-                    setUser(hardcodedUser);
-                }
             }
             setIsLoading(false);
         };
@@ -31,12 +25,16 @@ export const AuthProvider = ({ children }) => {
         checkAuth();
     }, []);
 
-    const login = async (idToken) => {
-        const success = AuthService.login(idToken);
-        if (success) {
+    const login = async (token) => {
+        try {
+            AuthService.login(token);
             setUser(AuthService.getProfile());
             navigate('/');
-        } else {
+            setIsLoading(false);
+            return true;
+        } catch (err) {
+            console.error('Login error:', err);
+            setIsLoading(false);
             return false;
         }
     };
@@ -45,6 +43,7 @@ export const AuthProvider = ({ children }) => {
         AuthService.logout();
         setUser(null);
         navigate('/');
+        return;
     };
 
     return (
