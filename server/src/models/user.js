@@ -35,10 +35,10 @@ User.init(
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    phoneNumber: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
+    // phoneNumber: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    // },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
