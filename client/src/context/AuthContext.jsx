@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         if (success) {
             setUser(AuthService.getProfile());
             navigate('/');
+            return
         } else {
             return false;
         }
@@ -45,6 +46,7 @@ export const AuthProvider = ({ children }) => {
         AuthService.logout();
         setUser(null);
         navigate('/');
+        return;
     };
 
     return (

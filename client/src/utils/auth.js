@@ -2,16 +2,7 @@ import { jwtDecode } from 'jwt-decode';
 
 const AuthService = {
     getProfile() {
-        try {
-            const token = this.getToken();
-            if (token) {
-                return jwtDecode(token);
-            }
-            return null;
-        } catch (error) {
-            console.error("Error getting profile:", error);
-            return null;
-        }
+        return jwtDecode(this.getToken());
     },
 
     loggedIn() {
@@ -22,24 +13,28 @@ const AuthService = {
     isTokenExpired(token) {
         try {
             const decoded = jwtDecode(token);
-            return decoded.exp < Date.now() / 1000;
+
+            if (decoded?.exp && decoded?.exp < Date.now() / 1000) {
+                return true;
+            }
         } catch (err) {
-            return true; // Consider expired if there's an error
+            return false;
         }
     },
 
     getToken() {
-        return localStorage.getItem('token');
+        const loggedUser = localStorage.getItem('token') || '';
+        return loggedUser;
     },
 
     login(idToken) {
         localStorage.setItem('id_token', idToken);
-        return true;
+        window.location.assign('/');
     },
 
     logout() {
         localStorage.removeItem('id_token');
-        return true;
+        window.location.assign('/');
     },
 
     getHardcodedUser() {
