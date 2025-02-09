@@ -6,7 +6,6 @@ import { HiOutlineShoppingCart } from "react-icons/hi";
 
 const Navbar = ({ cartItems }) => {
     const { user, logout } = useContext(AuthContext);
-    console.log('User in Navbar:', user);
     const cartCount = cartItems.length;
 
     const isActive = (path) => window.location.pathname === path;
