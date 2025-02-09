@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Box, Flex, Heading, VStack, HStack, Button, Card, Text, Input } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
@@ -7,12 +7,45 @@ import { AuthContext } from '../context/AuthContext';
 const Checkout = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { user } = useContext(AuthContext);
-
-    const cartItems = location.state?.cartItems || [];
-    const initialUserInfo = location.state?.userInfo || (user ? user : { name: '', email: '', address1: '', address2: '', city: '', state: '', zipcode: '' });
-    const [userInfo, setUserInfo] = useState(initialUserInfo);
+    const { user, isLoading: authLoading } = useContext(AuthContext);
+    const [formValues, setFormValues] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const [orderConfirmed, setOrderConfirmed] = useState(false);
+    
+    const cartItems = location.state?.cartItems || [];
+
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            if (!user) {
+                return;
+            }
+
+            try {
+                const token = localStorage.getItem('id_token');
+                const response = await fetch(`/api/users/user/${user.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+
+                const userData = await response.json();
+                setFormValues(userData);
+                console.log
+            } catch (error) {
+                console.error(error);
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserInfo();
+    }, [user]);
 
     const subTotal = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
     const taxes = subTotal * 0.0745;
@@ -23,18 +56,41 @@ const Checkout = () => {
     const formattedTotal = total.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 
     const handleInputChange = (e) => {
-        setUserInfo({ ...userInfo, [e.target.name]: e.target.value });
+        setFormValues({ ...formValues, [e.target.name]: e.target.value });
     };
 
     const handleConfirmOrder = () => {
         setOrderConfirmed(true);
     };
 
-    const handleSubmit = () => {
-        // Placeholder for submitting the order (backend integration)
-        console.log("Order submitted:", { cartItems, userInfo });
-        alert("Order submitted successfully! (Placeholder)");
-        navigate('/order-history'); // Navigate to confirmation page
+    const handleSubmit = async () => {
+        try {
+            const token = localStorage.getItem('id_token');
+
+            const orderData = {
+                items: cartItems,
+                user: formValues,
+            };
+
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to submit order');
+            }
+
+            alert('Order submitted successfully');
+            navigate('/order-history');
+        } catch (error) {
+            console.error(error);
+            setError(error.message);
+        }
     };
 
     return (
@@ -49,25 +105,25 @@ const Checkout = () => {
                 <Card.Body>
                     <VStack spacing={4}>
                         <Field label="Name" required>
-                            <Input type="text" name="name" value={userInfo.name} onChange={handleInputChange} />
+                            <Input type="text" name="name" value={formValues.name} onChange={handleInputChange} />
                         </Field>
                         <Field label="Email" required>
-                            <Input type="email" name="email" value={userInfo.email} onChange={handleInputChange} />
+                            <Input type="email" name="email" value={formValues.email} onChange={handleInputChange} />
                         </Field>
                         <Field label="Address 1" required>
-                            <Input type="text" name="address1" value={userInfo.address1} onChange={handleInputChange} />
+                            <Input type="text" name="address1" value={formValues.address1} onChange={handleInputChange} />
                         </Field>
                         <Field label="Address 2 (Optional)">
-                            <Input type="text" name="address2" value={userInfo.address2} onChange={handleInputChange} />
+                            <Input type="text" name="address2" value={formValues.address2} onChange={handleInputChange} />
                         </Field>
                         <Field label="City" required>
-                            <Input type="text" name="city" value={userInfo.city} onChange={handleInputChange} />
+                            <Input type="text" name="city" value={formValues.city} onChange={handleInputChange} />
                         </Field>
                         <Field label="State" required>
-                            <Input type="text" name="state" value={userInfo.state} onChange={handleInputChange} />
+                            <Input type="text" name="state" value={formValues.state} onChange={handleInputChange} />
                         </Field>
                         <Field label="Zip" required>
-                            <Input type="text" name="zip" value={userInfo.zipcode} onChange={handleInputChange} />
+                            <Input type="text" name="zip" value={formValues.zipcode} onChange={handleInputChange} />
                         </Field>
                     </VStack>
                 </Card.Body>
