@@ -15,7 +15,7 @@ const Navbar = ({ cartItems }) => {
             <Spacer />
             <HStack spacing={4}>
                 <Link to="/">
-                    <Button variant="ghost" fontWeight={isActive("/") ? "bold" : "normal"}>Shop</Button>
+                    <Button variant="ghost" size="lg" fontWeight={isActive("/") ? "bold" : "normal"}>Shop</Button>
                 </Link>
                 {/* ADD OTHER NAVIGATION HERE */}
             </HStack>
