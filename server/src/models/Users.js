@@ -31,7 +31,7 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    zip: {
+    zipcode: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
@@ -42,11 +42,11 @@ User.init(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
       allowNull: true,
-      defaultValue: null,
     },
     isAdmin: {
       type: DataTypes.BOOLEAN,

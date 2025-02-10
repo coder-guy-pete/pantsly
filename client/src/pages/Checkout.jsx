@@ -1,19 +1,18 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Box, Flex, Heading, VStack, HStack, Button, Card, Text, Input } from '@chakra-ui/react';
+import { SelectContent, SelectItem, SelectRoot, SelectTrigger, SelectValueText } from '../components/ui/select';
 import { Field } from '../components/ui/field';
 import { AuthContext } from '../context/AuthContext';
+import stateOptions from '@/logic/States';
 
-const Checkout = () => {
+const Checkout = ({ cartItems, setCartItems}) => {
     const navigate = useNavigate();
-    const location = useLocation();
     const { user, isLoading: authLoading } = useContext(AuthContext);
     const [formValues, setFormValues] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [orderConfirmed, setOrderConfirmed] = useState(false);
-    
-    const cartItems = location.state?.cartItems || [];
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -58,6 +57,10 @@ const Checkout = () => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value });
     };
 
+    const handleStateChange = (e) => {
+        setFormValues({ ...formValues, state: e.value[0] });
+    };
+
     const handleConfirmOrder = async () => {
         if (!user) {
             try {
@@ -81,12 +84,23 @@ const Checkout = () => {
         } catch (error) {
             console.error(error);
             setError(error.message); 
-        }}
+        }} else {
+            setOrderConfirmed(true);
+        }
     };
 
     const handleSubmit = async () => {
         if (user) {
         try {
+            const userData = {
+                name: formValues.name,
+                email: formValues.email,
+                address1: formValues.address1,
+                address2: formValues.address2,
+                city: formValues.city,
+                state: formValues.state,
+                zipcode: formValues.zipcode,
+            }
             const orderData = {
                 orderItems: [...cartItems.map((item) => ({
                         product_group_id: item.product_group_id,
@@ -102,7 +116,7 @@ const Checkout = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formValues),
+                body: JSON.stringify(userData),
             });
 
             if (!responseUser.ok) {
@@ -122,6 +136,7 @@ const Checkout = () => {
             }
 
             alert('Order submitted successfully');
+            setCartItems([]);
             navigate('/order-history');
         } catch (error) {
             console.error(error);
@@ -129,15 +144,25 @@ const Checkout = () => {
         }
     } else {
         try {
+            const newUserData = {
+                name: formValues.name,
+                email: formValues.email,
+                address1: formValues.address1,
+                address2: formValues.address2,
+                city: formValues.city,
+                state: formValues.state,
+                zipcode: formValues.zipcode,
+                password: formValues.password,
+            }
+        
         const responseUser = await fetch(`/api/users/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formValues),
+            body: JSON.stringify(newUserData),
         });
 
-        console.log(formValues);
         if (!responseUser.ok) {
             throw new Error('Failed to add user');
         }
@@ -150,7 +175,7 @@ const Checkout = () => {
                     quantity: item.quantity,
                 })),
             ],
-            user_id: responseUser.user_id,
+            user_id: responseUser.id,
         };
 
         const responseOrder = await fetch('/api/orders', {
@@ -164,6 +189,10 @@ const Checkout = () => {
         if (!responseOrder.ok) {
             throw new Error('Failed to submit order');
         }
+
+        alert('Order submitted successfully');
+        setCartItems([]);
+        navigate('/');
     } catch (error) {
         console.error(error);
         setError(error.message);
@@ -198,7 +227,22 @@ const Checkout = () => {
                             <Input type="text" name="city" value={formValues.city} onChange={handleInputChange} />
                         </Field>
                         <Field label="State" required>
-                            <Input type="text" name="state" value={formValues.state} onChange={handleInputChange} />
+                            <SelectRoot
+                                size="sm"
+                                collection={stateOptions}
+                                value={formValues.state}
+                                onValueChange={handleStateChange}>
+                                <SelectTrigger>
+                                    <SelectValueText />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {stateOptions.items.map((state) => (
+                                    <SelectItem item={state} key={state.value}>
+                                        {state.label}
+                                    </SelectItem>
+                                ))}
+                                </SelectContent>
+                            </SelectRoot>
                         </Field>
                         <Field label="Zipcode" required>
                             <Input type="text" name="zipcode" value={formValues.zipcode} onChange={handleInputChange} />
