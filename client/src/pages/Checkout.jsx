@@ -81,12 +81,23 @@ const Checkout = () => {
         } catch (error) {
             console.error(error);
             setError(error.message); 
-        }}
+        }} else {
+            setOrderConfirmed(true);
+        }
     };
 
     const handleSubmit = async () => {
         if (user) {
         try {
+            const userData = {
+                name: formValues.name,
+                email: formValues.email,
+                address1: formValues.address1,
+                address2: formValues.address2,
+                city: formValues.city,
+                state: formValues.state,
+                zipcode: formValues.zipcode,
+            }
             const orderData = {
                 orderItems: [...cartItems.map((item) => ({
                         product_group_id: item.product_group_id,
@@ -102,8 +113,11 @@ const Checkout = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formValues),
+                body: JSON.stringify(userData),
             });
+
+            console.log('User Data:',userData);
+            console.log('User ID:',user.id);
 
             if (!responseUser.ok) {
                 throw new Error('Failed to update user');

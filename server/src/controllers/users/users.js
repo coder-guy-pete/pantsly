@@ -22,16 +22,16 @@ export const usersValidate = async (req, res) => {
 
   let has_account = false;
 
- if (!allUsers) {
+  if (!allUsers) {
       return res.json({ has_account: has_account });
- } else {
+  } else {
       for (const user of allUsers) {
           if (user.password) {
               has_account = true;
               return res.json({ has_account: has_account });
           }
       }
- }
+  }
 
   return res.json({ has_account: has_account });
 
@@ -73,7 +73,7 @@ export const usersPut = async (req, res) => {
   // res.json({message: `Placeholder for usersPut. Will update user with ID: ${req.params.id} entered as a param for api/users/:id`})};
 
   try {
-    const user = await User.findOne({ where: { id: req.params.user_id } });
+    const user = await User.findOne({ where: { id: req.params.id } });
 
     if (req.body.name) user.name = req.body.name;
     if (req.body.address1) user.address1 = req.body.address1;
