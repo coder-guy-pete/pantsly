@@ -1,19 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Box, Flex, Heading, VStack, HStack, Button, Card, Text, Input } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
 import { AuthContext } from '../context/AuthContext';
 
-const Checkout = () => {
+const Checkout = ({ cartItems, setCartItems}) => {
     const navigate = useNavigate();
-    const location = useLocation();
     const { user, isLoading: authLoading } = useContext(AuthContext);
     const [formValues, setFormValues] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [orderConfirmed, setOrderConfirmed] = useState(false);
-    
-    const cartItems = location.state?.cartItems || [];
 
     useEffect(() => {
         const fetchUserInfo = async () => {
@@ -133,6 +130,7 @@ const Checkout = () => {
             }
 
             alert('Order submitted successfully');
+            setCartItems([]);
             navigate('/order-history');
         } catch (error) {
             console.error(error);
@@ -185,6 +183,10 @@ const Checkout = () => {
         if (!responseOrder.ok) {
             throw new Error('Failed to submit order');
         }
+
+        alert('Order submitted successfully');
+        setCartItems([]);
+        navigate('/');
     } catch (error) {
         console.error(error);
         setError(error.message);
