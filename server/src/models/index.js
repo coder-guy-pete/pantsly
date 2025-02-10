@@ -1,4 +1,4 @@
-import User from "./User.js";
+import User from "./Users.js";
 import Orders from "./Orders.js";
 import OrderItem from "./OrderItem.js";
 import ProductVariants from "./ProductVariants.js";
