@@ -21,7 +21,7 @@ import stateOptions from '../logic/States';
 
 const Signup = () => {
     const [formValues, setFormValues] = useState({});
-    const [stateValue, setStateValue] = useState(['']);
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleInputChange = (e) => {
@@ -29,34 +29,40 @@ const Signup = () => {
     };
 
     const handleStateChange = (e) => {
-        setFormValues({ ...formValues, state: e.value });
-        console.log('State:', e.value);
+        setFormValues({ ...formValues, state: e.value[0] });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // REPLACE WITH SIGNUP DETAILS HERE
-        console.log('Form Values:', formValues);
+        setIsLoading(true);
 
-    // REPLACE WITH SIGNUP DETAILS HERE. USE PROMISE TO SIMULATE ASYNC REQUEST
+        toaster.loading({ title: "Creating User Account", description: "Please wait while we create your account." });
 
-        const promise = new Promise((resolve) => {
-            setTimeout(() => resolve(), 3000)
-        });
+        try {
+            const response = await fetch('/api/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formValues),
+            });
 
-        toaster.promise(promise, {
-            success: {
-                title: "User Account Created",
-                description: "You have successfully created a user account.",
-            },
-            error: {
-                title: "User Account Creation Failed",
-                description: "There was an error creating your account. Please try again.",
-            },
-            loading: { title: "Creating User Account", description: "Please wait while we create your account." },
-        })
+            if (!response.ok) {
+                throw new Error('Error creating user account');
+            }
 
-        // USE a FINALLY to navigate to the home page after a successful signup
+            toaster.dismiss();
+            toaster.success({ title: "User Account Created", description: "You have successfully created a user account." });
+
+            setTimeout(() => {
+            navigate('/');
+            }, 3000);
+            
+        } catch (error) {
+            console.error('Signup Error', error);
+            toaster.dismiss();
+            toaster.error({ title: "User Account Creation Failed", description: "There was an error creating your account. Please try again." });
+        } 
     };
 
     return (
