@@ -47,8 +47,7 @@ export const usersPost = async (req, res) => {
     address2: req.body.address2,
     city: req.body.city,
     state: req.body.state,
-    zip: req.body.zip,
-    phoneNumber: req.body.phoneNumber,
+    zip: req.body.zipcode,
     email: req.body.email,
   }
 
@@ -81,8 +80,7 @@ export const usersPut = async (req, res) => {
     if (req.body.address2) user.address2 = req.body.address2;
     if (req.body.city) user.city = req.body.city;
     if (req.body.state) user.state = req.body.state;
-    if (req.body.zip) user.zip = req.body.zip;
-    if (req.body.phoneNumber) user.phoneNumber = req.body.phoneNumber;
+    if (req.body.zipcode) user.zip = req.body.zipcode;
     if (req.body.email) user.email = req.body.email;
     if (req.body.password) user.password = req.body.password;
     if (req.body.isAdmin) user.isAdmin = req.body.isAdmin;
