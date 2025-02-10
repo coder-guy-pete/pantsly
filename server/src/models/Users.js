@@ -31,7 +31,7 @@ User.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    zip: {
+    zipcode: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },

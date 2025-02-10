@@ -5,7 +5,7 @@ import api from './api/index.js';
 
 const router = Router();
 
-// localhost:5173/
+// localhost:3001/
 router.get('/', (req, res) => {
   res.send('Hello World!');
 });
