@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, Flex, Heading, VStack, HStack, Button, Card, Text, Input } from '@chakra-ui/react';
+import { SelectContent, SelectItem, SelectRoot, SelectTrigger, SelectValueText } from '../components/ui/select';
 import { Field } from '../components/ui/field';
 import { AuthContext } from '../context/AuthContext';
+import stateOptions from '@/logic/States';
 
 const Checkout = ({ cartItems, setCartItems}) => {
     const navigate = useNavigate();
@@ -53,6 +55,10 @@ const Checkout = ({ cartItems, setCartItems}) => {
 
     const handleInputChange = (e) => {
         setFormValues({ ...formValues, [e.target.name]: e.target.value });
+    };
+
+    const handleStateChange = (e) => {
+        setFormValues({ ...formValues, state: e.value[0] });
     };
 
     const handleConfirmOrder = async () => {
@@ -221,7 +227,22 @@ const Checkout = ({ cartItems, setCartItems}) => {
                             <Input type="text" name="city" value={formValues.city} onChange={handleInputChange} />
                         </Field>
                         <Field label="State" required>
-                            <Input type="text" name="state" value={formValues.state} onChange={handleInputChange} />
+                            <SelectRoot
+                                size="sm"
+                                collection={stateOptions}
+                                value={formValues.state}
+                                onValueChange={handleStateChange}>
+                                <SelectTrigger>
+                                    <SelectValueText />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {stateOptions.items.map((state) => (
+                                    <SelectItem item={state} key={state.value}>
+                                        {state.label}
+                                    </SelectItem>
+                                ))}
+                                </SelectContent>
+                            </SelectRoot>
                         </Field>
                         <Field label="Zipcode" required>
                             <Input type="text" name="zipcode" value={formValues.zipcode} onChange={handleInputChange} />

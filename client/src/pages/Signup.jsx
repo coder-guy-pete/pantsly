@@ -1,22 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-    Center,
-    Card,
-    Heading,
-    Input,
-    Stack,
-    Button,
-} from '@chakra-ui/react';
+import { Center, Card, Heading, Input, Stack, Button } from '@chakra-ui/react';
 import { Field } from '../components/ui/field';
 import { Toaster, toaster } from '../components/ui/toaster';
-import {
-    SelectContent,
-    SelectItem,
-    SelectRoot,
-    SelectTrigger,
-    SelectValueText,
-} from '../components/ui/select';
+import { SelectContent, SelectItem, SelectRoot, SelectTrigger, SelectValueText } from '../components/ui/select';
 import stateOptions from '../logic/States';
 
 const Signup = () => {
@@ -57,7 +44,7 @@ const Signup = () => {
             setTimeout(() => {
             navigate('/');
             }, 3000);
-            
+
         } catch (error) {
             console.error('Signup Error', error);
             toaster.dismiss();
