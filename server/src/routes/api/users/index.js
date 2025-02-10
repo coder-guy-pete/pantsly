@@ -13,7 +13,7 @@ router.get('/', usersGet);
 router.get('/:email', usersValidate);
 
 //POST api/users
-router.post('/', usersPost); //NEED to hash password
+router.post('/', usersPost);
 
 // PUT api/users/id
 router.put('/:id', usersPut) //NEED to hash password

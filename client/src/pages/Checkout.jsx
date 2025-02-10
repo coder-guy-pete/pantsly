@@ -116,9 +116,6 @@ const Checkout = () => {
                 body: JSON.stringify(userData),
             });
 
-            console.log('User Data:',userData);
-            console.log('User ID:',user.id);
-
             if (!responseUser.ok) {
                 throw new Error('Failed to update user');
             }
@@ -143,15 +140,25 @@ const Checkout = () => {
         }
     } else {
         try {
+            const newUserData = {
+                name: formValues.name,
+                email: formValues.email,
+                address1: formValues.address1,
+                address2: formValues.address2,
+                city: formValues.city,
+                state: formValues.state,
+                zipcode: formValues.zipcode,
+                password: formValues.password,
+            }
+        
         const responseUser = await fetch(`/api/users/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formValues),
+            body: JSON.stringify(newUserData),
         });
 
-        console.log(formValues);
         if (!responseUser.ok) {
             throw new Error('Failed to add user');
         }
@@ -164,7 +171,7 @@ const Checkout = () => {
                     quantity: item.quantity,
                 })),
             ],
-            user_id: responseUser.user_id,
+            user_id: responseUser.id,
         };
 
         const responseOrder = await fetch('/api/orders', {

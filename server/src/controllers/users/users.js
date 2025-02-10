@@ -1,3 +1,4 @@
+import bcrypt from 'bcrypt';
 import { User } from '../../models/index.js';
 
 // GET /Users
@@ -39,29 +40,36 @@ export const usersValidate = async (req, res) => {
 
 // Users POST
 export const usersPost = async (req, res) => {
-  // res.json({message: 'Placeholder for usersPost. Will be used to create new user'});
-
-  const newUser = {
-    name: req.body.name,
-    address1: req.body.address1,
-    address2: req.body.address2,
-    city: req.body.city,
-    state: req.body.state,
-    zip: req.body.zipcode,
-    email: req.body.email,
-  }
-
-  if (req.body.password) {
-    newUser.password = req.body.password;
-  }
-
-  if (req.body.isAdmin) {
-    newUser.isAdmin = req.body.isAdmin;
-  }
+  const { name, address1, address2, city, state, zipcode, email, password, isAdmin } = req.body;
 
   try {
+    let hashedPassword = null;
+    if (password) {
+      const saltRounds = 10;
+      hashedPassword = await bcrypt.hash(password, saltRounds);
+    }
+
+    const newUser = {
+      name,
+      address1,
+      address2,
+      city,
+      state,
+      zipcode,
+      email,
+    };
+
+    if (hashedPassword) {
+      newUser.password = hashedPassword;
+    }
+
+    if (isAdmin) {
+      newUser.isAdmin = isAdmin;
+    }
+
     const user = await User.create(newUser);
-    return res.status(200).json({ user_id: user.id , message: 'User created'});
+
+    return res.status(200).json({ user_id: user.id, message: 'User created' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ user_id: null, message: 'User could not be created' });
@@ -80,7 +88,7 @@ export const usersPut = async (req, res) => {
     if (req.body.address2) user.address2 = req.body.address2;
     if (req.body.city) user.city = req.body.city;
     if (req.body.state) user.state = req.body.state;
-    if (req.body.zipcode) user.zip = req.body.zipcode;
+    if (req.body.zipcode) user.zipcode = req.body.zipcode;
     if (req.body.email) user.email = req.body.email;
     if (req.body.password) user.password = req.body.password;
     if (req.body.isAdmin) user.isAdmin = req.body.isAdmin;

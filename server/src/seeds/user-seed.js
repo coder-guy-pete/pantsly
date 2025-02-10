@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import User from "../models/user.js";
+import User from "../models/Users.js";
 
 export const seedUsers = async () => {
   const saltRounds = 10;
