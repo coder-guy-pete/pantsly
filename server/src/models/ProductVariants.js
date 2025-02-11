@@ -1,6 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/connection.js";
-import OrderItem from "./OrderItem.js";
 
 class ProductVariants extends Model {}
 
@@ -23,7 +22,7 @@ ProductVariants.init(
       allowNull: false,
     },
     color: {
-      type: DataTypes.ENUM("red", "blue", "green", "black", "white"),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     size: {
@@ -61,11 +60,11 @@ ProductVariants.init(
       allowNull: true,
       validate: {
         isUrl: true,
-      },
-      desctription: {
+      }
+    },
+      description: {
         type: DataTypes.STRING,
         allowNull: true,
-      },
     },
   },
   {
