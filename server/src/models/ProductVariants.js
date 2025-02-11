@@ -23,7 +23,7 @@ ProductVariants.init(
       allowNull: false,
     },
     color: {
-      type: DataTypes.ENUM("red", "blue", "green", "black", "white"),
+      type: DataTypes.STRING,
       allowNull: false,
     },
     size: {
@@ -62,7 +62,7 @@ ProductVariants.init(
       validate: {
         isUrl: true,
       },
-      desctription: {
+      description: {
         type: DataTypes.STRING,
         allowNull: true,
       },
