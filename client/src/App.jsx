@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react"
-import { Routes, Route } from "react-router-dom"
+import React, { useState, useEffect, useCallback, useContext } from "react"
+import { Routes, Route, Navigate } from "react-router-dom"
 // Components
 import { Flex } from "@chakra-ui/react"
 import Navbar from "./components/Navbar"
@@ -10,8 +10,10 @@ import Signup from "./pages/Signup"
 import OrderHistory from "./pages/OrderHistory"
 import Cart from "./pages/Cart"
 import Checkout from "./pages/Checkout"
+import { AuthContext } from "./context/AuthContext"
 
 function App() {
+  const { user } = useContext(AuthContext);
   const [cartItems, setCartItems] = useState(() => {
     const storedCartItems = localStorage.getItem("shoppingCart")
     return storedCartItems ? JSON.parse(storedCartItems) : []
@@ -47,6 +49,13 @@ const handleRemoveFromCart = useCallback((product) => {
 
 const isProductInCart = (product) => cartItems.some(item => item.product_group_id === product.product_group_id);
 
+const ProtectedRoute = ({ children }) => {
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
+  return children;
+};
+
   return (
     <Flex flexDir="column" gap="8">
       <Navbar cartItems={cartItems} />
@@ -61,7 +70,13 @@ const isProductInCart = (product) => cartItems.some(item => item.product_group_i
         <Route path="/signup" element={<Signup />} />
         <Route path="/cart" element={ <Cart cartItems={cartItems} setCartItems={setCartItems} />} />
         <Route path="/checkout" element={<Checkout cartItems={cartItems} setCartItems={setCartItems} />} />
-        <Route path="order-history" element={<OrderHistory />} />
+        <Route path="order-history"
+          element={
+            <ProtectedRoute>
+              <OrderHistory />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
     </Flex>
   )
