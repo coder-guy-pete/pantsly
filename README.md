@@ -4,6 +4,24 @@
 
 Pantsly is a full-stack e-commerce application that allows users to browse and purchase products, create an account, log in, and view their order history. This platform includes authentication, product filtering and search capabilities, an admin panel for inventory management, and a secure checkout process.
 
+### Screenshots
+
+#### Home Page
+<img src='./screenshots/Homepage.png' width='600'>
+
+#### Login Page
+<img src='./screenshots/Login.png' width='600'>
+
+#### Shopping Cart
+<img src='./screenshots/Shoppingcart.png' width='600'>
+
+#### Checkout
+<img src='./screenshots/Checkout.png' width='600'>
+
+#### Create User/Sign Up
+<img src='./screenshots/CreateUser.png' width='600'>
+
+
 ## Features
 
 ### User Features:
@@ -83,8 +101,8 @@ Pantsly-Ecommerce-App/
 ### 1. Clone the repository:
 
 ```sh
-git clone https://github.com/your-repo/pantsly-ecommerce.git
-cd pantsly-ecommerce
+git clone https://github.com/coder-guy-pete/pantsly
+cd pantsly
 ```
 
 ### 2. Install dependencies:
@@ -136,6 +154,12 @@ npm run start:dev
 
 - `GET /orders/:user_id` - Get user order history.
 - `POST /orders` - Create a new order.
+
+## Deployment & Repository
+
+- **Live Demo**: [Pantsly on Render](https://pantsly.onrender.com)
+- **Source Code**: [GitHub Repository](https://github.com/coder-guy-pete/pantsly)
+
 
 ## Contributors
 
