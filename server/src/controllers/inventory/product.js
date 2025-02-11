@@ -1,6 +1,6 @@
 // import { Product } from '../../models/index.js';
 
-import tempDataProduct from '../tempDataProduct.js';
+// import tempDataProduct from '../tempDataProduct.js';
 
 
 export const productGet = async (req, res) => {
