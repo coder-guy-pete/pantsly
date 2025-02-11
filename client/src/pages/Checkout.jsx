@@ -164,7 +164,6 @@ const Checkout = ({ cartItems, setCartItems}) => {
         });
 
         const userData = await responseUser.json();
-        console.log(userData.user_id);
 
         if (!responseUser.ok) {
             throw new Error('Failed to add user');
