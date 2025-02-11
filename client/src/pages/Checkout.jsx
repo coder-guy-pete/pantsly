@@ -167,6 +167,8 @@ const Checkout = ({ cartItems, setCartItems}) => {
         // const userID = await responseUser.json().body;
         // console.log(userID);
 
+        const userData = await responseUser.json();
+
         if (!responseUser.ok) {
             throw new Error('Failed to add user');
         }
@@ -179,7 +181,9 @@ const Checkout = ({ cartItems, setCartItems}) => {
                     quantity: item.quantity,
                 })),
             ],
-            user_id: responseUser.user_id,
+
+            user_id: userData.user_id,
+
         };
 
         const responseOrder = await fetch('/api/orders', {
