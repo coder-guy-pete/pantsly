@@ -98,6 +98,8 @@ const ProductCard = ({ product, addToCart, removeFromCart, isProductInCart }) =>
                         alt={product.name} 
                         rounded="md"
                         w="75%"
+                        h="250px"
+                        fit="contain"
                         mb={4} 
                         />
                 <VStack align="start" spacing={2}>
