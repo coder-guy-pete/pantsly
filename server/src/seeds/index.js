@@ -8,7 +8,7 @@ import sequelize from "../config/connection.js";
 const seedAll = async () => {
   try {
     // Sync database, dropping and recreating tables
-    await sequelize.sync({ force: true });
+    await sequelize.sync({});
     console.log("\n----- DATABASE SYNCED -----\n");
 
     // Seed Product Variants
