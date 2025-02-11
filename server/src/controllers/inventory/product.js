@@ -1,5 +1,7 @@
+
 import { ProductVariants } from '../../models/index.js';
 import productsResponse from '../utils/productsResponse.js';
+
 
 export const productGet = async (req, res) => {
     try {

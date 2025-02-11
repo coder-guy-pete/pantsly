@@ -1,5 +1,4 @@
-import { ProductVariants} from '../../models/index.js';
-
+import { ProductVariants } from '../../models/index.js';
 import productsResponse from '../utils/productsResponse.js';
 
 // // Products GET
