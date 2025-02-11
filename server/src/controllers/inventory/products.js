@@ -1,13 +1,8 @@
-import { ProductVariants} from '../../models/index.js';
-
-// import tempData from '../tempDataProduct.js';
+import { ProductVariants } from '../../models/index.js';
 import productsResponse from '../utils/productsResponse.js';
 
 // // Products GET
 export const productsGet = async (req, res) => {
-    // res.json(tempData);
-
-//THE CODE BELOW WILL REPLACE THE CODE ABOVE ONCE THE DATABASE IS PROPERLY CONNECTED
     try {
         const products = await ProductVariants.findAll({
         attributes: ['product_group_id', 'name', 'brand', 'color', 'size', 'sell_price', 'image_url', 'description',],
