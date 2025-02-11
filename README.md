@@ -68,20 +68,18 @@ Pantsly is a full-stack e-commerce application that allows users to browse and p
 ```
 Pantsly-Ecommerce-App/
 │── client/              # Frontend React Application
-│   │── src/             # Source directory for frontend
-│       │── api/         # API calls and data fetching
-│       │── assets/      # Images, icons, and other static files
+│   │── public/          # Images, icons, and other static files
+│   │── src/             # Source directory for frontend       
 │       │── components/  # Reusable UI components
 │       │── context/     # React Context API for global state management
 │       │── logic/       # Business logic functions
 │       │── pages/       # Individual pages/views for the app
-│       │── utils/       # Utility functions and helper files
+│       │── utils/       # Authorizaton Structure
 │       │── App.jsx      # Main application component
-│       │── main.jsx     # Entry point for React app
+│       │── main.jsx     # Entry point for React app and controls application routing
 │
 │── server/              # Backend Node.js & Express API
 │   │── db/              # Database related files
-│       │── schema.sql   # Database schema and setup script
 │   │── src/             # Source directory for backend
 │       ├── controllers/ # API Controllers for handling requests
 │       ├── models/      # Database Models for Sequelize ORM
@@ -98,20 +96,20 @@ Pantsly-Ecommerce-App/
 
 ## Installation and Setup
 
-### 1. Clone the repository:
+### 1. Clone the repository
 
 ```sh
 git clone https://github.com/coder-guy-pete/pantsly
 cd pantsly
 ```
 
-### 2. Install dependencies:
+### 2. Install dependencies
 
 ```sh
 npm install
 ```
 
-### 3. Configure the environment:
+### 3. Configure the environment
 
 Create a `.env` file in the root directory and add the following:
 
@@ -120,15 +118,16 @@ DB_NAME=pantsly_db
 DB_USER=your_postgres_user
 DB_PASSWORD=your_postgres_password
 JWT_SECRET_KEY=your_secret_key
+SECRET_ADMIN=your_admin_key
 ```
 
-### 4. Seed the database:
+### 4. Seed the database
 
 ```sh
 npm run seed
 ```
 
-### 5. Start the development server:
+### 5. Start the development server
 
 ```sh
 npm run start:dev
@@ -157,7 +156,7 @@ npm run start:dev
 
 ## Deployment & Repository
 
-- **Live Demo**: [Pantsly on Render](https://pantsly.onrender.com)
+- **Live Deployment**: [Pantsly on Render](https://pantsly.onrender.com)
 - **Source Code**: [GitHub Repository](https://github.com/coder-guy-pete/pantsly)
 
 
