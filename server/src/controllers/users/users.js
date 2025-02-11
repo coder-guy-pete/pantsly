@@ -43,11 +43,6 @@ export const usersPost = async (req, res) => {
   const { name, address1, address2, city, state, zipcode, email, password, isAdmin } = req.body;
 
   try {
-    let hashedPassword = null;
-    if (password) {
-      const saltRounds = 10;
-      hashedPassword = await bcrypt.hash(password, saltRounds);
-    }
 
     const newUser = {
       name,
@@ -59,8 +54,8 @@ export const usersPost = async (req, res) => {
       email,
     };
 
-    if (hashedPassword) {
-      newUser.password = hashedPassword;
+    if (password) {
+      newUser.password = password;
     }
 
     if (isAdmin) {

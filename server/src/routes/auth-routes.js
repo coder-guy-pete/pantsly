@@ -11,12 +11,12 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findOne({ where: { email: email } });
         if (!user) {
-            return res.status(404).json({ message: 'Authentication failed' });
+            return res.status(404).json({ message: 'User not found' });
         }
 
         const passwordIsValid = await bcrypt.compare(password, user.password);
         if (!passwordIsValid) {
-            return res.status(401).json({ message: 'Authentication failed' });
+            return res.status(401).json({ message: 'Incorrect password' });
         }
 
         const secretKey = process.env.JWT_SECRET_KEY || '';
