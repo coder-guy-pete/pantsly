@@ -12,7 +12,7 @@ import {
     Spacer,
     Highlight
 } from '@chakra-ui/react';
-import { AuthContext } from '@/context/AuthContext';
+import { AuthContext } from '../context/AuthContext';
 
 const OrderHistory = () => {
     const [orders, setOrders] = useState(null);

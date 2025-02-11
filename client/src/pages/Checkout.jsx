@@ -4,7 +4,7 @@ import { Box, Flex, Heading, VStack, HStack, Button, Card, Text, Input } from '@
 import { SelectContent, SelectItem, SelectRoot, SelectTrigger, SelectValueText } from '../components/ui/select';
 import { Field } from '../components/ui/field';
 import { AuthContext } from '../context/AuthContext';
-import stateOptions from '@/logic/States';
+import stateOptions from '../logic/States';
 
 const Checkout = ({ cartItems, setCartItems}) => {
     const navigate = useNavigate();
