@@ -1,6 +1,5 @@
 import { DataTypes, Model } from "sequelize";
 import sequelize from "../config/connection.js";
-import OrderItem from "./OrderItem.js";
 
 class ProductVariants extends Model {}
 
@@ -61,11 +60,11 @@ ProductVariants.init(
       allowNull: true,
       validate: {
         isUrl: true,
-      },
+      }
+    },
       description: {
         type: DataTypes.STRING,
         allowNull: true,
-      },
     },
   },
   {

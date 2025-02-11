@@ -2,7 +2,7 @@ const productsResponse = (products) => {
     const productMap = {};
 
             products.forEach((product) => {
-            const {product_group_id, name, brand, color, size, sell_price, stock_quantity, image_url} = product;
+            const {product_group_id, name, brand, color, size, sell_price, description, image_url} = product;
 
             if (!productMap[product_group_id]) {
                 productMap[product_group_id] = {
@@ -20,7 +20,7 @@ const productsResponse = (products) => {
                         xxl: [],
                         xxxl: [],
                     },
-                    description: '',
+                    description: description,
                 }
             }
 
