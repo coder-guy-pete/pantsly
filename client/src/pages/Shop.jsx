@@ -1,8 +1,8 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Box, Heading, Highlight, Flex, Center, Spinner, Text } from '@chakra-ui/react';
-import ProductCard from '@/components/ProductCard';
-import SearchBar from '@/components/SearchBar';
-import SortFilter from '@/components/SortFilter';
+import ProductCard from '../components/ProductCard';
+import SearchBar from '../components/SearchBar';
+import SortFilter from '../components/SortFilter';
 
 const Shop = ({ addToCart, removeFromCart, isProductInCart }) => {
     const [searchQuery, setSearchQuery] = useState('');
