@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { Box, Heading, Highlight, Flex, Center, Spinner, Text } from '@chakra-ui/react';
 import ProductCard from '../components/ProductCard';
-import SearchBar from '../components/SearchBar';
+import SearchBar from '../components/Searchbar';
 import SortFilter from '../components/SortFilter';
 
 const Shop = ({ addToCart, removeFromCart, isProductInCart }) => {
