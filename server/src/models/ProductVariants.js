@@ -62,9 +62,9 @@ ProductVariants.init(
         isUrl: true,
       }
     },
-      description: {
-        type: DataTypes.STRING,
-        allowNull: true,
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {
