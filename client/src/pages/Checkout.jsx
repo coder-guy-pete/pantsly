@@ -161,7 +161,11 @@ const Checkout = ({ cartItems, setCartItems}) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(newUserData),
-        });
+        })
+
+        // Revisit after deploying
+        // const userID = await responseUser.json().body;
+        // console.log(userID);
 
         if (!responseUser.ok) {
             throw new Error('Failed to add user');
@@ -175,7 +179,7 @@ const Checkout = ({ cartItems, setCartItems}) => {
                     quantity: item.quantity,
                 })),
             ],
-            user_id: responseUser.id,
+            user_id: responseUser.user_id,
         };
 
         const responseOrder = await fetch('/api/orders', {
