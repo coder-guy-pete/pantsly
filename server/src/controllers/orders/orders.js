@@ -2,14 +2,8 @@ import { Orders, OrderItem, ProductVariants } from '../../models/index.js';
 import sequelize from '../../config/connection.js';
 
 
-// import tempDataOrderHistory from '../tempDataOrderHistory.js';
-
 // Order GET
 export const ordersGet = async (req, res) => {
-    // res.json(tempDataOrderHistory);
-    // console.log(`This is the order history for the user with the user id ${req.params.user_id}`);
-
-    // THE CODE BELOW WILL REPLACE THE CODE ABOVE ONCE THE DATABASE IS PROPERLY CONNECTED
     try {
         const orders = await Orders.findAll({  
             where: {
@@ -29,7 +23,6 @@ export const ordersGet = async (req, res) => {
             order: [['purchase_date', 'DESC']],
         });
 
-        console.log('ORDERS:',orders);
         if (!orders) {
             return res.json([]);
         }  
@@ -73,10 +66,7 @@ export const ordersGet = async (req, res) => {
 
 // Order POST
 export const ordersPost = async (req, res) => {
-    // res.json({message: `Placeholder for orderPost. Will be used to create new order with a post to api/orders/`})
 
-    // THE CODE BELOW WILL REPLACE THE CODE ABOVE ONCE THE DATABASE IS PROPERLY CONNECTED
-    
     const t = await sequelize.transaction();
     
     try {

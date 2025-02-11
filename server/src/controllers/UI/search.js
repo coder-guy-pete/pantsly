@@ -1,36 +1,32 @@
-// import ProductVariants from '../../models/index.js';
+import { ProductVariants } from '../../models/index.js';
 import { Op } from 'sequelize';
-import tempData from '../tempDataProducts.js';
-// import productsResponse from '../utils/productsResponse.js';
+import productsResponse from '../utils/productsResponse.js';
 
 
 // search GET
 export const searchGet = async (req, res) => {
-    res.json(tempData);
+    try {
+        const products = await ProductVariants.findAll({
+            attributes: ['productId', 'product_name', 'brand', 'color', 'size', 'sell_price', 'stock_quantity', 'image_url'],
+            where:
+                {
+                    product_name: {
+                        [Op.like]: `%${req.body.query}%`
+                    },
+                },
 
-    //THE CODE BELOW WILL REPLACE THE CODE ABOVE ONCE THE DATABASE IS PROPERLY CONNECTED
-    // try {
-    //     const products = await ProductVariants.findAll({
-    //         attributes: ['productId', 'product_name', 'brand', 'color', 'size', 'sell_price', 'stock_quantity', 'image_url'],
-    //         where:
-    //             {
-    //                 product_name: {
-    //                     [Op.like]: `%${req.body.query}%`
-    //                 },
-    //             },
+        });
 
-    //     });
+        if (!products) {
+            return res.json([]);
+        } else {
+            const productMap = productsResponse(products);
 
-    //     if (!products) {
-    //         return res.json([]);
-    //     } else {
-    //         const productMap = productResponse(products);
+            return res.json(Object.values(productMap));
+        }
 
-    //         return res.json(Object.values(productMap));
-    //     }
-
-    // } catch (error) {
-    //     console.error(error);
-    //     res.status(500).json([])
-    // }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json([])
+    }
 }
