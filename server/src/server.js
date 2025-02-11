@@ -14,8 +14,8 @@ if (process.env.NODE_ENV === 'production') {
 app.use(express.json());
 app.use(routes);
 
-const forceDatabaseRefresh = process.env.FORCE_DATABASE_REFRESH === '1' || false;
-sequelize.sync({ force: forceDatabaseRefresh }).then(() => {
+// const forceDatabaseRefresh = process.env.FORCE_DATABASE_REFRESH === '1' || false;
+sequelize.sync({}).then(() => {
   app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
   });
