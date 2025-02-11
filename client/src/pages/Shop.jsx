@@ -31,8 +31,8 @@ const Shop = ({ addToCart, removeFromCart, isProductInCart }) => {
         };
 
         fetchProducts();
-        console.log("Products:", products);
     }, []);
+    console.log("Products:", products);
 
     const handleSearch = (query) => {
         setSearchQuery(query);
