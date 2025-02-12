@@ -64,10 +64,18 @@ const Shop = ({ addToCart, removeFromCart, isProductInCart }) => {
                 filtered.sort((a, b) => b.name.localeCompare(a.name));
                 break;
             case 'price-asc':
-                filtered.sort((a, b) => a.sell_price - b.sell_price);
+                filtered.sort((a, b) => {
+                    const priceA = parseFloat(a.price);
+                    const priceB = parseFloat(b.price);
+                    return priceA - priceB;
+                });
                 break;
             case 'price-desc':
-                filtered.sort((a, b) => b.sell_price - a.sell_price);
+                filtered.sort((a, b) => {
+                    const priceA = parseFloat(a.price);
+                    const priceB = parseFloat(b.price);
+                    return priceB - priceA;
+                });
                 break;
             default:
                 break;
