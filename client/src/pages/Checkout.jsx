@@ -161,11 +161,7 @@ const Checkout = ({ cartItems, setCartItems}) => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(newUserData),
-        })
-
-        // Revisit after deploying
-        // const userID = await responseUser.json().body;
-        // console.log(userID);
+        });
 
         const userData = await responseUser.json();
 
